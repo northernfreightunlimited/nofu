@@ -1,139 +1,160 @@
 header:
-    title: Welcome to our Studio!
-    text: It's Nice To Meet You
-    button: Tell Me More
-    buttonlink: "#services" # "#{section}" or "URL/page link"
+    title: Welcome to 
+    text: Northern Freight Unlimited
+    button: Click for Destinations and Rates
+    buttonlink: "#portfolio" # "#{section}" or "URL/page link"
 
 services:
-    title: "Services"
-    text: "Lorem ipsum"
-    section: services
+    title: "Rules"
+    text: "Please read the following rules before creating a contract."
+    section: rules
     list:
-      - title: "E-Commerce"
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit."
-        icon: fas fa-shopping-cart #find more at https://fontawesome.com/icons
-      - title: "Responsive Design"
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit."
-        icon: fas fa-laptop       
-      - title: "[Markdown](https://en.wikipedia.org/wiki/Markdown)"
-        desc: "Your description here, full **Markdown** support"
-        icon: fab fa-markdown
+      - title: "Northern Freight Unlimited"
+        desc: "Create your contract to Northen Freight Unlimited. Ticker is [NOFU]."
+        icon: fas fa-file-signature #find more at https://fontawesome.com/icons
+      - title: "7/7 day Accept/Complete"
+        desc: "Set your contract for 7 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
+        icon: fas fa-calendar-week 
+      - title: "Rush or Custom Quotes"
+        desc: "Join our [discord](https://discord.gg/x7qhNux6wF) and contact Ackbarre or Necro Toralen."
+        icon: fas fa-comments-dollar
+      - title: "$30m ISK Minimum"
+        desc: "Unless otherwise sepecified, a 30m ISK minimum reward applies to all contracts."
+        icon: fas fa-hand-holding-usd
+      - title: "Maximum 10b ISK Collateral"
+        desc: "Max 10b ISK collateral per contract."
+        icon: fas fa-file-invoice-dollar
+      - title: "Maximum 335k m3"
+        desc: "Max 335k m3 per contract."
+        icon: fas fa-weight-hanging
+      - title: "Blue Characters"
+        desc: "All contracts leaving 1DQ1 must be from blue characters."
+        icon: fas fa-user-shield
+      - title: "No Containers"
+        desc: "No containers. If you need containers moved for some reason please reach out directly."
+        icon: fas fa-box-open
+      - title: "No Black Frog banned systems"
+        desc: "No contracts to or from systems banned by Black Frog. Exceptions for Imperium systems."
+        icon: fas fa-frog
+      - title: "Questions?"
+        desc: "Please join our [Discord Server](https://discord.gg/x7qhNux6wF)."
+        icon: fas fa-question-circle
 
 portfolio:
-    title: "Portfolio"
-    text: "Lorem ipsum dolor sit amet consectetur."
+    title: "Service Destinations"
+    text: "NOFU is proud to offer service to the following destinations."
     section: portfolio
     
 
 timeline:
-    title: "About" 
-    text: "Lorem ipsum timeline"
-    section: timeline
-    events:
-      - title: "Our Humble Beginnings"
-        year: "2009-2011"
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!"
-        image: assets/img/timeline/1.jpg
-        alt: 
-        align: left
-      - title: "An Agency is Born"
-        year: "March 2011"
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!"
-        image: assets/img/timeline/2.jpg
-        alt: 
-        align: right
-      - title: "Jekyll Theme is created"
-        year: "2019"
-        desc: "Ravi Riley converted Agency, a Bootstrap-based theme, into a Jekyll theme. The Jekyll theme can be installed as a Ruby gem, or remotely. For more information, visit the documentation."
-        image: assets/img/timeline/3.jpg
-        alt: image alt text
-        #align: #default is left       
-      - title: "Title"
-        year: "2009-2011"
-        desc: "Your description here, **Markdown** is fully supported."
-        image: assets/img/timeline/4.jpg
-        alt: 
-        align: right
-    end: "Be Part <br> of Our <br> Story!"
+#     title: "About" 
+#     text: "Lorem ipsum timeline"
+#     section: timeline
+#     events:
+#       - title: "Our Humble Beginnings"
+#         year: "2009-2011"
+#         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!"
+#         image: assets/img/timeline/1.jpg
+#         alt: 
+#         align: left
+#       - title: "An Agency is Born"
+#         year: "March 2011"
+#         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!"
+#         image: assets/img/timeline/2.jpg
+#         alt: 
+#         align: right
+#       - title: "Jekyll Theme is created"
+#         year: "2019"
+#         desc: "Ravi Riley converted Agency, a Bootstrap-based theme, into a Jekyll theme. The Jekyll theme can be installed as a Ruby gem, or remotely. For more information, visit the documentation."
+#         image: assets/img/timeline/3.jpg
+#         alt: image alt text
+#         #align: #default is left       
+#       - title: "Title"
+#         year: "2009-2011"
+#         desc: "Your description here, **Markdown** is fully supported."
+#         image: assets/img/timeline/4.jpg
+#         alt: 
+#         align: right
+#     end: "Be Part <br> of Our <br> Story!"
 
-about:
-    title: "About Us"
-    text: "our story"
-    section: about
+# about:
+#     title: "About Us"
+#     text: "our story"
+#     section: about
 
-clients:
-    section: clients
-    max-height: 100px
-    horizontal-scrolling: "" #"yes/no"
-    list:
-      - title: "envato"
-        url: https://github.com/raviriley/agency-jekyll-theme
-        logo: assets/img/clients/envato.jpg
-      - title: "designmodo"
-        url: https://github.com/raviriley/agency-jekyll-theme
-        logo: assets/img/clients/designmodo.jpg
-      - title: "themeforest"
-        url: https://github.com/raviriley/agency-jekyll-theme
-        logo: assets/img/clients/themeforest.jpg
-      - title: "Creative Market"
-        url: https://github.com/raviriley/agency-jekyll-theme
-        logo: assets/img/clients/creative-market.jpg
+# clients:
+#     section: clients
+#     max-height: 100px
+#     horizontal-scrolling: "" #"yes/no"
+#     list:
+#       - title: "envato"
+#         url: https://github.com/raviriley/agency-jekyll-theme
+#         logo: assets/img/clients/envato.jpg
+#       - title: "designmodo"
+#         url: https://github.com/raviriley/agency-jekyll-theme
+#         logo: assets/img/clients/designmodo.jpg
+#       - title: "themeforest"
+#         url: https://github.com/raviriley/agency-jekyll-theme
+#         logo: assets/img/clients/themeforest.jpg
+#       - title: "Creative Market"
+#         url: https://github.com/raviriley/agency-jekyll-theme
+#         logo: assets/img/clients/creative-market.jpg
     
-team:
-    title: "OUR AMAZING TEAM"
-    text: "Lorem ipsum dolor sit amet consectetur."
-    subtext: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde. **Markdown** supported.
-    section: team
-    people:
-      - name: "Kay Garland"
-        role: "Lead Designer"
-        image: assets/img/team/1.jpg
-        social:
-          - url: https://twitter.com
-            icon: fab fa-twitter
-          - url: https://facebook.com
-            icon: fab fa-facebook-f
-          - url: https://linkedin.com
-            icon: fab fa-linkedin-in
-      - name: "Larry Parker"
-        role: "Lead Marketer"
-        image: assets/img/team/2.jpg
-        social:
-          - url: https://twitter.com
-            icon: fab fa-twitter
-          - url: https://facebook.com
-            icon: fab fa-facebook-f
-          - url: https://linkedin.com
-            icon: fab fa-linkedin-in
-      - name: "Diana Perterson"
-        role: "Lead Developer"
-        image: assets/img/team/3.jpg
-        social:
-          - url: https://twitter.com
-            icon: fab fa-twitter
-          - url: https://facebook.com
-            icon: fab fa-facebook-f
-          - url: https://linkedin.com
-            icon: fab fa-linkedin-in
+# team:
+#     title: "OUR AMAZING TEAM"
+#     text: "Lorem ipsum dolor sit amet consectetur."
+#     subtext: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde. **Markdown** supported.
+#     section: team
+#     people:
+#       - name: "Kay Garland"
+#         role: "Lead Designer"
+#         image: assets/img/team/1.jpg
+#         social:
+#           - url: https://twitter.com
+#             icon: fab fa-twitter
+#           - url: https://facebook.com
+#             icon: fab fa-facebook-f
+#           - url: https://linkedin.com
+#             icon: fab fa-linkedin-in
+#       - name: "Larry Parker"
+#         role: "Lead Marketer"
+#         image: assets/img/team/2.jpg
+#         social:
+#           - url: https://twitter.com
+#             icon: fab fa-twitter
+#           - url: https://facebook.com
+#             icon: fab fa-facebook-f
+#           - url: https://linkedin.com
+#             icon: fab fa-linkedin-in
+#       - name: "Diana Perterson"
+#         role: "Lead Developer"
+#         image: assets/img/team/3.jpg
+#         social:
+#           - url: https://twitter.com
+#             icon: fab fa-twitter
+#           - url: https://facebook.com
+#             icon: fab fa-facebook-f
+#           - url: https://linkedin.com
+#             icon: fab fa-linkedin-in
           
 contact:
-    title: "Contact Us"
-    text: "Lorem ipsum or call 123456789"
-    section: contact
+    # title: "Contact Us"
+    # text: "Join our Discord: [https://discord.gg/x7qhNux6wF](https://discord.gg/x7qhNux6wF)"
+    # section: text
     
 footer:
-    legal: "Privacy Policy"
-    social:
-      - url: https://twitter.com
-        icon: "fab fa-twitter"  
-      - url: https://facebook.com
-        icon: "fab fa-facebook-f"
-      - url: https://linkedin.com
-        icon: "fab fa-linkedin-in"
-      - url: https://github.com/raviriley/agency-jekyll-theme
-        icon: "fab fa-github"
-      - url: https://instagram.com
-        icon: "fab fa-instagram"
+    # legal: "Privacy Policy"
+    # social:
+    #   - url: https://twitter.com
+    #     icon: "fab fa-twitter"  
+    #   - url: https://facebook.com
+    #     icon: "fab fa-facebook-f"
+    #   - url: https://linkedin.com
+    #     icon: "fab fa-linkedin-in"
+    #   - url: https://github.com/raviriley/agency-jekyll-theme
+    #     icon: "fab fa-github"
+    #   - url: https://instagram.com
+    #     icon: "fab fa-instagram"
 
 
 # {{ site.data.sitetext.ex.ex | markdownify | default: example }}

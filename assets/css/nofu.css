@@ -1,0 +1,15 @@
+h2.section-heading {
+    font-size: 60px !important;
+}
+
+h3.section-subheading{
+    font-size: 30px !important;
+}
+
+.modal-body dt {
+    font-size: 25px;
+}
+
+.modal-body dd {
+    font-size: 22px;
+}
