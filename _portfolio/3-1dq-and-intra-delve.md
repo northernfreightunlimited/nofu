@@ -17,7 +17,7 @@ Origin Jita/Amarr/Perimeter:
 : 900 ISK / m3
 
 Destination Jita/Perimeter/Amarr:
-: 600 ISK / m3
+: 750 ISK / m3
 
 Destination F2O/W6V:
 : 300 ISK / m3

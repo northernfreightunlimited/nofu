@@ -10,7 +10,7 @@ caption:
 ---
 
 Destination: Amarr
-: 600 ISK / m3
+: 750 ISK / m3
 : 30m ISK Minimum
 
 Pickup: Amarr
