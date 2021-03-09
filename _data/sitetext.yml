@@ -16,7 +16,7 @@ services:
         desc: "Set your contract for 7 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
         icon: fas fa-calendar-week 
       - title: "Rush or Custom Quotes"
-        desc: "Join our [discord](https://discord.gg/x7qhNux6wF) and contact Ackbarre or Necro Toralen."
+        desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact Ackbarre, Ajaxify, or Parrth."
         icon: fas fa-comments-dollar
       - title: "$30m ISK Minimum"
         desc: "Unless otherwise sepecified, a 30m ISK minimum reward applies to all contracts."
@@ -37,7 +37,7 @@ services:
         desc: "No contracts to or from systems banned by Black Frog. Exceptions for Imperium systems."
         icon: fas fa-frog
       - title: "Questions?"
-        desc: "Please join our [Discord Server](https://discord.gg/x7qhNux6wF)."
+        desc: "Please join our [Discord Server](https://discord.gg/qwFr4RhE2C)."
         icon: fas fa-question-circle
 
 portfolio:
