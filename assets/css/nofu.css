@@ -13,3 +13,22 @@ h3.section-subheading{
 .modal-body dd {
     font-size: 22px;
 }
+
+.page-section#calc {
+    background-color: #212529;
+    background-image: url(../img/map-image.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.page-section#calc h2.section-heading {
+    color: #FFFFFF;
+}
+
+.calc-label {
+    color: #FFFFFF;
+}
+
+.form-control {
+    color: #000000;
+}

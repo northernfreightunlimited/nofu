@@ -7,6 +7,7 @@ gem "jekyll-remote-theme"
 
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.6"
+  gem "jekyll-tsc"
 end
 
 # Delete the following lines if not on Windows: 

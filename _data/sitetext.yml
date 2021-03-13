@@ -77,10 +77,10 @@ timeline:
 #         align: right
 #     end: "Be Part <br> of Our <br> Story!"
 
-# about:
-#     title: "About Us"
-#     text: "our story"
-#     section: about
+calc:
+    title: "Get a Quote"
+    text: "Use the Calculator below to get a rate quote"
+    section: calc
 
 # clients:
 #     section: clients

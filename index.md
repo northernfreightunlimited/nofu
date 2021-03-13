@@ -6,6 +6,7 @@ layout: default
 
 {% include services.html %}
 {% include portfolio_grid.html %}
+{% include calc.html %}
 
 <!-- 
 # Other sections below.
