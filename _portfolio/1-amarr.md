@@ -14,7 +14,7 @@ Destination: Amarr
 : 30m ISK Minimum
 
 Pickup: Amarr
-: 900 ISK / m3
+: 800 ISK / m3
 : 30m ISK Minimum
 
 Max Collateral

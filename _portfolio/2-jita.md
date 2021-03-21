@@ -10,7 +10,7 @@ caption:
 ---
 
 Destination: Jita/Perimeter
-: 750 ISK / m3
+: 900 ISK / m3
 : 30m ISK Minimum
 
 Pickup: Jita/Perimeter

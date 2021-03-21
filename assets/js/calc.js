@@ -76,7 +76,7 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 750
+                rate: 900
             },
             {
                 destination: System.Domain,
@@ -109,7 +109,7 @@ var routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
-                rate: 900
+                rate: 800
             },
         ]
     },
@@ -159,6 +159,7 @@ function calculateRouteReward() {
     var route = routeMap[desiredRoute.value];
     var calculatedReward = Number(desiredm3.value) * route.rate;
     calculatedReward = Math.max(calculatedReward, route.minReward);
+    console.log("Route: " + route + ", Rate: " + route.rate + ", m3: " + desiredm3.value + ", Reward: " + calculatedReward);
     outputRouteReward(desiredRoute.value, calculatedReward);
 }
 /**
