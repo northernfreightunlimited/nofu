@@ -52,7 +52,7 @@ var routeMap = {};
 var defaults = {
     minReward: 30e6,
     maxCollateral: 10e9,
-    rate: 600,
+    rate: 800,
     maxM3: 335000
 };
 var RouteCalc = /** @class */ (function () {
@@ -76,22 +76,32 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 900
+                rate: 800
             },
             {
                 destination: System.Domain,
-                rate: 750
+                rate: 800
             },
             {
-                destination: System.Delve
-            }
+                destination: System.Irmalin,
+                rate: 800
+            },
+            {
+                destination: System.Zinkon,
+                rate: 800
+            },
+            {
+                destination: System.Delve,
+                rate: 600
+            },
         ]
     },
     {
         origin: System.Delve,
         destinations: [
             {
-                destination: System.ImperialPalace
+                destination: System.ImperialPalace,
+                rate: 600
             },
         ]
     },
@@ -109,8 +119,26 @@ var routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
-                rate: 800
+                rate: 900
             },
+        ]
+    },
+    {
+        origin: System.Irmalin,
+        destinations: [
+            {
+                destination: System.ImperialPalace,
+                rate: 600
+            },
+        ]
+    },
+    {
+        origin: System.Zinkon,
+        destinations: [
+            {
+                destination: System.ImperialPalace,
+                rate: 800
+            }
         ]
     },
 ];

@@ -17,7 +17,7 @@ const routeMap = {};
 const defaults :Base = {
     minReward: 30e6,  // 30m
     maxCollateral: 10e9,  // 10b
-    rate: 600,  // 600 isk per m3
+    rate: 800,  // isk per m3
     maxM3: 335000,  // 335k m3
 };
 
@@ -65,15 +65,24 @@ const routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 900,
+                rate: 800,
             },
             {
                 destination: System.Domain,
-                rate: 750,
+                rate: 800,
+            },
+            {
+                destination: System.Irmalin,
+                rate: 800,
+            },
+            {
+                destination: System.Zinkon,
+                rate: 800,
             },
             {
                 destination: System.Delve,
-            }
+                rate: 600,
+            },
         ]
     },
     {
@@ -81,6 +90,7 @@ const routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
+                rate: 600,
             },
         ],
     },
@@ -98,9 +108,27 @@ const routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
-                rate: 800,
+                rate: 900,
             },
         ],
+    },
+    {
+        origin: System.Irmalin,
+        destinations: [
+            {
+                destination: System.ImperialPalace,
+                rate: 600,
+            },
+        ]
+    },
+    {
+        origin: System.Zinkon,
+        destinations: [
+            {
+                destination: System.ImperialPalace,
+                rate: 800,
+            }
+        ]
     },
 ] as Route[]
 

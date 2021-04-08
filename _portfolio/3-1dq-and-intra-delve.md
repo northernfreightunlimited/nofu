@@ -17,7 +17,7 @@ Origin Jita/Amarr/Perimeter:
 : 900 ISK / m3
 
 Destination Jita/Perimeter/Amarr:
-: 900 ISK / m3
+: 800 ISK / m3
 
 Intra Delve:
 : 600 ISK / m3

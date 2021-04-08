@@ -13,7 +13,7 @@ Destination: Jita or Perimeter
 : 900 ISK / m3
 : 30m ISK Minimum
 
-Destination: 1DQ1, F2O, W6V
+Destination: 1DQ1
 : 800 ISK / m3
 : 30m ISK Minimum
 
