@@ -1,0 +1,64 @@
+h2.section-heading {
+    font-size: 60px !important;
+}
+
+h3.section-subheading{
+    font-size: 30px !important;
+}
+
+.modal-body dt {
+    font-size: 25px;
+}
+
+.modal-body dd {
+    font-size: 22px;
+}
+
+.page-section#calc {
+    background-color: #212529;
+    background-image: url(../img/map-image.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.page-section#calc h2.section-heading {
+    color: #FFFFFF;
+}
+
+.calc-label {
+    color: #FFFFFF;
+}
+
+.form-control {
+    color: #000000;
+    background-color: #54bfff;
+    font-weight: bold;
+    border-color: #54bfff;
+}
+
+.error {
+    border: red;
+    background-color: red;
+}
+
+.calc-output {
+    color: #000000;
+    background-color: skyblue;
+    padding: 10px;
+    font-weight: 700;
+    visibility: hidden;
+}
+
+.calc-output > dt {
+    font-weight: 400;
+    font-size: large;
+    text-decoration: underline;
+}
+
+.click-to-copy {
+    font-style: italic;
+    font-weight: 600;
+    color: #666;
+    font-size: small;
+}
+
