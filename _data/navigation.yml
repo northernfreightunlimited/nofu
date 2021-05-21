@@ -14,8 +14,6 @@ en: &DEFAULT_EN
       section: portfolio
     - title: "Service Rules"
       section: rules
-    # - title: "Theme Source"
-    #   url: https://github.com/raviriley/agency-jekyll-theme/
 en-US:
   <<: *DEFAULT_EN
 en-CA:
