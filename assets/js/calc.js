@@ -76,7 +76,8 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 800
+                rate: 800,
+                minReward: 10e6
             },
             {
                 destination: System.Domain,
@@ -84,7 +85,7 @@ var routes = [
             },
             {
                 destination: System.Irmalin,
-                rate: 800
+                rate: 600
             },
             {
                 destination: System.Zinkon,
@@ -110,7 +111,8 @@ var routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
-                rate: 900
+                rate: 1100,
+                minReward: 10e6
             },
         ]
     },
@@ -130,6 +132,10 @@ var routes = [
                 destination: System.ImperialPalace,
                 rate: 600
             },
+            {
+                destination: System.Forge,
+                rate: 900
+            }
         ]
     },
     {
@@ -138,6 +144,10 @@ var routes = [
             {
                 destination: System.ImperialPalace,
                 rate: 800
+            },
+            {
+                destination: System.Forge,
+                rate: 900
             }
         ]
     },
