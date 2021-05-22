@@ -11,11 +11,11 @@ caption:
 
 Destination: Jita/Perimeter
 : 800 ISK / m3
-: 30m ISK Minimum
+: 10m ISK Minimum
 
 Pickup: Jita/Perimeter
-: 900 ISK / m3
-: 30m ISK Minimum
+: 1100 ISK / m3
+: 10m ISK Minimum
 
 Max Collateral
 : 10b ISK
