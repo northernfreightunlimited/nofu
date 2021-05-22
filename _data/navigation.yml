@@ -14,6 +14,8 @@ en: &DEFAULT_EN
       section: portfolio
     - title: "Service Rules"
       section: rules
+    - title: "Rate Calculator"
+      section: calc
 en-US:
   <<: *DEFAULT_EN
 en-CA:
