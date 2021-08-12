@@ -100,7 +100,7 @@ const routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
-                rate: 1100,
+                rate: 1700,
                 minReward: 10e6,  // 10m
             },
         ],

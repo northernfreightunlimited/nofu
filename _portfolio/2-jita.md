@@ -14,7 +14,7 @@ Destination: Jita/Perimeter
 : 10m ISK Minimum
 
 Pickup: Jita/Perimeter
-: 1100 ISK / m3
+: 1700 ISK / m3
 : 10m ISK Minimum
 
 Max Collateral
@@ -24,4 +24,4 @@ Max m3
 : 335,000 m3
 
 Average Completion
-: 24 hours
+: 12 hours
