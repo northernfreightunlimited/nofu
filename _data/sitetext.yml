@@ -51,10 +51,10 @@ en: &DEFAULT_EN
           desc: "Please join our [Discord Server](https://discord.gg/qwFr4RhE2C)."
           icon: fas fa-question-circle
 
-  portfolio:
-      title: "Service Destinations"
-      text: "NOFU is proud to offer service to the following destinations."
-      section: portfolio
+  # portfolio:
+      # title: "Service Destinations"
+      # text: "NOFU is proud to offer service to the following destinations."
+      # section: portfolio
       
 
   timeline:
