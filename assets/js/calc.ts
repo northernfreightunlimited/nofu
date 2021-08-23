@@ -6,12 +6,18 @@ enum System {
     Domain = "Amarr/Ashab",
     Zinkon = "Zinkon",
     Irmalin = "Irmalin",
+    Fountain = "B17O-R",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
 const CLICK_TO_COPY = " Click to Copy";
 const COPIED = " Copied!";
 const routeMap = {};
+
+const STANDARD_IMPORT_FROM_JITA_RATE = 1700;
+const STANDARD_EXPORT_TO_JITA_RATE = 800;
+const STANDARD_IMPORT_FROM_JITA_MIN = 10e6;  // 10m
+const FOUNTAIN_DELVE_RATE = 1100;
 
 // Defaults where not otherwise specified
 const defaults :Base = {
@@ -65,12 +71,16 @@ const routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 800,
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: 10e6,  // 10m
             },
             {
                 destination: System.Domain,
                 rate: 800,
+            },
+            {
+                destination: System.Fountain,
+                rate: FOUNTAIN_DELVE_RATE,
             },
             {
                 destination: System.Irmalin,
@@ -84,6 +94,19 @@ const routes = [
                 destination: System.Delve,
                 rate: 600,
             },
+        ]
+    },
+    {
+        origin: System.Fountain,
+        destinations: [
+            {
+                destination: System.Forge,
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
+            },
+            {
+                destination: System.ImperialPalace,
+                rate: FOUNTAIN_DELVE_RATE,
+            }
         ]
     },
     {
@@ -101,7 +124,12 @@ const routes = [
             {
                 destination: System.ImperialPalace,
                 rate: 1700,
-                minReward: 10e6,  // 10m
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+            },
+            {
+                destination: System.Fountain,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
             },
         ],
     },
