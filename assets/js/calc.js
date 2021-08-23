@@ -42,12 +42,17 @@ var System;
     System["Domain"] = "Amarr/Ashab";
     System["Zinkon"] = "Zinkon";
     System["Irmalin"] = "Irmalin";
+    System["Fountain"] = "B17O-R";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
 var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
+var STANDARD_IMPORT_FROM_JITA_RATE = 1700;
+var STANDARD_EXPORT_TO_JITA_RATE = 800;
+var STANDARD_IMPORT_FROM_JITA_MIN = 10e6; // 10m
+var FOUNTAIN_DELVE_RATE = 1100;
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -76,12 +81,16 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 800,
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: 10e6
             },
             {
                 destination: System.Domain,
                 rate: 800
+            },
+            {
+                destination: System.Fountain,
+                rate: FOUNTAIN_DELVE_RATE
             },
             {
                 destination: System.Irmalin,
@@ -95,6 +104,19 @@ var routes = [
                 destination: System.Delve,
                 rate: 600
             },
+        ]
+    },
+    {
+        origin: System.Fountain,
+        destinations: [
+            {
+                destination: System.Forge,
+                rate: STANDARD_EXPORT_TO_JITA_RATE
+            },
+            {
+                destination: System.ImperialPalace,
+                rate: FOUNTAIN_DELVE_RATE
+            }
         ]
     },
     {
@@ -112,7 +134,12 @@ var routes = [
             {
                 destination: System.ImperialPalace,
                 rate: 1700,
-                minReward: 10e6
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+            },
+            {
+                destination: System.Fountain,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN
             },
         ]
     },
