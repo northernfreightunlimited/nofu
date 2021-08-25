@@ -13,7 +13,7 @@ en: &DEFAULT_EN
       title: Welcome to 
       text: Northern Freight Unlimited
       button: Click for Destinations and Rates
-      buttonlink: "#portfolio" # "#{section}" or "URL/page link"
+      buttonlink: "#calc" # "#{section}" or "URL/page link"
 
   services:
       title: "Rules"
