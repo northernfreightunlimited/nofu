@@ -10,8 +10,8 @@
 # -----------------
 en: &DEFAULT_EN
   nav:
-    - title: "Destinations"
-      section: portfolio
+    # - title: "Destinations"
+    #   section: portfolio
     - title: "Service Rules"
       section: rules
     - title: "Rate Calculator"
