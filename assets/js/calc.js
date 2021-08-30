@@ -42,7 +42,11 @@ var System;
     System["Domain"] = "Amarr/Ashab";
     System["Zinkon"] = "Zinkon";
     System["Irmalin"] = "Irmalin";
-    System["Fountain"] = "B17O-R";
+    System["Initiative"] = "B17O-R";
+    System["Bastion"] = "57-KGB";
+    System["Delta"] = "W-IX39";
+    System["IFED"] = "E2-RDQ";
+    System["Serren"] = "Serren";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -89,7 +93,11 @@ var routes = [
                 rate: 800
             },
             {
-                destination: System.Fountain,
+                destination: System.Initiative,
+                rate: FOUNTAIN_DELVE_RATE
+            },
+            {
+                destination: System.Bastion,
                 rate: FOUNTAIN_DELVE_RATE
             },
             {
@@ -104,10 +112,14 @@ var routes = [
                 destination: System.Delve,
                 rate: 600
             },
+            {
+                destination: System.Delta,
+                rate: 800
+            }
         ]
     },
     {
-        origin: System.Fountain,
+        origin: System.Initiative,
         destinations: [
             {
                 destination: System.Forge,
@@ -116,7 +128,28 @@ var routes = [
             {
                 destination: System.ImperialPalace,
                 rate: FOUNTAIN_DELVE_RATE
-            }
+            },
+            {
+                destination: System.Bastion,
+                rate: 600
+            },
+        ]
+    },
+    {
+        origin: System.Bastion,
+        destinations: [
+            {
+                destination: System.Initiative,
+                rate: 600
+            },
+            {
+                destination: System.ImperialPalace,
+                rate: FOUNTAIN_DELVE_RATE
+            },
+            {
+                destination: System.Forge,
+                rate: STANDARD_EXPORT_TO_JITA_RATE
+            },
         ]
     },
     {
@@ -137,8 +170,18 @@ var routes = [
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN
             },
             {
-                destination: System.Fountain,
+                destination: System.Initiative,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+            },
+            {
+                destination: System.Bastion,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+            },
+            {
+                destination: System.Delta,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 200,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN
             },
         ]
