@@ -57,6 +57,7 @@ var STANDARD_IMPORT_FROM_JITA_RATE = 1700;
 var STANDARD_EXPORT_TO_JITA_RATE = 800;
 var STANDARD_IMPORT_FROM_JITA_MIN = 10e6; // 10m
 var FOUNTAIN_DELVE_RATE = 1100;
+var FOUR_JUMP_RT = 800;
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -99,6 +100,10 @@ var routes = [
             {
                 destination: System.Bastion,
                 rate: FOUNTAIN_DELVE_RATE
+            },
+            {
+                destination: System.IFED,
+                rate: FOUR_JUMP_RT
             },
             {
                 destination: System.Irmalin,
@@ -158,6 +163,15 @@ var routes = [
             {
                 destination: System.ImperialPalace,
                 rate: 600
+            },
+        ]
+    },
+    {
+        origin: System.IFED,
+        destinations: [
+            {
+                destination: System.ImperialPalace,
+                rate: FOUR_JUMP_RT
             },
         ]
     },
