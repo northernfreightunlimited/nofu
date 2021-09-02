@@ -6,11 +6,11 @@ enum System {
     Domain = "Amarr/Ashab",
     Zinkon = "Zinkon",
     Irmalin = "Irmalin",
-    Initiative = "B17O-R",
-    Bastion = "57-KGB",
-    Delta = "W-IX39",
-    IFED = "E2-RDQ",
-    Serren = "Serren",
+    Initiative = "B17O-R (INIT.)",
+    Bastion = "57-KGB (BASTN)",
+    Delta = "W-IX39 (Δ Sqad)",
+    IFED = "E2-RDQ (IFED)",
+    Serren = "Serren (KFU)",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
