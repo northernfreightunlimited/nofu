@@ -18,7 +18,7 @@ const CLICK_TO_COPY = " Click to Copy";
 const COPIED = " Copied!";
 const routeMap = {};
 
-const STANDARD_IMPORT_FROM_JITA_RATE = 1700;
+const STANDARD_IMPORT_FROM_JITA_RATE = 1400;
 const STANDARD_EXPORT_TO_JITA_RATE = 800;
 const STANDARD_IMPORT_FROM_JITA_MIN = 10e6;  // 10m
 const FOUNTAIN_DELVE_RATE = 1100;
@@ -77,7 +77,7 @@ const routes = [
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
-                minReward: 10e6,  // 10m
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,  // 10m
             },
             {
                 destination: System.Domain,
