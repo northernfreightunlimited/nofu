@@ -42,18 +42,18 @@ var System;
     System["Domain"] = "Amarr/Ashab";
     System["Zinkon"] = "Zinkon";
     System["Irmalin"] = "Irmalin";
-    System["Initiative"] = "B17O-R";
-    System["Bastion"] = "57-KGB";
-    System["Delta"] = "W-IX39";
-    System["IFED"] = "E2-RDQ";
-    System["Serren"] = "Serren";
+    System["Initiative"] = "B17O-R (INIT.)";
+    System["Bastion"] = "57-KGB (BASTN)";
+    System["Delta"] = "W-IX39 (\u0394 Sqad)";
+    System["IFED"] = "E2-RDQ (IFED)";
+    System["Serren"] = "Serren (KFU)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
 var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
-var STANDARD_IMPORT_FROM_JITA_RATE = 1700;
+var STANDARD_IMPORT_FROM_JITA_RATE = 1400;
 var STANDARD_EXPORT_TO_JITA_RATE = 800;
 var STANDARD_IMPORT_FROM_JITA_MIN = 10e6; // 10m
 var FOUNTAIN_DELVE_RATE = 1100;
@@ -87,7 +87,7 @@ var routes = [
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
-                minReward: 10e6
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN
             },
             {
                 destination: System.Domain,
