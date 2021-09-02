@@ -108,6 +108,10 @@ const routes = [
                 rate: 600,
             },
             {
+                destination: System.Serren,
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
+            },
+            {
                 destination: System.Delta,
                 rate: 800,
             }
@@ -188,6 +192,10 @@ const routes = [
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 200,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
             },
+            {
+                destination: System.Serren,
+                rate: FOUR_JUMP_RT,
+            },
         ],
     },
     {
@@ -209,7 +217,7 @@ const routes = [
             {
                 destination: System.Forge,
                 rate: 900,
-            }
+            },
         ]
     },
     {
@@ -222,7 +230,20 @@ const routes = [
             {
                 destination: System.Forge,
                 rate: 900,
-            }
+            },
+        ]
+    },
+    {
+        origin: System.Serren,
+        destinations: [
+            {
+                destination: System.ImperialPalace,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE,
+            },
+            {
+                destination: System.Forge,
+                rate: 600,
+            },
         ]
     },
 ] as Route[]
