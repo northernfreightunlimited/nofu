@@ -175,7 +175,7 @@ const routes = [
         destinations: [
             {
                 destination: System.ImperialPalace,
-                rate: 1700,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
             },
             {
