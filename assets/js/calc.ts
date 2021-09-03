@@ -11,6 +11,7 @@ enum System {
     Delta = "W-IX39 (Δ Sqad)",
     IFED = "E2-RDQ (IFED)",
     Serren = "Serren (KFU)",
+    Uemon = "Uemon",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
@@ -194,6 +195,10 @@ const routes = [
             },
             {
                 destination: System.Serren,
+                rate: FOUR_JUMP_RT,
+            },
+            {
+                destination: System.Uemon,
                 rate: FOUR_JUMP_RT,
             },
         ],
