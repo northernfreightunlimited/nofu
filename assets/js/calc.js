@@ -47,6 +47,7 @@ var System;
     System["Delta"] = "W-IX39 (\u0394 Sqad)";
     System["IFED"] = "E2-RDQ (IFED)";
     System["Serren"] = "Serren (KFU)";
+    System["Uemon"] = "Uemon";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -204,6 +205,10 @@ var routes = [
             },
             {
                 destination: System.Serren,
+                rate: FOUR_JUMP_RT
+            },
+            {
+                destination: System.Uemon,
                 rate: FOUR_JUMP_RT
             },
         ]
