@@ -47,7 +47,7 @@ var System;
     System["Delta"] = "W-IX39 (\u0394 Sqad)";
     System["IFED"] = "E2-RDQ (IFED)";
     System["Serren"] = "Serren (KFU)";
-    System["Uemon"] = "Uemon";
+    System["Amok"] = "K-6K16 (Am0k)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -125,7 +125,11 @@ var routes = [
             {
                 destination: System.Delta,
                 rate: 800
-            }
+            },
+            {
+                destination: System.Amok,
+                rate: 500
+            },
         ]
     },
     {
@@ -208,9 +212,10 @@ var routes = [
                 rate: FOUR_JUMP_RT
             },
             {
-                destination: System.Uemon,
-                rate: FOUR_JUMP_RT
-            },
+                destination: System.Amok,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+            }
         ]
     },
     {
@@ -307,7 +312,7 @@ function calculateRouteReward() {
     var route = routeMap[desiredRoute.value];
     var calculatedReward = Number(desiredm3.value) * route.rate;
     calculatedReward = Math.max(calculatedReward, route.minReward);
-    console.log("Route: " + route + ", Rate: " + route.rate + ", m3: " + desiredm3.value + ", Reward: " + calculatedReward);
+    console.log("Route: ".concat(route, ", Rate: ").concat(route.rate, ", m3: ").concat(desiredm3.value, ", Reward: ").concat(calculatedReward));
     outputRouteReward(desiredRoute.value, calculatedReward);
 }
 /**
@@ -324,7 +329,7 @@ function outputRouteReward(route, reward) {
         termElem.innerText = term;
         var valElem = document.createElement("dd");
         valElem.innerText = val;
-        valElem.setAttribute("onClick", "copyToClipboard(\"" + id + "\", \"" + (copyVal !== null && copyVal !== void 0 ? copyVal : val) + "\")");
+        valElem.setAttribute("onClick", "copyToClipboard(\"".concat(id, "\", \"").concat(copyVal !== null && copyVal !== void 0 ? copyVal : val, "\")"));
         if (id != null) {
             var ctcElem = document.createElement("a");
             ctcElem.id = id;
@@ -338,7 +343,7 @@ function outputRouteReward(route, reward) {
     };
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
-    createElements("Reward", reward.toLocaleString() + " ISK", "reward", reward.toString());
+    createElements("Reward", "".concat(reward.toLocaleString(), " ISK"), "reward", reward.toString());
     createElements("Time to Accept/Complete", "7 Days", "time-to-accept");
 }
 /**
@@ -349,12 +354,12 @@ function copyToClipboard(id, value) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             navigator.clipboard.writeText(value).then(function () {
-                console.log("clipboard copy \"" + value + " (" + id + ")\"");
+                console.log("clipboard copy \"".concat(value, " (").concat(id, ")\""));
                 var tag = document.getElementById(id);
                 tag.innerText = COPIED;
                 setTimeout(function () { tag.innerText = CLICK_TO_COPY; }, 1000);
             }, function () {
-                console.log("FAIL clipboard copy \"" + value + " (" + id + ")\"");
+                console.log("FAIL clipboard copy \"".concat(value, " (").concat(id, ")\""));
             });
             return [2 /*return*/];
         });
