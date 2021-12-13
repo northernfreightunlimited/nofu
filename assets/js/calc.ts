@@ -11,7 +11,7 @@ enum System {
     Delta = "W-IX39 (Δ Sqad)",
     IFED = "E2-RDQ (IFED)",
     Serren = "Serren (KFU)",
-    Uemon = "Uemon",
+    Amok = "K-6K16 (Am0k)",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
@@ -115,7 +115,11 @@ const routes = [
             {
                 destination: System.Delta,
                 rate: 800,
-            }
+            },
+            {
+                destination: System.Amok,
+                rate: 500,
+            },
         ]
     },
     {
@@ -198,9 +202,10 @@ const routes = [
                 rate: FOUR_JUMP_RT,
             },
             {
-                destination: System.Uemon,
-                rate: FOUR_JUMP_RT,
-            },
+                destination: System.Amok,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+            }
         ],
     },
     {
