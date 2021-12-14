@@ -15,6 +15,7 @@ enum System {
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
+const ROUTE_SEP_ARROW_RT = " ⮂ "
 const CLICK_TO_COPY = " Click to Copy";
 const COPIED = " Copied!";
 const routeMap = {};
@@ -26,36 +27,36 @@ const FOUNTAIN_DELVE_RATE = 1100;
 const FOUR_JUMP_RT = 800;
 
 // Defaults where not otherwise specified
-const defaults :Base = {
+const defaults = {
     minReward: 30e6,  // 30m
     maxCollateral: 10e9,  // 10b
     rate: 800,  // isk per m3
     maxM3: 335000,  // 335k m3
+    isRoundTrip: false,
 };
 
-interface Base {
-    minReward?: number,
-    maxCollateral?: number,
-    maxM3?: number,
-    rate?: number,  // isk per m3
-}
-
-interface Destination extends Base {
+interface Destination {
     destination: string,
+    minReward: number,
+    maxCollateral: number,
+    maxM3: number,
+    rate: number,  // isk per m3
+    isRoundTrip: boolean,
 }
 
-interface Route extends Base {
+interface Route {
     origin: string,
     destinations: Destination[],
 }
 
-class RouteCalc implements Base {
+class RouteCalc implements Destination {
     readonly minReward: number;
     readonly maxCollateral: number;
     readonly maxM3: number;
     readonly rate: number;  // isk per m3
     readonly origin: string;
     readonly destination: string;
+    readonly isRoundTrip: boolean;
 
     constructor(origin :string, destination :Destination) {
         this.origin = origin
@@ -64,9 +65,13 @@ class RouteCalc implements Base {
         this.maxM3 = destination.maxM3 ?? defaults.maxM3
         this.rate = destination.rate ?? defaults.rate
         this.maxCollateral = destination.maxCollateral ?? defaults.maxCollateral
+        this.isRoundTrip = destination.isRoundTrip
     }
 
     toString() :string {
+        if (this.isRoundTrip) {
+            return this.origin + ROUTE_SEP_ARROW_RT + this.destination
+        }
         return this.origin + ROUTE_SEP_ARROW + this.destination
     }
 }
@@ -83,6 +88,7 @@ const routes = [
             {
                 destination: System.Domain,
                 rate: 800,
+                isRoundTrip: true,
             },
             {
                 destination: System.Initiative,
@@ -91,34 +97,37 @@ const routes = [
             {
                 destination: System.Bastion,
                 rate: FOUNTAIN_DELVE_RATE,
+                isRoundTrip: true,
             },
             {
                 destination: System.IFED,
                 rate: FOUR_JUMP_RT,
-            },
-            {
-                destination: System.Irmalin,
-                rate: 600,
+                isRoundTrip: true,
             },
             {
                 destination: System.Zinkon,
                 rate: 800,
+                isRoundTrip: true,
             },
             {
                 destination: System.Delve,
                 rate: 600,
+                isRoundTrip: true,
             },
             {
                 destination: System.Serren,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
+                isRoundTrip: true,
             },
             {
                 destination: System.Delta,
                 rate: 800,
+                isRoundTrip: true,
             },
             {
                 destination: System.Amok,
                 rate: 500,
+                isRoundTrip: true,
             },
         ]
     },
@@ -136,43 +145,9 @@ const routes = [
             {
                 destination: System.Bastion,
                 rate: 600,
+                isRoundTrip: true,
             },
         ]
-    },
-    {
-        origin: System.Bastion,
-        destinations: [
-            {
-                destination: System.Initiative,
-                rate: 600,
-            },
-            {
-                destination: System.ImperialPalace,
-                rate: FOUNTAIN_DELVE_RATE,
-            },
-            {
-                destination: System.Forge,
-                rate: STANDARD_EXPORT_TO_JITA_RATE,
-            },
-        ],
-    },
-    {
-        origin: System.Delve,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: 600,
-            },
-        ],
-    },
-    {
-        origin: System.IFED,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: FOUR_JUMP_RT,
-            },
-        ],
     },
     {
         origin: System.Forge,
@@ -191,68 +166,46 @@ const routes = [
                 destination: System.Bastion,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true,
             },
             {
                 destination: System.Delta,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 200,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true,
             },
             {
                 destination: System.Serren,
                 rate: FOUR_JUMP_RT,
+                isRoundTrip: true,
             },
             {
                 destination: System.Amok,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true,
             }
-        ],
-    },
-    {
-        origin: System.Domain,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: 900,
-            },
         ],
     },
     {
         origin: System.Irmalin,
         destinations: [
             {
-                destination: System.ImperialPalace,
-                rate: 600,
-            },
-            {
                 destination: System.Forge,
                 rate: 900,
             },
+            {
+                destination: System.ImperialPalace,
+                rate: FOUR_JUMP_RT,
+            }
         ]
     },
     {
         origin: System.Zinkon,
         destinations: [
             {
-                destination: System.ImperialPalace,
-                rate: 800,
-            },
-            {
                 destination: System.Forge,
                 rate: 900,
-            },
-        ]
-    },
-    {
-        origin: System.Serren,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE,
-            },
-            {
-                destination: System.Forge,
-                rate: 600,
             },
         ]
     },
