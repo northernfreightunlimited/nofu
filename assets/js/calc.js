@@ -51,6 +51,7 @@ var System;
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
+var ROUTE_SEP_ARROW_RT = " ⮂ ";
 var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
@@ -64,7 +65,8 @@ var defaults = {
     minReward: 30e6,
     maxCollateral: 10e9,
     rate: 800,
-    maxM3: 335000
+    maxM3: 335000,
+    isRoundTrip: false
 };
 var RouteCalc = /** @class */ (function () {
     function RouteCalc(origin, destination) {
@@ -75,8 +77,12 @@ var RouteCalc = /** @class */ (function () {
         this.maxM3 = (_b = destination.maxM3) !== null && _b !== void 0 ? _b : defaults.maxM3;
         this.rate = (_c = destination.rate) !== null && _c !== void 0 ? _c : defaults.rate;
         this.maxCollateral = (_d = destination.maxCollateral) !== null && _d !== void 0 ? _d : defaults.maxCollateral;
+        this.isRoundTrip = destination.isRoundTrip;
     }
     RouteCalc.prototype.toString = function () {
+        if (this.isRoundTrip) {
+            return this.origin + ROUTE_SEP_ARROW_RT + this.destination;
+        }
         return this.origin + ROUTE_SEP_ARROW + this.destination;
     };
     return RouteCalc;
@@ -92,7 +98,8 @@ var routes = [
             },
             {
                 destination: System.Domain,
-                rate: 800
+                rate: 800,
+                isRoundTrip: true
             },
             {
                 destination: System.Initiative,
@@ -100,35 +107,38 @@ var routes = [
             },
             {
                 destination: System.Bastion,
-                rate: FOUNTAIN_DELVE_RATE
+                rate: FOUNTAIN_DELVE_RATE,
+                isRoundTrip: true
             },
             {
                 destination: System.IFED,
-                rate: FOUR_JUMP_RT
-            },
-            {
-                destination: System.Irmalin,
-                rate: 600
+                rate: FOUR_JUMP_RT,
+                isRoundTrip: true
             },
             {
                 destination: System.Zinkon,
-                rate: 800
+                rate: 800,
+                isRoundTrip: true
             },
             {
                 destination: System.Delve,
-                rate: 600
+                rate: 600,
+                isRoundTrip: true
             },
             {
                 destination: System.Serren,
-                rate: STANDARD_EXPORT_TO_JITA_RATE
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
+                isRoundTrip: true
             },
             {
                 destination: System.Delta,
-                rate: 800
+                rate: 800,
+                isRoundTrip: true
             },
             {
                 destination: System.Amok,
-                rate: 500
+                rate: 500,
+                isRoundTrip: true
             },
         ]
     },
@@ -145,42 +155,8 @@ var routes = [
             },
             {
                 destination: System.Bastion,
-                rate: 600
-            },
-        ]
-    },
-    {
-        origin: System.Bastion,
-        destinations: [
-            {
-                destination: System.Initiative,
-                rate: 600
-            },
-            {
-                destination: System.ImperialPalace,
-                rate: FOUNTAIN_DELVE_RATE
-            },
-            {
-                destination: System.Forge,
-                rate: STANDARD_EXPORT_TO_JITA_RATE
-            },
-        ]
-    },
-    {
-        origin: System.Delve,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: 600
-            },
-        ]
-    },
-    {
-        origin: System.IFED,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: FOUR_JUMP_RT
+                rate: 600,
+                isRoundTrip: true
             },
         ]
     },
@@ -200,69 +176,47 @@ var routes = [
             {
                 destination: System.Bastion,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true
             },
             {
                 destination: System.Delta,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 200,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true
             },
             {
                 destination: System.Serren,
-                rate: FOUR_JUMP_RT
+                rate: FOUR_JUMP_RT,
+                isRoundTrip: true
             },
             {
                 destination: System.Amok,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true
             }
-        ]
-    },
-    {
-        origin: System.Domain,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: 900
-            },
         ]
     },
     {
         origin: System.Irmalin,
         destinations: [
             {
-                destination: System.ImperialPalace,
-                rate: 600
-            },
-            {
                 destination: System.Forge,
                 rate: 900
             },
+            {
+                destination: System.ImperialPalace,
+                rate: FOUR_JUMP_RT
+            }
         ]
     },
     {
         origin: System.Zinkon,
         destinations: [
             {
-                destination: System.ImperialPalace,
-                rate: 800
-            },
-            {
                 destination: System.Forge,
                 rate: 900
-            },
-        ]
-    },
-    {
-        origin: System.Serren,
-        destinations: [
-            {
-                destination: System.ImperialPalace,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE
-            },
-            {
-                destination: System.Forge,
-                rate: 600
             },
         ]
     },
