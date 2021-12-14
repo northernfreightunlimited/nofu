@@ -61,10 +61,10 @@ class RouteCalc implements Destination {
     constructor(origin :string, destination :Destination) {
         this.origin = origin
         this.destination = destination.destination
-        this.minReward = destination.minReward ?? defaults.minReward
-        this.maxM3 = destination.maxM3 ?? defaults.maxM3
-        this.rate = destination.rate ?? defaults.rate
-        this.maxCollateral = destination.maxCollateral ?? defaults.maxCollateral
+        this.minReward = destination.minReward
+        this.maxM3 = destination.maxM3
+        this.rate = destination.rate
+        this.maxCollateral = destination.maxCollateral
         this.isRoundTrip = destination.isRoundTrip
     }
 
