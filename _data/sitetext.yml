@@ -27,13 +27,13 @@ en: &DEFAULT_EN
           desc: "Set your contract for 7 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
           icon: fas fa-calendar-week 
         - title: "Rush or Custom Quotes"
-          desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact Ackbarre, Ajaxify, or Parrth."
+          desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact a pilot."
           icon: fas fa-comments-dollar
         - title: "$30m ISK Minimum"
-          desc: "Unless otherwise sepecified, a 30m ISK minimum reward applies to all contracts."
+          desc: "A 30m ISK minimum reward applies to all contracts. Exception: Jita to 1DQ is $10m minimum."
           icon: fas fa-hand-holding-usd
-        - title: "Maximum 10b ISK Collateral"
-          desc: "Max 10b ISK collateral per contract."
+        - title: ">10b ISK Collateral"
+          desc: "We will handle up to 10b ISK in collateral for free. Contracts over 10b ISK must add 1% of collateral to their reward."
           icon: fas fa-file-invoice-dollar
         - title: "Maximum 335k m3"
           desc: "Max 335k m3 per contract."
@@ -47,6 +47,9 @@ en: &DEFAULT_EN
         - title: "No Black Frog banned systems"
           desc: "No contracts to or from systems banned by Black Frog. Exceptions for Imperium systems."
           icon: fas fa-frog
+        - title: "JF Service"
+          desc: "Need a JF moved across the Galaxy? We can do that. Contact Ajaxify on [discord](https://discord.gg/qwFr4RhE2C)."
+          icon: fas fa-truck-moving
         - title: "Questions?"
           desc: "Please join our [Discord Server](https://discord.gg/qwFr4RhE2C)."
           icon: fas fa-question-circle
