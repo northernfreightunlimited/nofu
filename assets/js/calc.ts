@@ -37,11 +37,11 @@ const defaults = {
 
 interface Destination {
     destination: string,
-    minReward: number,
-    maxCollateral: number,
-    maxM3: number,
+    minReward?: number,
+    maxCollateral?: number,
+    maxM3?: number,
     rate: number,  // isk per m3
-    isRoundTrip: boolean,
+    isRoundTrip?: boolean,
 }
 
 interface Route {
@@ -50,13 +50,13 @@ interface Route {
 }
 
 class RouteCalc implements Destination {
-    readonly minReward: number;
-    readonly maxCollateral: number;
-    readonly maxM3: number;
-    readonly rate: number;  // isk per m3
     readonly origin: string;
     readonly destination: string;
-    readonly isRoundTrip: boolean;
+    readonly minReward?: number;
+    readonly maxCollateral?: number;
+    readonly maxM3?: number;
+    readonly rate: number;  // isk per m3
+    readonly isRoundTrip?: boolean;
 
     constructor(origin :string, destination :Destination) {
         this.origin = origin
