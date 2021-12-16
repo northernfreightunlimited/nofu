@@ -70,12 +70,13 @@ var defaults = {
 };
 var RouteCalc = /** @class */ (function () {
     function RouteCalc(origin, destination) {
+        var _a, _b, _c, _d;
         this.origin = origin;
         this.destination = destination.destination;
-        this.minReward = destination.minReward;
-        this.maxM3 = destination.maxM3;
-        this.rate = destination.rate;
-        this.maxCollateral = destination.maxCollateral;
+        this.minReward = (_a = destination.minReward) !== null && _a !== void 0 ? _a : defaults.minReward;
+        this.maxM3 = (_b = destination.maxM3) !== null && _b !== void 0 ? _b : defaults.maxM3;
+        this.rate = (_c = destination.rate) !== null && _c !== void 0 ? _c : defaults.rate;
+        this.maxCollateral = (_d = destination.maxCollateral) !== null && _d !== void 0 ? _d : defaults.maxCollateral;
         this.isRoundTrip = destination.isRoundTrip;
     }
     RouteCalc.prototype.toString = function () {
