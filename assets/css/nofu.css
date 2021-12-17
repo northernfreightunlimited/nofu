@@ -6,6 +6,15 @@ h3.section-subheading{
     font-size: 30px !important;
 }
 
+h2.holiday {
+    color: green !important;
+}
+
+h3.sale {
+    color: indianred !important;
+    text-emphasis-style: bold;
+}
+
 .modal-body dt {
     font-size: 25px;
 }
