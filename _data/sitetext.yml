@@ -32,7 +32,7 @@ en: &DEFAULT_EN
         - title: "$30m ISK Minimum"
           desc: "A 30m ISK minimum reward applies to all contracts. Exception: Jita to 1DQ is $10m minimum."
           icon: fas fa-hand-holding-usd
-        - title: ">10b ISK Collateral"
+        - title: "No Fees on <10b ISK Collateral"
           desc: "We will handle up to 10b ISK in collateral for free. Contracts over 10b ISK must add 1% of collateral to their reward."
           icon: fas fa-file-invoice-dollar
         - title: "Maximum 335k m3"
