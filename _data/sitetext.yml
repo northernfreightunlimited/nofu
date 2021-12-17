@@ -15,6 +15,11 @@ en: &DEFAULT_EN
       button: Click for Destinations and Rates
       buttonlink: "#calc" # "#{section}" or "URL/page link"
 
+  calc:
+      title: "Rate Calculator"
+      text: "Holiday Sale: 10% off rates to and from Jita"
+      section: calc
+
   services:
       title: "Rules"
       text: "Please read the following rules before creating a contract."
@@ -60,7 +65,7 @@ en: &DEFAULT_EN
       # section: portfolio
       
 
-  timeline:
+  # timeline:
   #     title: "About" 
   #     text: "Lorem ipsum timeline"
   #     section: timeline
@@ -90,11 +95,6 @@ en: &DEFAULT_EN
   #         alt: 
   #         align: right
   #     end: "Be Part <br> of Our <br> Story!"
-
-  calc:
-      title: "Get a Quote"
-      text: "Use the Calculator below to get a rate quote"
-      section: calc
 
   # clients:
   #     section: clients
