@@ -20,13 +20,15 @@ const CLICK_TO_COPY = " Click to Copy";
 const COPIED = " Copied!";
 const routeMap = {};
 
-const RATE_MULTIPLIER = 0.85;
 const HIGH_COLLAT_REWARD_PERCENT = .01;
-const STANDARD_IMPORT_FROM_JITA_RATE = 1100 * RATE_MULTIPLIER;
-const STANDARD_EXPORT_TO_JITA_RATE = 1000 * RATE_MULTIPLIER;
 const STANDARD_IMPORT_FROM_JITA_MIN = 10e6;  // 10m
-const FOUNTAIN_DELVE_RATE = 1100;
-const FOUR_JUMP_RT = 800;
+
+// Rates
+const FOUR_JUMP_RT = 700;
+const STANDARD_IMPORT_FROM_JITA_RATE = 850;
+const STANDARD_EXPORT_TO_JITA_RATE = 850;
+const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
+const FOUNTAIN_DELVE_RATE = 900;
 
 // Defaults where not otherwise specified
 const defaults = {
@@ -89,7 +91,7 @@ const routes = [
             },
             {
                 destination: System.Domain,
-                rate: 800,
+                rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
@@ -108,12 +110,12 @@ const routes = [
             },
             {
                 destination: System.Zinkon,
-                rate: 800,
+                rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
                 destination: System.Delve,
-                rate: 600,
+                rate: 300,
                 isRoundTrip: true,
             },
             {
@@ -123,12 +125,12 @@ const routes = [
             },
             {
                 destination: System.Delta,
-                rate: 800,
+                rate: 300,
                 isRoundTrip: true,
             },
             {
                 destination: System.Amok,
-                rate: 500,
+                rate: 250,
                 isRoundTrip: true,
             },
         ]
@@ -146,7 +148,7 @@ const routes = [
             },
             {
                 destination: System.Bastion,
-                rate: 600,
+                rate: 250,
                 isRoundTrip: true,
             },
         ]
@@ -172,7 +174,7 @@ const routes = [
             },
             {
                 destination: System.Delta,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 200,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
             },
@@ -183,7 +185,7 @@ const routes = [
             },
             {
                 destination: System.Amok,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
             }
@@ -194,11 +196,11 @@ const routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 900,
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
             },
             {
                 destination: System.ImperialPalace,
-                rate: FOUR_JUMP_RT,
+                rate: 500,
             }
         ]
     },
@@ -207,7 +209,7 @@ const routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 900,
+                rate: STANDARD_EXPORT_TO_JITA_RATE,
             },
         ]
     },
