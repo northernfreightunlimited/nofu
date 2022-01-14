@@ -17,7 +17,7 @@ en: &DEFAULT_EN
 
   calc:
       title: "Rate Calculator"
-      text: "Holiday Sale: 10% off rates to and from Jita"
+      text: "Jita now 850 isk/m3! New destinations in Esoteria!"
       section: calc
 
   services:
