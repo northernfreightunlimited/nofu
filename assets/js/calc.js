@@ -48,6 +48,7 @@ var System;
     System["IFED"] = "E2-RDQ (IFED)";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
+    System["Party"] = "R-ARKN/D-PNP9 (Esoteria)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -55,13 +56,14 @@ var ROUTE_SEP_ARROW_RT = " ⮂ ";
 var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
-var RATE_MULTIPLIER = 0.85;
 var HIGH_COLLAT_REWARD_PERCENT = .01;
-var STANDARD_IMPORT_FROM_JITA_RATE = 1100 * RATE_MULTIPLIER;
-var STANDARD_EXPORT_TO_JITA_RATE = 1000 * RATE_MULTIPLIER;
 var STANDARD_IMPORT_FROM_JITA_MIN = 10e6; // 10m
-var FOUNTAIN_DELVE_RATE = 1100;
-var FOUR_JUMP_RT = 800;
+// Rates
+var FOUR_JUMP_RT = 700;
+var STANDARD_IMPORT_FROM_JITA_RATE = 850;
+var STANDARD_EXPORT_TO_JITA_RATE = 850;
+var STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
+var FOUNTAIN_DELVE_RATE = 900;
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -94,13 +96,18 @@ var routes = [
         origin: System.ImperialPalace,
         destinations: [
             {
+                destination: System.Party,
+                rate: 1500,
+                isRoundTrip: true
+            },
+            {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN
             },
             {
                 destination: System.Domain,
-                rate: 800,
+                rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true
             },
             {
@@ -119,12 +126,12 @@ var routes = [
             },
             {
                 destination: System.Zinkon,
-                rate: 800,
+                rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true
             },
             {
                 destination: System.Delve,
-                rate: 600,
+                rate: 300,
                 isRoundTrip: true
             },
             {
@@ -134,12 +141,12 @@ var routes = [
             },
             {
                 destination: System.Delta,
-                rate: 800,
+                rate: 300,
                 isRoundTrip: true
             },
             {
                 destination: System.Amok,
-                rate: 500,
+                rate: 250,
                 isRoundTrip: true
             },
         ]
@@ -157,7 +164,7 @@ var routes = [
             },
             {
                 destination: System.Bastion,
-                rate: 600,
+                rate: 250,
                 isRoundTrip: true
             },
         ]
@@ -183,7 +190,7 @@ var routes = [
             },
             {
                 destination: System.Delta,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 200,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true
             },
@@ -194,7 +201,7 @@ var routes = [
             },
             {
                 destination: System.Amok,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true
             }
@@ -205,11 +212,11 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 900
+                rate: STANDARD_EXPORT_TO_JITA_RATE
             },
             {
                 destination: System.ImperialPalace,
-                rate: FOUR_JUMP_RT
+                rate: 500
             }
         ]
     },
@@ -218,7 +225,7 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: 900
+                rate: STANDARD_EXPORT_TO_JITA_RATE
             },
         ]
     },
