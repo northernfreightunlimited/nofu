@@ -12,6 +12,7 @@ enum System {
     IFED = "E2-RDQ (IFED)",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
+    Party = "R-ARKN/D-PNP9 (Esoteria)",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
@@ -84,6 +85,11 @@ const routes = [
     {
         origin: System.ImperialPalace,
         destinations: [
+            {
+                destination: System.Party,
+                rate: 1500,
+                isRoundTrip: true,
+            },
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
