@@ -87,7 +87,7 @@ const routes = [
         destinations: [
             {
                 destination: System.Party,
-                rate: 1500,
+                rate: 900,
                 isRoundTrip: true,
             },
             {
