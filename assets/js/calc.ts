@@ -12,7 +12,7 @@ enum System {
     IFED = "E2-RDQ (IFED)",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
-    Party = "R-ARKN/D-PNP9 (Esoteria)",
+    GEF = "D-PNP9 (Esoteria)",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
@@ -30,6 +30,7 @@ const STANDARD_IMPORT_FROM_JITA_RATE = 850;
 const STANDARD_EXPORT_TO_JITA_RATE = 850;
 const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 const FOUNTAIN_DELVE_RATE = 900;
+const GEF_DEPLOYMENT_RATE = 700;
 
 // Defaults where not otherwise specified
 const defaults = {
@@ -86,8 +87,8 @@ const routes = [
         origin: System.ImperialPalace,
         destinations: [
             {
-                destination: System.Party,
-                rate: 900,
+                destination: System.GEF,
+                rate:  GEF_DEPLOYMENT_RATE,
                 isRoundTrip: true,
             },
             {
@@ -166,6 +167,10 @@ const routes = [
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+            },
+            {
+                destination: System.GEF,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE,
             },
             {
                 destination: System.Initiative,
