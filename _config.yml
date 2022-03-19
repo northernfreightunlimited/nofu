@@ -18,7 +18,7 @@ url    : "" # the base hostname & protocol for your site, e.g. http://example.co
 baseurl: "" # the subpath of your site, e.g. /blog
 
 title      : Northern Freight Unlimited
-email      : your-email@example.com #this is also the email contact forms will go to
+email      : 78984825+ajaxify@users.noreply.github.com  # this is also the email contact forms will go to
 description: "Click Below for a Quote Today!"
 author     : NOFU
 # logo:     #optional, defaults to site title
