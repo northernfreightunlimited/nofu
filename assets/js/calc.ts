@@ -96,6 +96,7 @@ const routes = [
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,  // 10m
+                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
                 destination: System.Ahbazon,
@@ -173,6 +174,7 @@ const routes = [
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
                 destination: System.GEF,
