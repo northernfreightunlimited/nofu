@@ -4,6 +4,7 @@ enum System {
     Delve = "Intra Delve",
     Forge = "Jita/Perimeter",
     Domain = "Amarr/Ashab",
+    Ahbazon = "Ahbazon (Genesis)",
     Zinkon = "Zinkon",
     Irmalin = "Irmalin",
     Initiative = "B17O-R (INIT.)",
@@ -95,6 +96,11 @@ const routes = [
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,  // 10m
+            },
+            {
+                destination: System.Ahbazon,
+                rate: FOUR_JUMP_RT,
+                isRoundTrip: true,
             },
             {
                 destination: System.Domain,
