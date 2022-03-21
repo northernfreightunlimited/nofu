@@ -16,6 +16,7 @@ enum System {
     GEF = "D-PNP9 (Esoteria)",
 };
 
+const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
 const ROUTE_SEP_ARROW = " ➠ ";
 const ROUTE_SEP_ARROW_RT = " ⮂ "
 const CLICK_TO_COPY = " Click to Copy";
@@ -244,6 +245,9 @@ function addRouteOption(dropdown :Element, option :string) {
     const routeOption = document.createElement("option")
     routeOption.value = option
     routeOption.text = option
+    if (option == DEFAULT_ROUTE_SELECTION) {
+        routeOption.selected = true
+    }
     dropdown.appendChild(routeOption)
 }
 
