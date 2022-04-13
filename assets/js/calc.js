@@ -40,6 +40,7 @@ var System;
     System["Delve"] = "Intra Delve";
     System["Forge"] = "Jita/Perimeter";
     System["Domain"] = "Amarr/Ashab";
+    System["Ahbazon"] = "Ahbazon (Genesis)";
     System["Zinkon"] = "Zinkon";
     System["Irmalin"] = "Irmalin";
     System["Initiative"] = "B17O-R (INIT.)";
@@ -48,9 +49,11 @@ var System;
     System["IFED"] = "E2-RDQ (IFED)";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
-    System["Party"] = "R-ARKN/D-PNP9 (Esoteria)";
+    System["DP"] = "D-PNP9 (Esoteria)";
+    System["GEF"] = "3L-Y9M (Feythabolis)";
 })(System || (System = {}));
 ;
+var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
 var ROUTE_SEP_ARROW = " ➠ ";
 var ROUTE_SEP_ARROW_RT = " ⮂ ";
 var CLICK_TO_COPY = " Click to Copy";
@@ -64,6 +67,7 @@ var STANDARD_IMPORT_FROM_JITA_RATE = 850;
 var STANDARD_EXPORT_TO_JITA_RATE = 850;
 var STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 var FOUNTAIN_DELVE_RATE = 900;
+var GEF_DEPLOYMENT_RATE = 700;
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -96,14 +100,25 @@ var routes = [
         origin: System.ImperialPalace,
         destinations: [
             {
-                destination: System.Party,
-                rate: 900,
+                destination: System.DP,
+                rate: GEF_DEPLOYMENT_RATE,
+                isRoundTrip: true,
+            },
+            {
+                destination: System.GEF,
+                rate: GEF_DEPLOYMENT_RATE + 50,
                 isRoundTrip: true,
             },
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN, // 10m
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
+            },
+            {
+                destination: System.Ahbazon,
+                rate: FOUR_JUMP_RT,
+                isRoundTrip: true,
             },
             {
                 destination: System.Domain,
@@ -176,6 +191,15 @@ var routes = [
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
+            },
+            {
+                destination: System.DP,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE,
+            },
+            {
+                destination: System.GEF,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE + 50,
             },
             {
                 destination: System.Initiative,
@@ -240,6 +264,9 @@ function addRouteOption(dropdown, option) {
     var routeOption = document.createElement("option");
     routeOption.value = option;
     routeOption.text = option;
+    if (option == DEFAULT_ROUTE_SELECTION) {
+        routeOption.selected = true;
+    }
     dropdown.appendChild(routeOption);
 }
 /**
