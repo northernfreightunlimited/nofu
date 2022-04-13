@@ -13,7 +13,8 @@ enum System {
     IFED = "E2-RDQ (IFED)",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
-    GEF = "D-PNP9 (Esoteria)",
+    DP = "D-PNP9 (Esoteria)",
+    GEF = "3L-Y9M (Feythabolis)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -89,8 +90,13 @@ const routes = [
         origin: System.ImperialPalace,
         destinations: [
             {
-                destination: System.GEF,
+                destination: System.DP,
                 rate:  GEF_DEPLOYMENT_RATE,
+                isRoundTrip: true,
+            },
+            {
+                destination: System.GEF,
+                rate:  GEF_DEPLOYMENT_RATE + 50,
                 isRoundTrip: true,
             },
             {
@@ -178,8 +184,12 @@ const routes = [
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
-                destination: System.GEF,
+                destination: System.DP,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE,
+            },
+            {
+                destination: System.GEF,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE + 50,
             },
             {
                 destination: System.Initiative,
