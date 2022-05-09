@@ -14,7 +14,7 @@ enum System {
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
-    GEF = "3L-Y9M (Feythabolis)",
+    GEF = "ZJG-7G / 3L-Y9M (Feythabolis)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
