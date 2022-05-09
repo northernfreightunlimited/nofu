@@ -50,7 +50,7 @@ var System;
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
-    System["GEF"] = "3L-Y9M (Feythabolis)";
+    System["GEF"] = "ZJG-7G / 3L-Y9M (Feythabolis)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
