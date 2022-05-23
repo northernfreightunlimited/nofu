@@ -17,7 +17,7 @@ en: &DEFAULT_EN
 
   calc:
       title: "Rate Calculator"
-      text: "Jita now 850 isk/m3! New destinations in Esoteria!"
+      text: "All GEF stagers consolidated to: D-P, GEF (Current), GEF (Previous)"
       section: calc
 
   services:
