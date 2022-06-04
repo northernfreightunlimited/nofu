@@ -14,8 +14,7 @@ enum System {
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
-    GEF = "GEF (Current)",
-    OldGEF = "GEF (Previous)"
+    GEF = "GEF (No Longer Servicing 3L or Beyond)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -87,21 +86,6 @@ class RouteCalc implements Destination {
 }
 
 const routes = [
-    {
-        origin: System.OldGEF,
-        destinations: [
-            {
-                destination: System.DP,
-                rate: FOUR_JUMP_RT,
-                isRoundTrip: false,
-            },
-            {
-                destination: System.GEF,
-                rate: 250,
-                isRoundTrip: false,
-            },
-        ]
-    },
     {
         origin: System.ImperialPalace,
         destinations: [
