@@ -50,8 +50,7 @@ var System;
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
-    System["GEF"] = "GEF (Current)";
-    System["OldGEF"] = "GEF (Previous)";
+    System["GEF"] = "GEF (No Longer Servicing 3L or Beyond)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -97,21 +96,6 @@ var RouteCalc = /** @class */ (function () {
     return RouteCalc;
 }());
 var routes = [
-    {
-        origin: System.OldGEF,
-        destinations: [
-            {
-                destination: System.DP,
-                rate: FOUR_JUMP_RT,
-                isRoundTrip: false,
-            },
-            {
-                destination: System.GEF,
-                rate: 250,
-                isRoundTrip: false,
-            },
-        ]
-    },
     {
         origin: System.ImperialPalace,
         destinations: [
