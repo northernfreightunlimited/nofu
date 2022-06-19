@@ -14,7 +14,7 @@ enum System {
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
-    GEF = "GEF (No Longer Servicing 3L or Beyond)",
+    GE = "GE-8JV (Catch)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -33,7 +33,8 @@ const STANDARD_IMPORT_FROM_JITA_RATE = 850;
 const STANDARD_EXPORT_TO_JITA_RATE = 850;
 const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 const FOUNTAIN_DELVE_RATE = 900;
-const GEF_DEPLOYMENT_RATE = 700;
+const GE_WAR_RATE = 750;
+const GE_JITA_WAR_RATE = 1800;
 
 // Defaults where not otherwise specified
 const defaults = {
@@ -91,12 +92,12 @@ const routes = [
         destinations: [
             {
                 destination: System.DP,
-                rate:  GEF_DEPLOYMENT_RATE,
+                rate:  GE_WAR_RATE,
                 isRoundTrip: true,
             },
             {
-                destination: System.GEF,
-                rate:  GEF_DEPLOYMENT_RATE + 50,
+                destination: System.GE,
+                rate:  GE_WAR_RATE,
                 isRoundTrip: true,
             },
             {
@@ -185,11 +186,11 @@ const routes = [
             },
             {
                 destination: System.DP,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + GE_WAR_RATE,
             },
             {
-                destination: System.GEF,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE + 50,
+                destination: System.GE,
+                rate: GE_JITA_WAR_RATE,
             },
             {
                 destination: System.Initiative,

@@ -10,14 +10,14 @@
 # -----------------
 en: &DEFAULT_EN
   header:
-      title: Welcome to 
+      title: Welcome to
       text: Northern Freight Unlimited
       button: Click for Destinations and Rates
       buttonlink: "#calc" # "#{section}" or "URL/page link"
 
   calc:
       title: "Rate Calculator"
-      text: "All GEF stagers consolidated to: D-P, GEF (Current), GEF (Previous)"
+      text: "The Imperium goes to war! New Rates for GE-8JV from 1DQ and Jita!"
       section: calc
 
   services:
