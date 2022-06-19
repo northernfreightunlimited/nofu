@@ -50,7 +50,7 @@ var System;
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
-    System["GEF"] = "GEF (No Longer Servicing 3L or Beyond)";
+    System["GE"] = "GE-8JV (Catch)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -67,7 +67,8 @@ var STANDARD_IMPORT_FROM_JITA_RATE = 850;
 var STANDARD_EXPORT_TO_JITA_RATE = 850;
 var STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 var FOUNTAIN_DELVE_RATE = 900;
-var GEF_DEPLOYMENT_RATE = 700;
+var GE_WAR_RATE = 750;
+var GE_JITA_WAR_RATE = 1800;
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -101,12 +102,12 @@ var routes = [
         destinations: [
             {
                 destination: System.DP,
-                rate: GEF_DEPLOYMENT_RATE,
+                rate: GE_WAR_RATE,
                 isRoundTrip: true,
             },
             {
-                destination: System.GEF,
-                rate: GEF_DEPLOYMENT_RATE + 50,
+                destination: System.GE,
+                rate: GE_WAR_RATE,
                 isRoundTrip: true,
             },
             {
@@ -195,11 +196,11 @@ var routes = [
             },
             {
                 destination: System.DP,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + GE_WAR_RATE,
             },
             {
-                destination: System.GEF,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + GEF_DEPLOYMENT_RATE + 50,
+                destination: System.GE,
+                rate: GE_JITA_WAR_RATE,
             },
             {
                 destination: System.Initiative,
