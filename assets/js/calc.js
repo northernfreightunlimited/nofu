@@ -74,7 +74,7 @@ var defaults = {
     minReward: 30e6,
     maxCollateral: 10e9,
     rate: 800,
-    maxM3: 335000,
+    maxM3: 350000,
     isRoundTrip: false,
 };
 var RouteCalc = /** @class */ (function () {
