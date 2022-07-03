@@ -32,10 +32,10 @@ en: &DEFAULT_EN
           desc: "Set your contract for 7 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
           icon: fas fa-calendar-week 
         - title: "Rush or Custom Quotes"
-          desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact a pilot."
+          desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact a pilot. Rush fee is $200m ISK."
           icon: fas fa-comments-dollar
         - title: "$30m ISK Minimum"
-          desc: "A 30m ISK minimum reward applies to all contracts. Exception: Jita to 1DQ is $10m minimum."
+          desc: "Exception: Jita <-> 1DQ is $10m ISK minimum."
           icon: fas fa-hand-holding-usd
         - title: "No Fees on <10b ISK Collateral"
           desc: "We will handle up to 10b ISK in collateral for free. Contracts over 10b ISK must add 1% of collateral to their reward."
