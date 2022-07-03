@@ -17,7 +17,7 @@ en: &DEFAULT_EN
 
   calc:
       title: "Rate Calculator"
-      text: "The Imperium goes to war! New Rates for GE-8JV from 1DQ and Jita!"
+      text: "New 350k m3 max size! New 20b max collateral!"
       section: calc
 
   services:
@@ -37,11 +37,11 @@ en: &DEFAULT_EN
         - title: "$30m ISK Minimum"
           desc: "Exception: Jita <-> 1DQ is $10m ISK minimum."
           icon: fas fa-hand-holding-usd
-        - title: "No Fees on <10b ISK Collateral"
-          desc: "We will handle up to 10b ISK in collateral for free. Contracts over 10b ISK must add 1% of collateral to their reward."
+        - title: "No Fees on <20b ISK Collateral"
+          desc: "We will handle up to 20b ISK in collateral for free. Contracts over 20b ISK must add 1% of collateral to their reward."
           icon: fas fa-file-invoice-dollar
         - title: "Maximum 335k m3"
-          desc: "Max 335k m3 per contract."
+          desc: "Max 350k m3 per contract."
           icon: fas fa-weight-hanging
         - title: "Blue Characters"
           desc: "All contracts leaving 1DQ1 must be from blue characters."

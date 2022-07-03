@@ -41,7 +41,7 @@ const defaults = {
     minReward: 30e6,  // 30m
     maxCollateral: 10e9,  // 10b
     rate: 800,  // isk per m3
-    maxM3: 335000,  // 335k m3
+    maxM3: 350000,  // 350k m3
     isRoundTrip: false,
 };
 
