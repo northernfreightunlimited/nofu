@@ -40,7 +40,7 @@ en: &DEFAULT_EN
         - title: "No Fees on <20b ISK Collateral"
           desc: "We will handle up to 20b ISK in collateral for free. Contracts over 20b ISK must add 1% of collateral to their reward."
           icon: fas fa-file-invoice-dollar
-        - title: "Maximum 335k m3"
+        - title: "Maximum 350k m3"
           desc: "Max 350k m3 per contract."
           icon: fas fa-weight-hanging
         - title: "Blue Characters"
