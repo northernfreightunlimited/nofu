@@ -15,6 +15,7 @@ enum System {
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
     GE = "GE-8JV (Catch)",
+    ZMZ = "ZMV-9A (Teneferis)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -88,6 +89,17 @@ class RouteCalc implements Destination {
 
 const routes = [
     {
+        origin: System.GE,
+        destinations: [
+            {
+                destination: System.ZMZ,
+                rate: 100,
+                isRoundTrip: true,
+                minReward: 5000000,
+            }
+        ]
+    },
+    {
         origin: System.ImperialPalace,
         destinations: [
             {
@@ -98,6 +110,11 @@ const routes = [
             {
                 destination: System.GE,
                 rate:  GE_WAR_RATE,
+                isRoundTrip: true,
+            },
+            {
+                destination: System.ZMZ,
+                rate: GE_WAR_RATE + 50,
                 isRoundTrip: true,
             },
             {
@@ -191,6 +208,10 @@ const routes = [
             {
                 destination: System.GE,
                 rate: GE_JITA_WAR_RATE,
+            },
+            {
+                destination: System.ZMZ,
+                rate: GE_JITA_WAR_RATE + 50,
             },
             {
                 destination: System.Initiative,
