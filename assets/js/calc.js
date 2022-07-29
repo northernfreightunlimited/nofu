@@ -51,6 +51,7 @@ var System;
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
     System["GE"] = "GE-8JV (Catch)";
+    System["ZMZ"] = "ZMV-9A (Teneferis)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -98,6 +99,17 @@ var RouteCalc = /** @class */ (function () {
 }());
 var routes = [
     {
+        origin: System.GE,
+        destinations: [
+            {
+                destination: System.ZMZ,
+                rate: 100,
+                isRoundTrip: true,
+                minReward: 5000000,
+            }
+        ]
+    },
+    {
         origin: System.ImperialPalace,
         destinations: [
             {
@@ -108,6 +120,11 @@ var routes = [
             {
                 destination: System.GE,
                 rate: GE_WAR_RATE,
+                isRoundTrip: true,
+            },
+            {
+                destination: System.ZMZ,
+                rate: GE_WAR_RATE + 50,
                 isRoundTrip: true,
             },
             {
@@ -201,6 +218,10 @@ var routes = [
             {
                 destination: System.GE,
                 rate: GE_JITA_WAR_RATE,
+            },
+            {
+                destination: System.ZMZ,
+                rate: GE_JITA_WAR_RATE + 50,
             },
             {
                 destination: System.Initiative,
