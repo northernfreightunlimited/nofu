@@ -8,14 +8,10 @@ enum System {
     Zinkon = "Zinkon",
     Irmalin = "Irmalin",
     Initiative = "B17O-R (INIT.)",
-    Bastion = "57-KGB (BASTN)",
-    Delta = "W-IX39 (Δ Sqad)",
-    IFED = "E2-RDQ (IFED)",
+    Querious = "Querious",
+    PeriodBasis = "Period Basis",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
-    DP = "D-PNP9 (Esoteria)",
-    GE = "GE-8JV (Catch)",
-    ZMZ = "ZMV-9A (Teneferis)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -34,8 +30,6 @@ const STANDARD_IMPORT_FROM_JITA_RATE = 850;
 const STANDARD_EXPORT_TO_JITA_RATE = 850;
 const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 const FOUNTAIN_DELVE_RATE = 900;
-const GE_WAR_RATE = 750;
-const GE_JITA_WAR_RATE = 1800;
 
 // Defaults where not otherwise specified
 const defaults = {
@@ -89,34 +83,8 @@ class RouteCalc implements Destination {
 
 const routes = [
     {
-        origin: System.GE,
-        destinations: [
-            {
-                destination: System.ZMZ,
-                rate: 100,
-                isRoundTrip: true,
-                minReward: 5000000,
-            }
-        ]
-    },
-    {
         origin: System.ImperialPalace,
         destinations: [
-            {
-                destination: System.DP,
-                rate:  GE_WAR_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.GE,
-                rate:  GE_WAR_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.ZMZ,
-                rate: GE_WAR_RATE + 50,
-                isRoundTrip: true,
-            },
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
@@ -138,12 +106,7 @@ const routes = [
                 rate: FOUNTAIN_DELVE_RATE,
             },
             {
-                destination: System.Bastion,
-                rate: FOUNTAIN_DELVE_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.IFED,
+                destination: System.PeriodBasis,
                 rate: FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
@@ -163,7 +126,7 @@ const routes = [
                 isRoundTrip: true,
             },
             {
-                destination: System.Delta,
+                destination: System.Querious,
                 rate: 300,
                 isRoundTrip: true,
             },
@@ -185,11 +148,6 @@ const routes = [
                 destination: System.ImperialPalace,
                 rate: FOUNTAIN_DELVE_RATE,
             },
-            {
-                destination: System.Bastion,
-                rate: 250,
-                isRoundTrip: true,
-            },
         ]
     },
     {
@@ -202,30 +160,12 @@ const routes = [
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
-                destination: System.DP,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + GE_WAR_RATE,
-            },
-            {
-                destination: System.GE,
-                rate: GE_JITA_WAR_RATE,
-            },
-            {
-                destination: System.ZMZ,
-                rate: GE_JITA_WAR_RATE + 50,
-            },
-            {
                 destination: System.Initiative,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
             },
             {
-                destination: System.Bastion,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.Delta,
+                destination: System.Querious,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
