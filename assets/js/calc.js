@@ -48,6 +48,7 @@ var System;
     System["PeriodBasis"] = "Period Basis";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
+    System["DP"] = "D-PNP9 (Esoteria)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -100,6 +101,11 @@ var routes = [
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
+            },
+            {
+                destination: System.DP,
+                rate: 750,
+                isRoundTrip: true,
             },
             {
                 destination: System.Ahbazon,
