@@ -44,14 +44,10 @@ var System;
     System["Zinkon"] = "Zinkon";
     System["Irmalin"] = "Irmalin";
     System["Initiative"] = "B17O-R (INIT.)";
-    System["Bastion"] = "57-KGB (BASTN)";
-    System["Delta"] = "W-IX39 (\u0394 Sqad)";
-    System["IFED"] = "E2-RDQ (IFED)";
+    System["Querious"] = "Querious";
+    System["PeriodBasis"] = "Period Basis";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
-    System["DP"] = "D-PNP9 (Esoteria)";
-    System["GE"] = "GE-8JV (Catch)";
-    System["ZMZ"] = "ZMV-9A (Teneferis)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -68,8 +64,6 @@ var STANDARD_IMPORT_FROM_JITA_RATE = 850;
 var STANDARD_EXPORT_TO_JITA_RATE = 850;
 var STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 var FOUNTAIN_DELVE_RATE = 900;
-var GE_WAR_RATE = 750;
-var GE_JITA_WAR_RATE = 1800;
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -99,34 +93,8 @@ var RouteCalc = /** @class */ (function () {
 }());
 var routes = [
     {
-        origin: System.GE,
-        destinations: [
-            {
-                destination: System.ZMZ,
-                rate: 100,
-                isRoundTrip: true,
-                minReward: 5000000,
-            }
-        ]
-    },
-    {
         origin: System.ImperialPalace,
         destinations: [
-            {
-                destination: System.DP,
-                rate: GE_WAR_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.GE,
-                rate: GE_WAR_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.ZMZ,
-                rate: GE_WAR_RATE + 50,
-                isRoundTrip: true,
-            },
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
@@ -148,12 +116,7 @@ var routes = [
                 rate: FOUNTAIN_DELVE_RATE,
             },
             {
-                destination: System.Bastion,
-                rate: FOUNTAIN_DELVE_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.IFED,
+                destination: System.PeriodBasis,
                 rate: FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
@@ -173,7 +136,7 @@ var routes = [
                 isRoundTrip: true,
             },
             {
-                destination: System.Delta,
+                destination: System.Querious,
                 rate: 300,
                 isRoundTrip: true,
             },
@@ -195,11 +158,6 @@ var routes = [
                 destination: System.ImperialPalace,
                 rate: FOUNTAIN_DELVE_RATE,
             },
-            {
-                destination: System.Bastion,
-                rate: 250,
-                isRoundTrip: true,
-            },
         ]
     },
     {
@@ -212,30 +170,12 @@ var routes = [
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
-                destination: System.DP,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + GE_WAR_RATE,
-            },
-            {
-                destination: System.GE,
-                rate: GE_JITA_WAR_RATE,
-            },
-            {
-                destination: System.ZMZ,
-                rate: GE_JITA_WAR_RATE + 50,
-            },
-            {
                 destination: System.Initiative,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
             },
             {
-                destination: System.Bastion,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.Delta,
+                destination: System.Querious,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
