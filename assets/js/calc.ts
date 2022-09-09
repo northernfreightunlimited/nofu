@@ -12,6 +12,7 @@ enum System {
     PeriodBasis = "Period Basis",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
+    DP = "D-PNP9 (Esoteria)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -90,6 +91,11 @@ const routes = [
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,  // 10m
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
+            },
+            {
+                destination: System.DP,
+                rate:  750,
+                isRoundTrip: true,
             },
             {
                 destination: System.Ahbazon,
