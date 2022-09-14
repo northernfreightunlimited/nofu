@@ -196,7 +196,11 @@ var routes = [
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
                 minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
-            }
+            },
+            {
+                destination: System.DP,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+            },
         ],
     },
     {
