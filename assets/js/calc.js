@@ -49,6 +49,7 @@ var System;
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
+    System["NorthernSIGDeployment"] = "Northern SIG Deployment";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -169,6 +170,12 @@ var routes = [
     {
         origin: System.Forge,
         destinations: [
+            {
+                destination: System.NorthernSIGDeployment,
+                rate: 400,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true,
+            },
             {
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
