@@ -13,6 +13,7 @@ enum System {
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
+    NorthernSIGDeployment = "Northern SIG Deployment",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -159,6 +160,12 @@ const routes = [
     {
         origin: System.Forge,
         destinations: [
+            {
+                destination: System.NorthernSIGDeployment,
+                rate: 400,
+                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                isRoundTrip: true,
+            },
             {
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,

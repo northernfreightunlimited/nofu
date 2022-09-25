@@ -17,7 +17,7 @@ en: &DEFAULT_EN
 
   calc:
       title: "Rate Calculator"
-      text: "New 350k m3 max size! New 20b max collateral!"
+      text: "350k m3 max size 20b max collateral.<br />Now with service for Northern SIG Deployments!"
       section: calc
 
   services:
