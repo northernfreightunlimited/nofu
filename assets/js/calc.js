@@ -173,7 +173,6 @@ var routes = [
             {
                 destination: System.NorthernSIGDeployment,
                 rate: 400,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
             },
             {
