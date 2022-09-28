@@ -14,6 +14,7 @@ enum System {
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
     NorthernSIGDeployment = "Northern SIG Deployment",
+    UPG = "UPG SIG (Senda/Tuuriainas)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -161,6 +162,13 @@ const routes = [
         origin: System.Forge,
         destinations: [
             {
+                destination: System.UPG,
+                rate: 2000,
+                maxM3: 60000,  // 50k m3
+                minReward: 50000000,  // 50m isk
+                isRoundTrip: true,
+            },
+            {
                 destination: System.NorthernSIGDeployment,
                 rate: 400,
                 isRoundTrip: true,
@@ -265,28 +273,47 @@ function calculateRouteReward() {
 
     desiredm3.classList.remove("error");
 
+    const route = routeMap[desiredRoute.value] as Destination;
+    const maxVolume = route.maxM3 ?? defaults.maxM3;
+
     if(! form.checkValidity()) {
         console.log("Form doesn't validate, not calculating reward");
+        // Currently the form native validation only works with the hardcoded default m3
+        outputRouteReward(desiredRoute.value, NaN.toLocaleString(), maxVolume.toLocaleString());
         return;
     }
 
-    const route = routeMap[desiredRoute.value];
+    if (Number(desiredm3.value) > maxVolume){
+        console.log(`${desiredm3.value} m3 over the maximum of ${maxVolume} for route ${desiredRoute.value}`);
+        desiredm3.classList.add("error");
+        outputRouteReward(desiredRoute.value, NaN.toLocaleString(), maxVolume.toLocaleString());
+        return;
+    }
+
     let calculatedReward = Number(desiredm3.value) * route.rate;
     calculatedReward = Math.max(calculatedReward, route.minReward);
     console.log(`Route: ${route}, Rate: ${route.rate}, m3: ${desiredm3.value}, Reward: ${calculatedReward}`);
 
-    outputRouteReward(desiredRoute.value, calculatedReward);
+    outputRouteReward(desiredRoute.value, calculatedReward.toLocaleString(), maxVolume.toLocaleString());
+}
+
+function getCalcOutput(): HTMLSpanElement {
+    return document.getElementById("calc-output") as HTMLSpanElement;
+}
+
+function clearCalcOutput(output: HTMLSpanElement) {
+    while(output.firstChild) {
+        output.removeChild(output.lastChild);
+    }
 }
 
 /**
  * Outputs the reward for a contract to the user
  */
-function outputRouteReward(route: string, reward: number) {
-    const output = document.getElementById("calc-output") as HTMLSpanElement;
+function outputRouteReward(route: string, reward: string, maxM3: string) {
+    const output = getCalcOutput();
     output.style.visibility = "visible";
-    while(output.firstChild) {
-        output.removeChild(output.lastChild);
-    }
+    clearCalcOutput(output);
 
     const createElements = (term :string, val :string, id? :string, copyVal? :string) => {
         const termElem = document.createElement("dt");
@@ -309,10 +336,13 @@ function outputRouteReward(route: string, reward: number) {
         output.appendChild(valElem);
     }
 
+    const rewardStr = reward !== "NaN" ? `${reward} ISK` : "Desired Contract Volume Too High";
+
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
-    createElements("Reward", `${reward.toLocaleString()} ISK`, "reward", reward.toString());
+    createElements("Reward", rewardStr, "reward", reward);
     createElements("Time to Accept/Complete", "7 Days", "time-to-accept");
+    createElements("Max Volume", `${maxM3} m3`);
 }
 
 /**
