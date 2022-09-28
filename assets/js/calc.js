@@ -50,6 +50,7 @@ var System;
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
+    System["UPG"] = "UPG SIG (Senda/Tuuriainas)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -171,6 +172,13 @@ var routes = [
         origin: System.Forge,
         destinations: [
             {
+                destination: System.UPG,
+                rate: 2000,
+                maxM3: 60000,
+                minReward: 50000000,
+                isRoundTrip: true,
+            },
+            {
                 destination: System.NorthernSIGDeployment,
                 rate: 400,
                 isRoundTrip: true,
@@ -268,30 +276,46 @@ function registerEventHandlers() {
  * Calculate route reward and update UI
  */
 function calculateRouteReward() {
+    var _a;
     var form = document.getElementById("calc-form");
     var desiredRoute = document.getElementById("calc-route");
     var desiredm3 = document.getElementById("calc-m3");
     // const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
     desiredm3.classList.remove("error");
+    var route = routeMap[desiredRoute.value];
+    var maxVolume = (_a = route.maxM3) !== null && _a !== void 0 ? _a : defaults.maxM3;
     if (!form.checkValidity()) {
         console.log("Form doesn't validate, not calculating reward");
+        // Currently the form native validation only works with the hardcoded default m3
+        outputRouteReward(desiredRoute.value, NaN.toLocaleString(), maxVolume.toLocaleString());
         return;
     }
-    var route = routeMap[desiredRoute.value];
+    if (Number(desiredm3.value) > maxVolume) {
+        console.log("".concat(desiredm3.value, " m3 over the maximum of ").concat(maxVolume, " for route ").concat(desiredRoute.value));
+        desiredm3.classList.add("error");
+        outputRouteReward(desiredRoute.value, NaN.toLocaleString(), maxVolume.toLocaleString());
+        return;
+    }
     var calculatedReward = Number(desiredm3.value) * route.rate;
     calculatedReward = Math.max(calculatedReward, route.minReward);
     console.log("Route: ".concat(route, ", Rate: ").concat(route.rate, ", m3: ").concat(desiredm3.value, ", Reward: ").concat(calculatedReward));
-    outputRouteReward(desiredRoute.value, calculatedReward);
+    outputRouteReward(desiredRoute.value, calculatedReward.toLocaleString(), maxVolume.toLocaleString());
+}
+function getCalcOutput() {
+    return document.getElementById("calc-output");
+}
+function clearCalcOutput(output) {
+    while (output.firstChild) {
+        output.removeChild(output.lastChild);
+    }
 }
 /**
  * Outputs the reward for a contract to the user
  */
-function outputRouteReward(route, reward) {
-    var output = document.getElementById("calc-output");
+function outputRouteReward(route, reward, maxM3) {
+    var output = getCalcOutput();
     output.style.visibility = "visible";
-    while (output.firstChild) {
-        output.removeChild(output.lastChild);
-    }
+    clearCalcOutput(output);
     var createElements = function (term, val, id, copyVal) {
         var termElem = document.createElement("dt");
         termElem.innerText = term;
@@ -309,10 +333,12 @@ function outputRouteReward(route, reward) {
         output.appendChild(termElem);
         output.appendChild(valElem);
     };
+    var rewardStr = reward !== "NaN" ? "".concat(reward, " ISK") : "Desired Contract Volume Too High";
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
-    createElements("Reward", "".concat(reward.toLocaleString(), " ISK"), "reward", reward.toString());
+    createElements("Reward", rewardStr, "reward", reward);
     createElements("Time to Accept/Complete", "7 Days", "time-to-accept");
+    createElements("Max Volume", "".concat(maxM3, " m3"));
 }
 /**
  * Copy contents of value to the system clipboard
