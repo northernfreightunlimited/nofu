@@ -280,6 +280,9 @@ function calculateRouteReward() {
     var form = document.getElementById("calc-form");
     var desiredRoute = document.getElementById("calc-route");
     var desiredm3 = document.getElementById("calc-m3");
+    if (desiredm3.value == "") {
+        return;
+    }
     // const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
     desiredm3.classList.remove("error");
     var route = routeMap[desiredRoute.value];
