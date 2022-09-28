@@ -269,6 +269,9 @@ function calculateRouteReward() {
     const form = document.getElementById("calc-form") as HTMLFormElement;
     const desiredRoute = document.getElementById("calc-route") as HTMLSelectElement;
     const desiredm3 = document.getElementById("calc-m3") as HTMLInputElement;
+    if(desiredm3.value == "") {
+        return;
+    }
     // const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
 
     desiredm3.classList.remove("error");
