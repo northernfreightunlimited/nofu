@@ -50,7 +50,7 @@ var System;
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
-    System["UPG"] = "UPG SIG (Senda/Tuuriainas)";
+    System["UPG"] = "Senda (UPG SIG)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
