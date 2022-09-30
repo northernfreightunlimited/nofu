@@ -14,7 +14,7 @@ enum System {
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
     NorthernSIGDeployment = "Northern SIG Deployment",
-    UPG = "UPG SIG (Senda/Tuuriainas)",
+    UPG = "Senda (UPG SIG)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
