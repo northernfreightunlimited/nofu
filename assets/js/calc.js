@@ -60,7 +60,7 @@ var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
 var HIGH_COLLAT_REWARD_PERCENT = .01;
-var STANDARD_IMPORT_FROM_JITA_MIN = 10e6; // 10m
+var JITA_REDUCED_MIN_REWARD = 10e6; // 10m
 // Rates
 var FOUR_JUMP_RT = 700;
 var STANDARD_IMPORT_FROM_JITA_RATE = 850;
@@ -101,7 +101,7 @@ var routes = [
             {
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
@@ -186,18 +186,16 @@ var routes = [
             {
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
                 destination: System.Initiative,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
             },
             {
                 destination: System.Querious,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
                 isRoundTrip: true,
             },
             {
@@ -208,7 +206,7 @@ var routes = [
             {
                 destination: System.Amok,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
-                minReward: STANDARD_IMPORT_FROM_JITA_MIN,
+                minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: true,
             },
             {
