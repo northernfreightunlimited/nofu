@@ -200,6 +200,10 @@ const routes = [
                 isRoundTrip: true,
             },
             {
+                destination: System.PeriodBasis,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 350,
+            },
+            {
                 destination: System.DP,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
             },
