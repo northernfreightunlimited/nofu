@@ -212,6 +212,7 @@ var routes = [
             {
                 destination: System.PeriodBasis,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 350,
+                isRoundTrip: true,
             },
             {
                 destination: System.DP,
