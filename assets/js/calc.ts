@@ -14,7 +14,7 @@ enum System {
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 (Esoteria)",
     NorthernSIGDeployment = "Northern SIG Deployment",
-    UPG = "Senda (UPG SIG)",
+    CloudRing = "O-ZXUV (Cloud Ring)",
 };
 
 const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -162,10 +162,8 @@ const routes = [
         origin: System.Forge,
         destinations: [
             {
-                destination: System.UPG,
-                rate: 2000,
-                maxM3: 60000,  // 50k m3
-                minReward: 50000000,  // 50m isk
+                destination: System.CloudRing,
+                rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
