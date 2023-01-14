@@ -50,7 +50,7 @@ var System;
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 (Esoteria)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
-    System["UPG"] = "Senda (UPG SIG)";
+    System["CloudRing"] = "O-ZXUV (Cloud Ring)";
 })(System || (System = {}));
 ;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
@@ -172,10 +172,8 @@ var routes = [
         origin: System.Forge,
         destinations: [
             {
-                destination: System.UPG,
-                rate: 2000,
-                maxM3: 60000,
-                minReward: 50000000,
+                destination: System.CloudRing,
+                rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
