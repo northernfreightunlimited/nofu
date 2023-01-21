@@ -100,6 +100,11 @@ const routes = [
                 isRoundTrip: true,
             },
             {
+                destination: System.CloudRing,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT,
+                isRoundTrip: true,
+            },
+            {
                 destination: System.Ahbazon,
                 rate: FOUR_JUMP_RT,
                 isRoundTrip: true,
