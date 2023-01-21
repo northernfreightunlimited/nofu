@@ -12,7 +12,7 @@ enum System {
     PeriodBasis = "Period Basis",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
-    DP = "D-PNP9 (Esoteria)",
+    DP = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)",
     NorthernSIGDeployment = "Northern SIG Deployment",
     CloudRing = "O-ZXUV (Cloud Ring)",
 };
