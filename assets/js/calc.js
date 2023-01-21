@@ -48,7 +48,7 @@ var System;
     System["PeriodBasis"] = "Period Basis";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
-    System["DP"] = "D-PNP9 (Esoteria)";
+    System["DP"] = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
     System["CloudRing"] = "O-ZXUV (Cloud Ring)";
 })(System || (System = {}));
@@ -107,6 +107,11 @@ var routes = [
             {
                 destination: System.DP,
                 rate: 750,
+                isRoundTrip: true,
+            },
+            {
+                destination: System.CloudRing,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
             {
