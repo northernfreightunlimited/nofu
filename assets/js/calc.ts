@@ -29,7 +29,7 @@ const JITA_REDUCED_MIN_REWARD = 10e6;  // 10m
 
 // Rates
 const FOUR_JUMP_RT = 700;
-const STANDARD_IMPORT_FROM_JITA_RATE = 850;
+const STANDARD_IMPORT_FROM_JITA_RATE = 640;
 const STANDARD_EXPORT_TO_JITA_RATE = 850;
 const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 const FOUNTAIN_DELVE_RATE = 900;
@@ -92,7 +92,7 @@ const routes = [
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: JITA_REDUCED_MIN_REWARD,  // 10m
-                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
+                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0,
             },
             {
                 destination: System.DP,
@@ -180,7 +180,7 @@ const routes = [
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: JITA_REDUCED_MIN_REWARD,
-                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE == STANDARD_IMPORT_FROM_JITA_RATE,
+                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0,
             },
             {
                 destination: System.Initiative,
