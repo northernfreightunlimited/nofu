@@ -17,7 +17,6 @@ enum System {
     CloudRing = "O-ZXUV (Cloud Ring)",
 };
 
-const DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
 const ROUTE_SEP_ARROW = " ➠ ";
 const ROUTE_SEP_ARROW_RT = " ⮂ "
 const CLICK_TO_COPY = " Click to Copy";
@@ -31,8 +30,11 @@ const JITA_REDUCED_MIN_REWARD = 10e6;  // 10m
 const FOUR_JUMP_RT = 700;
 const STANDARD_IMPORT_FROM_JITA_RATE = 640;
 const STANDARD_EXPORT_TO_JITA_RATE = 850;
+const IS_JITA_ROUND_TRIP = STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0;
 const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 const FOUNTAIN_DELVE_RATE = 900;
+
+const DEFAULT_ROUTE_SELECTION = `1DQ1-A${IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW}Jita/Perimeter`;
 
 // Defaults where not otherwise specified
 const defaults = {
@@ -92,7 +94,7 @@ const routes = [
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: JITA_REDUCED_MIN_REWARD,  // 10m
-                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0,
+                isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
                 destination: System.DP,
@@ -180,7 +182,7 @@ const routes = [
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: JITA_REDUCED_MIN_REWARD,
-                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0,
+                isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
                 destination: System.Initiative,
@@ -247,7 +249,7 @@ function addRouteOption(dropdown :Element, option :string) {
     const routeOption = document.createElement("option")
     routeOption.value = option
     routeOption.text = option
-    if (option == DEFAULT_ROUTE_SELECTION) {
+    if (option === DEFAULT_ROUTE_SELECTION) {
         routeOption.selected = true
     }
     dropdown.appendChild(routeOption)
@@ -383,7 +385,7 @@ window.onload = (event) => {
             routeMap[routeStr] = r;
         }
     }
-    console.log(routes)
+    console.log("DEFAULT_ROUTE_SELECTION=", DEFAULT_ROUTE_SELECTION)
 
     routeStrs = routeStrs.sort();
     for (const routeStr of routeStrs) {
