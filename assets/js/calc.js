@@ -53,7 +53,6 @@ var System;
     System["CloudRing"] = "O-ZXUV (Cloud Ring)";
 })(System || (System = {}));
 ;
-var DEFAULT_ROUTE_SELECTION = "1DQ1-A ⮂ Jita/Perimeter";
 var ROUTE_SEP_ARROW = " ➠ ";
 var ROUTE_SEP_ARROW_RT = " ⮂ ";
 var CLICK_TO_COPY = " Click to Copy";
@@ -65,8 +64,10 @@ var JITA_REDUCED_MIN_REWARD = 10e6; // 10m
 var FOUR_JUMP_RT = 700;
 var STANDARD_IMPORT_FROM_JITA_RATE = 640;
 var STANDARD_EXPORT_TO_JITA_RATE = 850;
+var IS_JITA_ROUND_TRIP = STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0;
 var STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 var FOUNTAIN_DELVE_RATE = 900;
+var DEFAULT_ROUTE_SELECTION = "1DQ1-A".concat(IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW, "Jita/Perimeter");
 // Defaults where not otherwise specified
 var defaults = {
     minReward: 30e6,
@@ -102,7 +103,7 @@ var routes = [
                 destination: System.Forge,
                 rate: STANDARD_EXPORT_TO_JITA_RATE,
                 minReward: JITA_REDUCED_MIN_REWARD,
-                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0,
+                isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
                 destination: System.DP,
@@ -190,7 +191,7 @@ var routes = [
                 destination: System.ImperialPalace,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE,
                 minReward: JITA_REDUCED_MIN_REWARD,
-                isRoundTrip: STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0,
+                isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
                 destination: System.Initiative,
@@ -256,7 +257,7 @@ function addRouteOption(dropdown, option) {
     var routeOption = document.createElement("option");
     routeOption.value = option;
     routeOption.text = option;
-    if (option == DEFAULT_ROUTE_SELECTION) {
+    if (option === DEFAULT_ROUTE_SELECTION) {
         routeOption.selected = true;
     }
     dropdown.appendChild(routeOption);
@@ -383,7 +384,7 @@ window.onload = function (event) {
             routeMap[routeStr] = r;
         }
     }
-    console.log(routes);
+    console.log("DEFAULT_ROUTE_SELECTION=", DEFAULT_ROUTE_SELECTION);
     routeStrs = routeStrs.sort();
     for (var _c = 0, routeStrs_1 = routeStrs; _c < routeStrs_1.length; _c++) {
         var routeStr = routeStrs_1[_c];
