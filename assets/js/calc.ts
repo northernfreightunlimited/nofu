@@ -14,7 +14,7 @@ enum System {
     Amok = "K-6K16 (Am0k)",
     DP = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)",
     NorthernSIGDeployment = "Northern SIG Deployment",
-    CloudRing = "O-ZXUV (Cloud Ring)",
+    CloudRing = "F7C-H0 (Cloud Ring)",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
