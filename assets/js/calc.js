@@ -50,7 +50,7 @@ var System;
     System["Amok"] = "K-6K16 (Am0k)";
     System["DP"] = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
-    System["CloudRing"] = "O-ZXUV (Cloud Ring)";
+    System["CloudRing"] = "F7C-H0 (Cloud Ring)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
