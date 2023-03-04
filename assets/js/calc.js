@@ -51,6 +51,7 @@ var System;
     System["DP"] = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
     System["CloudRing"] = "F7C-H0 (Cloud Ring)";
+    System["Deployment2023"] = "DO6H-Q (Fade Deployment)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -211,7 +212,6 @@ var routes = [
             {
                 destination: System.Amok,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
-                minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: true,
             },
             {
@@ -222,6 +222,11 @@ var routes = [
             {
                 destination: System.DP,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+            },
+            {
+                destination: System.Deployment2023,
+                rate: 315,
+                isRoundTrip: true,
             },
         ],
     },
