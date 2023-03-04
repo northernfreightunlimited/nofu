@@ -17,7 +17,7 @@ en: &DEFAULT_EN
 
   calc:
       title: "Rate Calculator"
-      text: "Deployment destination coming soon!"
+      text: "Deployment destination is live!"
       section: calc
 
   services:
