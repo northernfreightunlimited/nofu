@@ -15,6 +15,7 @@ enum System {
     DP = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)",
     NorthernSIGDeployment = "Northern SIG Deployment",
     CloudRing = "F7C-H0 (Cloud Ring)",
+    Deployment2023 = "DO6H-Q (Fade Deployment)"
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
@@ -202,7 +203,6 @@ const routes = [
             {
                 destination: System.Amok,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
-                minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: true,
             },
             {
@@ -213,6 +213,11 @@ const routes = [
             {
                 destination: System.DP,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+            },
+            {
+                destination: System.Deployment2023,
+                rate: 315,
+                isRoundTrip: true,
             },
         ],
     },
