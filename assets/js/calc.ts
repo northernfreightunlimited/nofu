@@ -218,6 +218,7 @@ const routes = [
                 destination: System.Deployment2023,
                 rate: 315,
                 isRoundTrip: true,
+                minReward: JITA_REDUCED_MIN_REWARD,
             },
         ],
     },
@@ -247,8 +248,8 @@ const routes = [
 
 /**
  * Adds options to the select element representing routes serviced
- * @param dropdown 
- * @param option 
+ * @param dropdown
+ * @param option
  */
 function addRouteOption(dropdown :Element, option :string) {
     console.log("adding " + option)
@@ -337,9 +338,9 @@ function outputRouteReward(route: string, reward: string, maxM3: string) {
         termElem.innerText = term;
 
         const valElem = document.createElement("dd");
-        valElem.innerText = val; 
+        valElem.innerText = val;
         valElem.setAttribute("onClick", `copyToClipboard("${id}", "${copyVal ?? val}")`);
-        
+
         if (id != null) {
             const ctcElem = document.createElement("a");
             ctcElem.id = id;
@@ -364,7 +365,7 @@ function outputRouteReward(route: string, reward: string, maxM3: string) {
 
 /**
  * Copy contents of value to the system clipboard
- * @param value 
+ * @param value
  */
 async function copyToClipboard(id :string, value :string) {
     navigator.clipboard.writeText(value).then(() => {
