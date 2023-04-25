@@ -227,7 +227,6 @@ var routes = [
                 destination: System.Deployment2023,
                 rate: 315,
                 isRoundTrip: true,
-                minReward: JITA_REDUCED_MIN_REWARD,
             },
         ],
     },
