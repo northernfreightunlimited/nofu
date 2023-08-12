@@ -216,7 +216,7 @@ const routes = [
             },
             {
                 destination: System.Deployment2023,
-                rate: 315,
+                rate: 415,
                 isRoundTrip: true,
             },
         ],
