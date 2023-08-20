@@ -12,7 +12,6 @@ enum System {
     PeriodBasis = "Period Basis",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
-    DP = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)",
     NorthernSIGDeployment = "Northern SIG Deployment",
     CloudRing = "F7C-H0 (Cloud Ring)",
     Deployment2023 = "DO6H-Q (Fade Deployment)"
@@ -97,11 +96,6 @@ const routes = [
                 rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
                 minReward: JITA_REDUCED_MIN_REWARD,  // 10m
                 isRoundTrip: IS_JITA_ROUND_TRIP,
-            },
-            {
-                destination: System.DP,
-                rate:  750,
-                isRoundTrip: true,
             },
             {
                 destination: System.CloudRing,
@@ -209,10 +203,6 @@ const routes = [
                 destination: System.PeriodBasis,
                 rate: STANDARD_IMPORT_FROM_JITA_RATE + 350,
                 isRoundTrip: true,
-            },
-            {
-                destination: System.DP,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
             },
             {
                 destination: System.Deployment2023,
