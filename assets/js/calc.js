@@ -48,7 +48,6 @@ var System;
     System["PeriodBasis"] = "Period Basis";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
-    System["DP"] = "D-PNP9 / O4T-Z5 (Esoteria / Paragon Soul)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
     System["CloudRing"] = "F7C-H0 (Cloud Ring)";
     System["Deployment2023"] = "DO6H-Q (Fade Deployment)";
@@ -59,8 +58,9 @@ var ROUTE_SEP_ARROW_RT = " ⮂ ";
 var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
-var HIGH_COLLAT_REWARD_PERCENT = .01;
+var DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.01; // 1%
 var JITA_REDUCED_MIN_REWARD = 10e6; // 10m
+var MILLIONS = 1e6; // 1m
 // Rates
 var FOUR_JUMP_RT = 700;
 var STANDARD_IMPORT_FROM_JITA_RATE = 850;
@@ -74,19 +74,21 @@ var DEFAULT_ROUTE_SELECTION = "1DQ1-A".concat(IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARR
 var defaults = {
     minReward: 30e6,
     maxCollateral: 10e9,
-    rate: 800,
+    m3Rate: 800,
+    collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE,
     maxM3: 350000,
     isRoundTrip: false,
 };
 var RouteCalc = /** @class */ (function () {
     function RouteCalc(origin, destination) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         this.origin = origin;
         this.destination = destination.destination;
         this.minReward = (_a = destination.minReward) !== null && _a !== void 0 ? _a : defaults.minReward;
         this.maxM3 = (_b = destination.maxM3) !== null && _b !== void 0 ? _b : defaults.maxM3;
-        this.rate = (_c = destination.rate) !== null && _c !== void 0 ? _c : defaults.rate;
-        this.maxCollateral = (_d = destination.maxCollateral) !== null && _d !== void 0 ? _d : defaults.maxCollateral;
+        this.m3Rate = (_c = destination.m3Rate) !== null && _c !== void 0 ? _c : defaults.m3Rate;
+        this.collateralRate = (_d = destination.collateralRate) !== null && _d !== void 0 ? _d : defaults.collateralRate;
+        this.maxCollateral = (_e = destination.maxCollateral) !== null && _e !== void 0 ? _e : defaults.maxCollateral;
         this.isRoundTrip = destination.isRoundTrip;
     }
     RouteCalc.prototype.toString = function () {
@@ -103,62 +105,57 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
+                m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
                 minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
-                destination: System.DP,
-                rate: 750,
-                isRoundTrip: true,
-            },
-            {
                 destination: System.CloudRing,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
             {
                 destination: System.Ahbazon,
-                rate: FOUR_JUMP_RT,
+                m3Rate: FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
             {
                 destination: System.Domain,
-                rate: STANDARD_DOMAIN_RATE,
+                m3Rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
                 destination: System.Initiative,
-                rate: FOUNTAIN_DELVE_RATE,
+                m3Rate: FOUNTAIN_DELVE_RATE,
             },
             {
                 destination: System.PeriodBasis,
-                rate: FOUR_JUMP_RT,
+                m3Rate: FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
             {
                 destination: System.Zinkon,
-                rate: STANDARD_DOMAIN_RATE,
+                m3Rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
                 destination: System.Delve,
-                rate: 300,
+                m3Rate: 300,
                 isRoundTrip: true,
             },
             {
                 destination: System.Serren,
-                rate: STANDARD_EXPORT_TO_JITA_RATE,
+                m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
                 isRoundTrip: true,
             },
             {
                 destination: System.Querious,
-                rate: 300,
+                m3Rate: 300,
                 isRoundTrip: true,
             },
             {
                 destination: System.Amok,
-                rate: 250,
+                m3Rate: 250,
                 isRoundTrip: true,
             },
         ]
@@ -168,11 +165,11 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: STANDARD_EXPORT_TO_JITA_RATE,
+                m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
             },
             {
                 destination: System.ImperialPalace,
-                rate: FOUNTAIN_DELVE_RATE,
+                m3Rate: FOUNTAIN_DELVE_RATE,
             },
         ]
     },
@@ -181,51 +178,47 @@ var routes = [
         destinations: [
             {
                 destination: System.CloudRing,
-                rate: STANDARD_DOMAIN_RATE,
+                m3Rate: STANDARD_DOMAIN_RATE,
                 isRoundTrip: true,
             },
             {
                 destination: System.NorthernSIGDeployment,
-                rate: 400,
+                m3Rate: 400,
                 isRoundTrip: true,
             },
             {
                 destination: System.ImperialPalace,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE - JITA_RATE_DISCOUNT,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE - JITA_RATE_DISCOUNT,
                 minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
                 destination: System.Initiative,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE,
             },
             {
                 destination: System.Querious,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
                 isRoundTrip: true,
             },
             {
                 destination: System.Serren,
-                rate: FOUR_JUMP_RT,
+                m3Rate: FOUR_JUMP_RT,
                 isRoundTrip: true,
             },
             {
                 destination: System.Amok,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
                 isRoundTrip: true,
             },
             {
                 destination: System.PeriodBasis,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 350,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 350,
                 isRoundTrip: true,
             },
             {
-                destination: System.DP,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
-            },
-            {
                 destination: System.Deployment2023,
-                rate: 415,
+                m3Rate: 415,
                 isRoundTrip: true,
             },
         ],
@@ -235,11 +228,11 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: STANDARD_EXPORT_TO_JITA_RATE,
+                m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
             },
             {
                 destination: System.ImperialPalace,
-                rate: 500,
+                m3Rate: 500,
             }
         ]
     },
@@ -248,7 +241,7 @@ var routes = [
         destinations: [
             {
                 destination: System.Forge,
-                rate: STANDARD_EXPORT_TO_JITA_RATE,
+                m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
             },
         ]
     },
@@ -293,29 +286,37 @@ function calculateRouteReward() {
     var form = document.getElementById("calc-form");
     var desiredRoute = document.getElementById("calc-route");
     var desiredm3 = document.getElementById("calc-m3");
-    if (desiredm3.value == "") {
+    var desiredCollateral = document.getElementById("calc-collateral");
+    if (desiredm3.value == "" || desiredCollateral.value == "") {
         return;
     }
-    // const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
     desiredm3.classList.remove("error");
+    desiredCollateral.classList.remove("error");
     var route = routeMap[desiredRoute.value];
     var maxVolume = (_a = route.maxM3) !== null && _a !== void 0 ? _a : defaults.maxM3;
     if (!form.checkValidity()) {
         console.log("Form doesn't validate, not calculating reward");
         // Currently the form native validation only works with the hardcoded default m3
-        outputRouteReward(desiredRoute.value, NaN.toLocaleString(), maxVolume.toLocaleString());
+        outputRouteReward(desiredRoute.value, "Fix Invalid Input", maxVolume.toLocaleString(), "None");
         return;
     }
     if (Number(desiredm3.value) > maxVolume) {
         console.log("".concat(desiredm3.value, " m3 over the maximum of ").concat(maxVolume, " for route ").concat(desiredRoute.value));
         desiredm3.classList.add("error");
-        outputRouteReward(desiredRoute.value, NaN.toLocaleString(), maxVolume.toLocaleString());
+        outputRouteReward(desiredRoute.value, "Desired Contract Volume is too Large", maxVolume.toLocaleString(), "None");
         return;
     }
-    var calculatedReward = Number(desiredm3.value) * route.rate;
-    calculatedReward = Math.max(calculatedReward, route.minReward);
-    console.log("Route: ".concat(route, ", Rate: ").concat(route.rate, ", m3: ").concat(desiredm3.value, ", Reward: ").concat(calculatedReward));
-    outputRouteReward(desiredRoute.value, calculatedReward.toLocaleString(), maxVolume.toLocaleString());
+    var desiredCollateralVal = Number(desiredCollateral.value) * MILLIONS;
+    var m3Fee = Number(desiredm3.value) * route.m3Rate;
+    var collateralFee = desiredCollateralVal * route.collateralRate;
+    var calculatedReward = Math.max(collateralFee, Math.max(m3Fee, route.minReward));
+    var rateType = "Volume Rate (".concat(route.m3Rate, " isk/m3)");
+    if (calculatedReward === collateralFee) {
+        rateType = "Collateral Rate (".concat(DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100, "% of ").concat(desiredCollateralVal.toLocaleString(), " ISK)");
+    }
+    ;
+    console.log("Route: ".concat(route, ",\n        Rate: ").concat(route.m3Rate, ",\n        m3: ").concat(desiredm3.value, ",\n        Reward: ").concat(calculatedReward, ",\n        RateType: ").concat(rateType, ",\n    "));
+    outputRouteReward(desiredRoute.value, calculatedReward.toLocaleString(), maxVolume.toLocaleString(), rateType);
 }
 function getCalcOutput() {
     return document.getElementById("calc-output");
@@ -328,7 +329,7 @@ function clearCalcOutput(output) {
 /**
  * Outputs the reward for a contract to the user
  */
-function outputRouteReward(route, reward, maxM3) {
+function outputRouteReward(route, reward, maxM3, rateType) {
     var output = getCalcOutput();
     output.style.visibility = "visible";
     clearCalcOutput(output);
@@ -349,11 +350,11 @@ function outputRouteReward(route, reward, maxM3) {
         output.appendChild(termElem);
         output.appendChild(valElem);
     };
-    var rewardStr = reward !== "NaN" ? "".concat(reward, " ISK") : "Desired Contract Volume Too High";
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
-    createElements("Reward", rewardStr, "reward", reward);
-    createElements("Time to Accept/Complete", "7 Days", "time-to-accept");
+    createElements("Reward", reward, "reward", reward);
+    createElements("Contract Rate Type", rateType);
+    createElements("Time to Accept/Complete", "14 day accept / 7 day complete");
     createElements("Max Volume", "".concat(maxM3, " m3"));
 }
 /**
