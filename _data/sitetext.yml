@@ -17,7 +17,7 @@ en: &DEFAULT_EN
 
   calc:
       title: "Rate Calculator"
-      text: "Deployment destination is live!"
+      text: "Collateral based rates are now live!"
       section: calc
 
   services:
@@ -37,8 +37,8 @@ en: &DEFAULT_EN
         - title: "$30m ISK Minimum"
           desc: "Exception: Jita <-> 1DQ is $10m ISK minimum."
           icon: fas fa-hand-holding-usd
-        - title: "No Fees on <20b ISK Collateral"
-          desc: "We will handle up to 20b ISK in collateral for free. Contracts over 20b ISK must add 1% of collateral to their reward."
+        - title: "Collateral Based Pricing"
+          desc: "Due to recent changes in game design from CCP, we must use collateral based pricing to create an acceptable risk/reward ratio for pilots."
           icon: fas fa-file-invoice-dollar
         - title: "Maximum 350k m3"
           desc: "Max 350k m3 per contract."
