@@ -20,13 +20,14 @@
                 </div>
                 <div class="form-group">
                   <label for="calc-m3" class="calc-label">Volume (m3):</label>
-                  <input name="calc-m3" class="form-control" id="calc-m3" type="number" placeholder="m3*" required="required" max="350000" min="0" data-validation-required-message="Please enter your volume to move in m3. It must be less than 350,000 (60,000 for Pochven).">
+                  <input name="calc-m3" class="form-control" id="calc-m3" type="number" placeholder="m3*" required="required" max="350000" min="0" data-validation-required-message="Please enter your volume to move in m3. It must be less than 350,000.">
                   <p class="help-block text-danger"></p>
                 </div>
-                <!-- <div class="form-group">
-                  <input name="calc-collateral" class="form-control" id="calc-collateral" type="number" placeholder="Collateral*" required="required" max="10000000000" min="1000000" data-validation-required-message="Please enter the collateral on your package.">
+                <div class="form-group">
+                  <label for="calc-collateral" class="calc-label">Collateral in millions of ISK (e.g. 1b would be 1000 below):</label>
+                  <input name="calc-collateral" class="form-control" id="calc-collateral" type="number" placeholder="Collateral*" required="required" max=500000 min=1 data-validation-required-message="Please enter the collateral on your package in millions of isk.">
                   <p class="help-block text-danger"></p>
-                </div> -->
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
