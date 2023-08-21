@@ -310,7 +310,7 @@ function calculateRouteReward() {
     let collateralFee = desiredCollateralVal * route.collateralRate;
     let calculatedReward = Math.max(collateralFee, Math.max(m3Fee, route.minReward));
 
-    let rateType = `Volume  Rate (${route.m3Rate} isk/m3)`;
+    let rateType = `Volume Rate (${route.m3Rate} isk/m3)`;
     if (calculatedReward === collateralFee) {
         rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}% of ${desiredCollateralVal.toLocaleString()} ISK)`;
     };
