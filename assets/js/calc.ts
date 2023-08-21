@@ -312,7 +312,7 @@ function calculateRouteReward() {
 
     let rateType = `Volume  Rate (${route.m3Rate} isk/m3)`;
     if (calculatedReward === collateralFee) {
-        rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}% of $${desiredCollateralVal.toLocaleString()} ISK)`;
+        rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}% of ${desiredCollateralVal.toLocaleString()} ISK)`;
     };
 
     console.log(
