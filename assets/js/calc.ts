@@ -308,9 +308,9 @@ function calculateRouteReward() {
     let collateralRate = Number(desiredCollateral.value) * route.collateralRate * MILLIONS;
     let calculatedReward = Math.max(collateralRate, Math.max(m3Rate, route.minReward));
 
-    let rateType = "Volume";
+    let rateType = `Volume  Rate (${route.m3Rate} isk/m3)`;
     if (calculatedReward === collateralRate) {
-        rateType = "Collateral";
+        rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}%)`;
     };
 
     console.log(
