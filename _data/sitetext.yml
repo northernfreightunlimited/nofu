@@ -28,8 +28,8 @@ en: &DEFAULT_EN
         - title: "Northern Freight Unlimited"
           desc: "Create your contract to Northern Freight Unlimited. Ticker is [NOFU]."
           icon: fas fa-file-signature #find more at https://fontawesome.com/icons
-        - title: "7/7 day Accept/Complete"
-          desc: "Set your contract for 7 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
+        - title: "14/7 day Accept/Complete"
+          desc: "Set your contract for 14 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
           icon: fas fa-calendar-week 
         - title: "Rush or Custom Quotes"
           desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact a pilot. Rush fee is $200m ISK."

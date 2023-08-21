@@ -369,7 +369,7 @@ function outputRouteReward(route: string, reward: string, maxM3: string, rateTyp
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
     createElements("Reward", reward, "reward", reward);
     createElements("Contract Rate Type", rateType)
-    createElements("Time to Accept/Complete", "7 Days", "time-to-accept");
+    createElements("Time to Accept/Complete", "14 day accept / 7 day complete");
     createElements("Max Volume", `${maxM3} m3`);
 }
 
