@@ -48,6 +48,7 @@ var System;
     System["PeriodBasis"] = "Period Basis";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
+    System["O4T"] = "O4T-Z5 (Esoteria / Paragon Soul)";
     System["NorthernSIGDeployment"] = "Northern SIG Deployment";
     System["CloudRing"] = "F7C-H0 (Cloud Ring)";
     System["Deployment2023"] = "DO6H-Q (Fade Deployment)";
@@ -58,7 +59,7 @@ var ROUTE_SEP_ARROW_RT = " ⮂ ";
 var CLICK_TO_COPY = " Click to Copy";
 var COPIED = " Copied!";
 var routeMap = {};
-var DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.01; // 1%
+var DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.0075; // 0.75%
 var JITA_REDUCED_MIN_REWARD = 10e6; // 10m
 var MILLIONS = 1e6; // 1m
 // Rates
@@ -108,6 +109,11 @@ var routes = [
                 m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
                 minReward: JITA_REDUCED_MIN_REWARD,
                 isRoundTrip: IS_JITA_ROUND_TRIP,
+            },
+            {
+                destination: System.O4T,
+                rate: 750,
+                isRoundTrip: true,
             },
             {
                 destination: System.CloudRing,
@@ -217,6 +223,10 @@ var routes = [
                 isRoundTrip: true,
             },
             {
+                destination: System.O4T,
+                rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+            },
+            {
                 destination: System.Deployment2023,
                 m3Rate: 415,
                 isRoundTrip: true,
@@ -309,12 +319,8 @@ function calculateRouteReward() {
     var desiredCollateralVal = Number(desiredCollateral.value) * MILLIONS;
     var m3Fee = Number(desiredm3.value) * route.m3Rate;
     var collateralFee = desiredCollateralVal * route.collateralRate;
-    var calculatedReward = Math.max(collateralFee, Math.max(m3Fee, route.minReward));
-    var rateType = "Volume Rate (".concat(route.m3Rate, " isk/m3)");
-    if (calculatedReward === collateralFee) {
-        rateType = "Collateral Rate (".concat(DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100, "% of ").concat(desiredCollateralVal.toLocaleString(), " ISK)");
-    }
-    ;
+    var calculatedReward = Math.max(m3Fee + collateralFee, route.minReward);
+    var rateType = "Rate is ".concat(route.m3Rate, " isk/m3 + ").concat(route.collateralRate * 100, "% of collateral");
     console.log("Route: ".concat(route, ",\n        Rate: ").concat(route.m3Rate, ",\n        m3: ").concat(desiredm3.value, ",\n        Reward: ").concat(calculatedReward, ",\n        RateType: ").concat(rateType, ",\n    "));
     outputRouteReward(desiredRoute.value, calculatedReward.toLocaleString(), maxVolume.toLocaleString(), rateType);
 }
@@ -353,7 +359,7 @@ function outputRouteReward(route, reward, maxM3, rateType) {
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
     createElements("Reward", reward, "reward", reward);
-    createElements("Contract Rate Type", rateType);
+    createElements("Contract Rate Structure", rateType);
     createElements("Time to Accept/Complete", "14 day accept / 7 day complete");
     createElements("Max Volume", "".concat(maxM3, " m3"));
 }
