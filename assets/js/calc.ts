@@ -23,7 +23,7 @@ const CLICK_TO_COPY = " Click to Copy";
 const COPIED = " Copied!";
 const routeMap = {};
 
-const DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.01; // 1%
+const DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.0075; // 0.75%
 const JITA_REDUCED_MIN_REWARD = 10e6;  // 10m
 const MILLIONS = 1e6; // 1m
 
@@ -308,12 +308,9 @@ function calculateRouteReward() {
 
     let m3Fee = Number(desiredm3.value) * route.m3Rate;
     let collateralFee = desiredCollateralVal * route.collateralRate;
-    let calculatedReward = Math.max(collateralFee, Math.max(m3Fee, route.minReward));
+    let calculatedReward = Math.max(m3Fee + collateralFee, route.minReward);
 
-    let rateType = `Volume Rate (${route.m3Rate} isk/m3)`;
-    if (calculatedReward === collateralFee) {
-        rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}% of ${desiredCollateralVal.toLocaleString()} ISK)`;
-    };
+    let rateType = `Rate is ${route.m3Rate} isk/m3 + ${route.collateralRate * 100}% of collateral`;
 
     console.log(
         `Route: ${route},
@@ -368,7 +365,7 @@ function outputRouteReward(route: string, reward: string, maxM3: string, rateTyp
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
     createElements("Reward", reward, "reward", reward);
-    createElements("Contract Rate Type", rateType)
+    createElements("Contract Rate Structure", rateType)
     createElements("Time to Accept/Complete", "14 day accept / 7 day complete");
     createElements("Max Volume", `${maxM3} m3`);
 }
