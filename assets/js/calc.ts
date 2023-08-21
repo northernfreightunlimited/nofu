@@ -304,13 +304,15 @@ function calculateRouteReward() {
         return;
     }
 
-    let m3Rate = Number(desiredm3.value) * route.m3Rate;
-    let collateralRate = Number(desiredCollateral.value) * route.collateralRate * MILLIONS;
-    let calculatedReward = Math.max(collateralRate, Math.max(m3Rate, route.minReward));
+    let desiredCollateralVal = Number(desiredCollateral.value) * MILLIONS;
+
+    let m3Fee = Number(desiredm3.value) * route.m3Rate;
+    let collateralFee = desiredCollateralVal * route.collateralRate;
+    let calculatedReward = Math.max(collateralFee, Math.max(m3Fee, route.minReward));
 
     let rateType = `Volume  Rate (${route.m3Rate} isk/m3)`;
-    if (calculatedReward === collateralRate) {
-        rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}%)`;
+    if (calculatedReward === collateralFee) {
+        rateType = `Collateral Rate (${DEFAULT_COLLATERAL_PERCENTAGE_FEE * 100}% of $${desiredCollateralVal.toLocaleString()} ISK)`;
     };
 
     console.log(
@@ -366,7 +368,7 @@ function outputRouteReward(route: string, reward: string, maxM3: string, rateTyp
     createElements("Route", route);
     createElements("Contract To", "Northern Freight Unlimited [NOFU]", "corp-name", "Northern Freight Unlimited");
     createElements("Reward", reward, "reward", reward);
-    createElements("Contract Rate", rateType)
+    createElements("Contract Rate Type", rateType)
     createElements("Time to Accept/Complete", "7 Days", "time-to-accept");
     createElements("Max Volume", `${maxM3} m3`);
 }
