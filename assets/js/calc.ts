@@ -23,6 +23,7 @@ const CLICK_TO_COPY = " Click to Copy";
 const COPIED = " Copied!";
 const routeMap = {};
 
+const DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.01; // 1%
 const JITA_REDUCED_MIN_REWARD = 10e6;  // 10m
 const MILLIONS = 1e6; // 1m
 
@@ -42,7 +43,7 @@ const defaults = {
     minReward: 30e6,  // 30m
     maxCollateral: 10e9,  // 10b
     m3Rate: 800,  // isk per m3
-    collateralRate: 0.1, // percent collateral to charge as reward
+    collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE, // percent collateral to charge as reward
     maxM3: 350000,  // 350k m3
     isRoundTrip: false,
 };
