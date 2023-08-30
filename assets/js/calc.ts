@@ -114,7 +114,7 @@ const routes = [
             },
             {
                 destination: System.O4T,
-                rate:  750,
+                m3rate:  750,
                 isRoundTrip: true,
             },
             {
