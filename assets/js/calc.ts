@@ -13,7 +13,6 @@ enum System {
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
     O4T = "O4T-Z5 (Esoteria / Paragon Soul)",
-    NorthernSIGDeployment = "Northern SIG Deployment",
     CloudRing = "F7C-H0 (Cloud Ring)",
     Deployment2023 = "DO6H-Q (Fade Deployment)"
 };
@@ -178,11 +177,6 @@ const routes = [
             {
                 destination: System.CloudRing,
                 m3Rate: STANDARD_DOMAIN_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.NorthernSIGDeployment,
-                m3Rate: 400,
                 isRoundTrip: true,
             },
             {
