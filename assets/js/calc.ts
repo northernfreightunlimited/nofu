@@ -46,6 +46,7 @@ const defaults = {
     collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE, // percent collateral to charge as reward
     maxM3: 350000,  // 350k m3
     isRoundTrip: false,
+    flatRate: NaN,
 };
 
 interface Destination {
@@ -56,6 +57,7 @@ interface Destination {
     m3Rate: number,  // isk per m3
     collateralRate: number, // percent fee of collateral to charge
     isRoundTrip?: boolean,
+    flatRate?: number, // flat rate fee
 }
 
 interface Route {
@@ -72,6 +74,7 @@ class RouteCalc implements Destination {
     readonly m3Rate: number;  // isk per m3
     readonly collateralRate: number; // percent fee of collateral to charge
     readonly isRoundTrip?: boolean;
+    readonly flatRate?: number;
 
     constructor(origin :string, destination :Destination) {
         this.origin = origin
@@ -82,6 +85,7 @@ class RouteCalc implements Destination {
         this.collateralRate = destination.collateralRate ?? defaults.collateralRate
         this.maxCollateral = destination.maxCollateral ?? defaults.maxCollateral
         this.isRoundTrip = destination.isRoundTrip
+        this.flatRate = destination.flatRate ?? defaults.flatRate
     }
 
     toString() :string {
@@ -101,6 +105,12 @@ const routes = [
                 m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
                 minReward: JITA_REDUCED_MIN_REWARD,  // 10m
                 isRoundTrip: IS_JITA_ROUND_TRIP,
+            },
+            {
+                destination: System.Deployment2023,
+                m3Rate: NaN,
+                isRoundTrip: true,
+                flatRate: 445000000, // 445m
             },
             {
                 destination: System.O4T,
@@ -284,15 +294,20 @@ function calculateRouteReward() {
     const desiredm3 = document.getElementById("calc-m3") as HTMLInputElement;
     const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
 
+    const route = routeMap[desiredRoute.value] as Destination;
+    const maxVolume = route.maxM3 ?? defaults.maxM3;
+
+    if (!isNaN(route.flatRate) && route.flatRate > 0){
+        outputRouteReward(desiredRoute.value, route.flatRate.toLocaleString(), route.maxM3.toLocaleString(), "Flat Rate");
+        return;
+    }
+
     if(desiredm3.value == "" || desiredCollateral.value == "" ) {
         return;
     }
 
     desiredm3.classList.remove("error");
     desiredCollateral.classList.remove("error");
-
-    const route = routeMap[desiredRoute.value] as Destination;
-    const maxVolume = route.maxM3 ?? defaults.maxM3;
 
     if(! form.checkValidity()) {
         console.log("Form doesn't validate, not calculating reward");
