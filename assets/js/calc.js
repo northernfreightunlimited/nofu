@@ -49,7 +49,6 @@ var System;
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
     System["O4T"] = "O4T-Z5 (Esoteria / Paragon Soul)";
-    System["NorthernSIGDeployment"] = "Northern SIG Deployment";
     System["CloudRing"] = "F7C-H0 (Cloud Ring)";
     System["Deployment2023"] = "DO6H-Q (Fade Deployment)";
 })(System || (System = {}));
@@ -79,10 +78,11 @@ var defaults = {
     collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE,
     maxM3: 350000,
     isRoundTrip: false,
+    flatRate: NaN,
 };
 var RouteCalc = /** @class */ (function () {
     function RouteCalc(origin, destination) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f;
         this.origin = origin;
         this.destination = destination.destination;
         this.minReward = (_a = destination.minReward) !== null && _a !== void 0 ? _a : defaults.minReward;
@@ -91,6 +91,7 @@ var RouteCalc = /** @class */ (function () {
         this.collateralRate = (_d = destination.collateralRate) !== null && _d !== void 0 ? _d : defaults.collateralRate;
         this.maxCollateral = (_e = destination.maxCollateral) !== null && _e !== void 0 ? _e : defaults.maxCollateral;
         this.isRoundTrip = destination.isRoundTrip;
+        this.flatRate = (_f = destination.flatRate) !== null && _f !== void 0 ? _f : defaults.flatRate;
     }
     RouteCalc.prototype.toString = function () {
         if (this.isRoundTrip) {
@@ -111,8 +112,14 @@ var routes = [
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
+                destination: System.Deployment2023,
+                m3Rate: NaN,
+                isRoundTrip: true,
+                flatRate: 445000000, // 445m
+            },
+            {
                 destination: System.O4T,
-                rate: 750,
+                m3rate: 750,
                 isRoundTrip: true,
             },
             {
@@ -185,11 +192,6 @@ var routes = [
             {
                 destination: System.CloudRing,
                 m3Rate: STANDARD_DOMAIN_RATE,
-                isRoundTrip: true,
-            },
-            {
-                destination: System.NorthernSIGDeployment,
-                m3Rate: 400,
                 isRoundTrip: true,
             },
             {
@@ -297,13 +299,17 @@ function calculateRouteReward() {
     var desiredRoute = document.getElementById("calc-route");
     var desiredm3 = document.getElementById("calc-m3");
     var desiredCollateral = document.getElementById("calc-collateral");
+    var route = routeMap[desiredRoute.value];
+    var maxVolume = (_a = route.maxM3) !== null && _a !== void 0 ? _a : defaults.maxM3;
+    if (!isNaN(route.flatRate) && route.flatRate > 0) {
+        outputRouteReward(desiredRoute.value, route.flatRate.toLocaleString(), route.maxM3.toLocaleString(), "Flat Rate");
+        return;
+    }
     if (desiredm3.value == "" || desiredCollateral.value == "") {
         return;
     }
     desiredm3.classList.remove("error");
     desiredCollateral.classList.remove("error");
-    var route = routeMap[desiredRoute.value];
-    var maxVolume = (_a = route.maxM3) !== null && _a !== void 0 ? _a : defaults.maxM3;
     if (!form.checkValidity()) {
         console.log("Form doesn't validate, not calculating reward");
         // Currently the form native validation only works with the hardcoded default m3
