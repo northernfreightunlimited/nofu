@@ -226,7 +226,7 @@ var routes = [
             },
             {
                 destination: System.O4T,
-                rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
             },
             {
                 destination: System.Deployment2023,
