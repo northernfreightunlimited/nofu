@@ -124,7 +124,7 @@ var routes = [
             },
             {
                 destination: System.CloudRing,
-                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + (FOUR_JUMP_RT / 2),
                 isRoundTrip: true,
             },
             {
