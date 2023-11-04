@@ -108,9 +108,10 @@ const routes = [
             },
             {
                 destination: System.Deployment2023,
-                m3Rate: NaN,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 415,
                 isRoundTrip: true,
-                flatRate: 445000000, // 445m
+                flatRate: NaN,
+                collateralRate: 0,
             },
             {
                 destination: System.O4T,
