@@ -12,9 +12,9 @@ enum System {
     PeriodBasis = "Period Basis",
     Serren = "Serren (KFU)",
     Amok = "K-6K16 (Am0k)",
-    O4T = "O4T-Z5 (Esoteria / Paragon Soul)",
+    O4T = "O4T-Z5 (Paragon Soul)",
     CloudRing = "F7C-H0 (Cloud Ring)",
-    Deployment2023 = "DO6H-Q (Fade Deployment)"
+    DP = "D-PNP9 (Esoteria)",
 };
 
 const ROUTE_SEP_ARROW = " ➠ ";
@@ -107,11 +107,9 @@ const routes = [
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
-                destination: System.Deployment2023,
-                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 415,
+                destination: System.DP,
+                m3rate:  750,
                 isRoundTrip: true,
-                flatRate: NaN,
-                collateralRate: 0,
             },
             {
                 destination: System.O4T,
@@ -225,8 +223,8 @@ const routes = [
                 m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
             },
             {
-                destination: System.Deployment2023,
-                m3Rate: 415,
+                destination: System.DP,
+                m3rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
                 isRoundTrip: true,
             },
         ],
