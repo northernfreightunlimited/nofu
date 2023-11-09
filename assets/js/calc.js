@@ -48,9 +48,9 @@ var System;
     System["PeriodBasis"] = "Period Basis";
     System["Serren"] = "Serren (KFU)";
     System["Amok"] = "K-6K16 (Am0k)";
-    System["O4T"] = "O4T-Z5 (Esoteria / Paragon Soul)";
+    System["O4T"] = "O4T-Z5 (Paragon Soul)";
     System["CloudRing"] = "F7C-H0 (Cloud Ring)";
-    System["Deployment2023"] = "DO6H-Q (Fade Deployment)";
+    System["DP"] = "D-PNP9 (Esoteria)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -112,11 +112,9 @@ var routes = [
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
-                destination: System.Deployment2023,
-                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 415,
+                destination: System.DP,
+                m3rate: 750,
                 isRoundTrip: true,
-                flatRate: NaN,
-                collateralRate: 0,
             },
             {
                 destination: System.O4T,
@@ -230,8 +228,8 @@ var routes = [
                 m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
             },
             {
-                destination: System.Deployment2023,
-                m3Rate: 415,
+                destination: System.DP,
+                m3rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
                 isRoundTrip: true,
             },
         ],
