@@ -12,10 +12,15 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: stefanoeb/eslint-action@1.0.2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          files: assets/js
+          node-version: 20
+      - run: npm ci
+      - uses: sibiraj-s/action-eslint@v3
+        with:
+          extensions: 'ts'
+          annotations: true
   jekyll:
     needs: eslint
     runs-on: ubuntu-latest # can change this to ubuntu-latest if you prefer
