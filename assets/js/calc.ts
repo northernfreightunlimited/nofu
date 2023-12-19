@@ -55,7 +55,7 @@ interface Destination {
     maxCollateral?: number,
     maxM3?: number,
     m3Rate: number,  // isk per m3
-    collateralRate: number, // percent fee of collateral to charge
+    collateralRate?: number, // percent fee of collateral to charge
     isRoundTrip?: boolean,
     flatRate?: number, // flat rate fee
 }
@@ -96,7 +96,7 @@ class RouteCalc implements Destination {
     }
 }
 
-const routes = [
+const routes: Route[] = [
     {
         origin: System.ImperialPalace,
         destinations: [
@@ -108,12 +108,12 @@ const routes = [
             },
             {
                 destination: System.DP,
-                m3rate:  750,
+                m3Rate: 750,
                 isRoundTrip: true,
             },
             {
                 destination: System.O4T,
-                m3rate:  750,
+                m3Rate: 750,
                 isRoundTrip: true,
             },
             {
@@ -224,7 +224,7 @@ const routes = [
             },
             {
                 destination: System.DP,
-                m3rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
                 isRoundTrip: true,
             },
         ],
@@ -251,7 +251,7 @@ const routes = [
             },
         ]
     },
-] as Route[]
+];
 
 /**
  * Adds options to the select element representing routes serviced
@@ -278,7 +278,7 @@ function registerEventHandlers() {
     const controls = form.getElementsByClassName("form-control");
     for (const i in controls) {
         controls[i].addEventListener("blur", calculateRouteReward);
-        controls[i].addEventListener("invalid", (event) => {
+        controls[i].addEventListener("invalid", () => {
             controls[i].classList.add("error");
         });
     }
@@ -392,6 +392,7 @@ function outputRouteReward(route: string, reward: string, maxM3: string, rateTyp
  * Copy contents of value to the system clipboard
  * @param value
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function copyToClipboard(id :string, value :string) {
     navigator.clipboard.writeText(value).then(() => {
         console.log(`clipboard copy "${value} (${id})"`);
@@ -403,7 +404,7 @@ async function copyToClipboard(id :string, value :string) {
     });
 }
 
-window.onload = (event) => {
+window.onload = () => {
     console.log("onload called, populating route dropdown....");
     const routeDropdown = document.querySelector('#calc-route');
     let routeStrs = [];

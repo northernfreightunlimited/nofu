@@ -5,3 +5,4 @@ _site
 .typescript
 .bundle/
 vendor/
+node_modules
