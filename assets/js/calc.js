@@ -72,11 +72,11 @@ var FOUNTAIN_DELVE_RATE = 900;
 var DEFAULT_ROUTE_SELECTION = "1DQ1-A".concat(IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW, "Jita/Perimeter");
 // Defaults where not otherwise specified
 var defaults = {
-    minReward: 30e6,
-    maxCollateral: 10e9,
-    m3Rate: 800,
-    collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE,
-    maxM3: 350000,
+    minReward: 30e6, // 30m
+    maxCollateral: 10e9, // 10b
+    m3Rate: 800, // isk per m3
+    collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE, // percent collateral to charge as reward
+    maxM3: 350000, // 350k m3
     isRoundTrip: false,
     flatRate: NaN,
 };
@@ -108,17 +108,17 @@ var routes = [
             {
                 destination: System.Forge,
                 m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
-                minReward: JITA_REDUCED_MIN_REWARD,
+                minReward: JITA_REDUCED_MIN_REWARD, // 10m
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
                 destination: System.DP,
-                m3rate: 750,
+                m3Rate: 750,
                 isRoundTrip: true,
             },
             {
                 destination: System.O4T,
-                m3rate: 750,
+                m3Rate: 750,
                 isRoundTrip: true,
             },
             {
@@ -229,7 +229,7 @@ var routes = [
             },
             {
                 destination: System.DP,
-                m3rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
+                m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
                 isRoundTrip: true,
             },
         ],
@@ -281,7 +281,7 @@ function registerEventHandlers() {
     var controls = form.getElementsByClassName("form-control");
     var _loop_1 = function (i) {
         controls[i].addEventListener("blur", calculateRouteReward);
-        controls[i].addEventListener("invalid", function (event) {
+        controls[i].addEventListener("invalid", function () {
             controls[i].classList.add("error");
         });
     };
@@ -372,6 +372,7 @@ function outputRouteReward(route, reward, maxM3, rateType) {
  * Copy contents of value to the system clipboard
  * @param value
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function copyToClipboard(id, value) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -387,7 +388,7 @@ function copyToClipboard(id, value) {
         });
     });
 }
-window.onload = function (event) {
+window.onload = function () {
     console.log("onload called, populating route dropdown....");
     var routeDropdown = document.querySelector('#calc-route');
     var routeStrs = [];
