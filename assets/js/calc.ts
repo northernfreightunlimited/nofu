@@ -32,7 +32,7 @@ const FOUR_JUMP_RT = 700;
 const STANDARD_IMPORT_FROM_JITA_RATE = 850;
 const STANDARD_EXPORT_TO_JITA_RATE = 850;
 const JITA_RATE_DISCOUNT = 0;
-const IS_JITA_ROUND_TRIP = STANDARD_EXPORT_TO_JITA_RATE - STANDARD_IMPORT_FROM_JITA_RATE === 0;
+const IS_JITA_ROUND_TRIP = false;
 const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
 const FOUNTAIN_DELVE_RATE = 900;
 
@@ -192,6 +192,7 @@ const routes: Route[] = [
                 destination: System.ImperialPalace,
                 m3Rate: STANDARD_IMPORT_FROM_JITA_RATE - JITA_RATE_DISCOUNT,
                 minReward: JITA_REDUCED_MIN_REWARD,
+                collateralRate: 0,
                 isRoundTrip: IS_JITA_ROUND_TRIP,
             },
             {
@@ -288,6 +289,7 @@ function registerEventHandlers() {
  * Calculate route reward and update UI
  */
 function calculateRouteReward() {
+    // Collect information from the form
     const form = document.getElementById("calc-form") as HTMLFormElement;
     const desiredRoute = document.getElementById("calc-route") as HTMLSelectElement;
     const desiredm3 = document.getElementById("calc-m3") as HTMLInputElement;
@@ -296,15 +298,28 @@ function calculateRouteReward() {
     const route = routeMap[desiredRoute.value] as Destination;
     const maxVolume = route.maxM3 ?? defaults.maxM3;
 
+    // Toggle visibility of collateral rate if necessary
+    if (isNaN(route.collateralRate) || route.collateralRate == 0) {
+        desiredCollateral.hidden = true;
+        (document.getElementById("calc-collateral-label") as HTMLInputElement).hidden = true;
+    } else {
+        desiredCollateral.hidden = false;
+        (document.getElementById("calc-collateral-label") as HTMLInputElement).hidden = false;
+    }
+
+    // Check for flat rate routes
     if (!isNaN(route.flatRate) && route.flatRate > 0){
         outputRouteReward(desiredRoute.value, route.flatRate.toLocaleString(), route.maxM3.toLocaleString(), "Flat Rate");
         return;
     }
 
+    // If the desired m3 or desired collateral are empty, then the user hasn't entered anything yet
+    // so we should return early.
     if(desiredm3.value == "" || desiredCollateral.value == "" ) {
         return;
     }
 
+    // Remove error classes and then recheck validity of data.
     desiredm3.classList.remove("error");
     desiredCollateral.classList.remove("error");
 
