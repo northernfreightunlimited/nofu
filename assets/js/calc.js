@@ -302,8 +302,9 @@ function calculateRouteReward() {
     var desiredCollateral = document.getElementById("calc-collateral");
     var route = routeMap[desiredRoute.value];
     var maxVolume = (_a = route.maxM3) !== null && _a !== void 0 ? _a : defaults.maxM3;
+    var disableCollateral = isNaN(route.collateralRate) || route.collateralRate == 0;
     // Toggle visibility of collateral rate if necessary
-    if (isNaN(route.collateralRate) || route.collateralRate == 0) {
+    if (disableCollateral) {
         desiredCollateral.hidden = true;
         document.getElementById("calc-collateral-label").hidden = true;
     }
@@ -318,7 +319,7 @@ function calculateRouteReward() {
     }
     // If the desired m3 or desired collateral are empty, then the user hasn't entered anything yet
     // so we should return early.
-    if (desiredm3.value == "" || desiredCollateral.value == "") {
+    if (desiredm3.value == "" || (!disableCollateral && desiredCollateral.value == "")) {
         return;
     }
     // Remove error classes and then recheck validity of data.
