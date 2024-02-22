@@ -300,25 +300,28 @@ function calculateRouteReward() {
     var desiredRoute = document.getElementById("calc-route");
     var desiredm3 = document.getElementById("calc-m3");
     var desiredCollateral = document.getElementById("calc-collateral");
+    var desiredCollateralLabel = document.getElementById("calc-collateral-label");
     var route = routeMap[desiredRoute.value];
     var maxVolume = (_a = route.maxM3) !== null && _a !== void 0 ? _a : defaults.maxM3;
     var disableCollateral = isNaN(route.collateralRate) || route.collateralRate == 0;
-    // Toggle visibility of collateral rate if necessary
+    // Toggle visibility and validation requirement of collateral rate if necessary
     if (disableCollateral) {
+        desiredCollateral.required = false;
         desiredCollateral.hidden = true;
-        document.getElementById("calc-collateral-label").hidden = true;
+        desiredCollateralLabel.hidden = true;
     }
     else {
+        desiredCollateral.required = true;
         desiredCollateral.hidden = false;
-        document.getElementById("calc-collateral-label").hidden = false;
+        desiredCollateralLabel.hidden = false;
     }
     // Check for flat rate routes
     if (!isNaN(route.flatRate) && route.flatRate > 0) {
         outputRouteReward(desiredRoute.value, route.flatRate.toLocaleString(), route.maxM3.toLocaleString(), "Flat Rate");
         return;
     }
-    // If the desired m3 or desired collateral are empty, then the user hasn't entered anything yet
-    // so we should return early.
+    // If the desired m3 or desired collateral are empty, then the user hasn't
+    // entered anything yet so we should return early.
     if (desiredm3.value == "" || (!disableCollateral && desiredCollateral.value == "")) {
         return;
     }
