@@ -294,19 +294,22 @@ function calculateRouteReward() {
     const desiredRoute = document.getElementById("calc-route") as HTMLSelectElement;
     const desiredm3 = document.getElementById("calc-m3") as HTMLInputElement;
     const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
+    const desiredCollateralLabel = document.getElementById("calc-collateral-label") as HTMLInputElement;
 
     const route = routeMap[desiredRoute.value] as Destination;
     const maxVolume = route.maxM3 ?? defaults.maxM3;
 
     const disableCollateral = isNaN(route.collateralRate) || route.collateralRate == 0;
 
-    // Toggle visibility of collateral rate if necessary
+    // Toggle visibility and validation requirement of collateral rate if necessary
     if (disableCollateral) {
+        desiredCollateral.required = false;
         desiredCollateral.hidden = true;
-        (document.getElementById("calc-collateral-label") as HTMLInputElement).hidden = true;
+        desiredCollateralLabel.hidden = true;
     } else {
+        desiredCollateral.required = true;
         desiredCollateral.hidden = false;
-        (document.getElementById("calc-collateral-label") as HTMLInputElement).hidden = false;
+        desiredCollateralLabel.hidden = false;
     }
 
     // Check for flat rate routes
@@ -315,8 +318,8 @@ function calculateRouteReward() {
         return;
     }
 
-    // If the desired m3 or desired collateral are empty, then the user hasn't entered anything yet
-    // so we should return early.
+    // If the desired m3 or desired collateral are empty, then the user hasn't
+    // entered anything yet so we should return early.
     if(desiredm3.value == "" || (!disableCollateral && desiredCollateral.value == "") ) {
         return;
     }
