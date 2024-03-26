@@ -1,0 +1,12 @@
+# Top-level configuration
+name = "nofu-bot"
+main = "./src/server.ts"
+compatibility_date = "2022-07-12"
+
+workers_dev = true
+
+
+[dev]
+ip = "localhost"
+port = 4001
+local_protocol = "http"

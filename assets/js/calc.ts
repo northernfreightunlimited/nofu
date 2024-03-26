@@ -1,6 +1,6 @@
 import { IS_JITA_ROUND_TRIP, MILLIONS } from "./src/consts.js";
 import { RouteCalc, routes } from "./src/routes.js";
-import { Destination } from "./src/types.js";
+import { CalcFeeRequest, CalcFeeResponse, Destination } from "./src/types.js";
 
 const ROUTE_SEP_ARROW = " ➠ ";
 const ROUTE_SEP_ARROW_RT = " ⮂ "
@@ -44,7 +44,7 @@ function registerEventHandlers() {
 /**
  * Calculate route reward and update UI
  */
-function calculateRouteReward() {
+async function calculateRouteReward() {
   // Collect information from the form
   const form = document.getElementById("calc-form") as HTMLFormElement;
   const desiredRoute = document.getElementById("calc-route") as HTMLSelectElement;
@@ -52,7 +52,7 @@ function calculateRouteReward() {
   const desiredCollateral = document.getElementById("calc-collateral") as HTMLInputElement;
   const desiredCollateralLabel = document.getElementById("calc-collateral-label") as HTMLInputElement;
 
-  const route = routeMap[desiredRoute.value] as Destination;
+  const route = routeMap[desiredRoute.value] as RouteCalc;
   const maxVolume = route.maxM3;
 
   const disableCollateral = isNaN(route.collateralRate) || route.collateralRate == 0;
@@ -98,23 +98,30 @@ function calculateRouteReward() {
     return;
   }
 
-  let desiredCollateralVal = Number(desiredCollateral.value) * MILLIONS;
+  const calculatorResponse = await fetch("http://localhost:4001/", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      origin: route.origin,
+      destination: route.destination,
+      volume: desiredm3.valueAsNumber,
+      collateral: desiredCollateral.valueAsNumber,
+    } as CalcFeeRequest),
+  })
 
-  let m3Fee = Number(desiredm3.value) * route.m3Rate;
-  let collateralFee = desiredCollateralVal * route.collateralRate;
-  let calculatedReward = Math.max(m3Fee + collateralFee, route.minReward);
+  const { rateStructure, reward, maxM3 } = await calculatorResponse.json() as CalcFeeResponse;
 
-  let rateType = `Rate is ${route.m3Rate} isk/m3 + ${route.collateralRate * 100}% of collateral`;
+  const rateType = `Rate is ${rateStructure.m3Rate} isk/m3 + ${rateStructure.collateralRate * 100}% of collateral`;
+  console.log(`Calculate Response:
+    Route: ${route},
+    Rate: ${rateStructure.m3Rate},
+    CollateralRate: ${rateStructure.collateralRate},
+    m3: ${desiredm3.value},
+    Reward: ${reward},
+    RateType: ${rateType},
+  `);
 
-  console.log(
-    `Route: ${route},
-        Rate: ${route.m3Rate},
-        m3: ${desiredm3.value},
-        Reward: ${calculatedReward},
-        RateType: ${rateType},
-    `);
-
-  outputRouteReward(desiredRoute.value, calculatedReward.toLocaleString(), maxVolume.toLocaleString(), rateType);
+  outputRouteReward(desiredRoute.value, reward.toLocaleString(), maxM3.toLocaleString(), rateType);
 }
 
 function getCalcOutput(): HTMLSpanElement {

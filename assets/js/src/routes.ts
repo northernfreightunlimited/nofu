@@ -9,11 +9,11 @@ export class RouteCalc implements Destination {
   readonly destination: string;
   readonly m3Rate: number;  // isk per m3
   readonly collateralRate: number; // percent fee of collateral to charge
-  readonly minReward?: number;
-  readonly maxCollateral?: number;
-  readonly maxM3?: number;
-  readonly isRoundTrip?: boolean;
-  readonly flatRate?: number;
+  readonly minReward: number;
+  readonly maxCollateral: number;
+  readonly maxM3: number;
+  readonly isRoundTrip: boolean;
+  readonly flatRate: number;
 
   constructor(origin: string, destination: Destination) {
     this.origin = origin;

@@ -14,7 +14,7 @@ export interface Route {
   destinations: Destination[],
 };
 
-export interface RouteFee {
+export interface CalcFeeResponse {
   route: string,
   reward: number,
   maxM3: number,
@@ -23,3 +23,12 @@ export interface RouteFee {
     collateralRate: number,
   },
 };
+
+export interface CalcFeeRequest {
+  origin: string,
+  destination: string,
+  volume: number,
+  collateral?: number,
+};
+
+
