@@ -12,8 +12,9 @@ This repo contains the source code for the Northern Freight Unlimited website.
 
 ## Running Locally
 To run the site locally:
+
 ```
-bundle exec jekyll server --force-polling
+./run-servers.sh
 ```
 
 ## Developing
