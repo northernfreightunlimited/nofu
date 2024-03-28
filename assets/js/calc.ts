@@ -208,5 +208,5 @@ window.onload = () => {
     addRouteOption(routeDropdown, routeStr);
   }
 
-  registerEventHandlers();
+  // registerEventHandlers();
 }

@@ -11,25 +11,16 @@ export interface RouteFee {
   },
 };
 
-function getRoute(origin: string, destination: string): RouteCalc {
-  for (const route of routes) {
-    if (route.origin != origin) {
-      continue;
-    }
-
-    for (const dest of route.destinations) {
-      if (dest.destination != destination) {
-        continue;
-      }
-
-      return new RouteCalc(route.origin, dest);
-    }
+const routeMap = new Map<string, RouteCalc>();
+for (const route of routes) {
+  for (const destination of route.destinations) {
+    const r = new RouteCalc(route.origin, destination);
+    routeMap[r.toString()] = r;
   }
-  throw new Error(`Unknown route: ${origin} to ${destination}`);
 }
 
-export function getShippingRate(origin: string, destination: string, desiredM3: number, desiredCollateral: number): RouteFee {
-  const route = getRoute(origin, destination);
+export function getShippingRate(routeStr: string, desiredM3: number, desiredCollateral: number): RouteFee {
+  const route = routeMap[routeStr];
   const maxVolume = route.maxM3;
 
   // Check for flat rate routes

@@ -1,4 +1,4 @@
-import { getShippingRate } from "../assets/js/src/calc_fee";
+import { getShippingRate, RouteFee } from "../assets/js/src/calc_fee";
 
 export default {
   async fetch(request: Request) {
@@ -8,19 +8,31 @@ export default {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Expose-Headers': '*',
         },
       });
     }
     try {
-      const { origin, destination, volume, collateral } = await request.json()
+      const formData = await request.formData();
+      const route = formData.get("route") as string;
+      const volume = formData.get("volume") as string;
+      const collateral = formData.get("collateral") as string;
+
+      console.log(formData);
+
+      console.log(`
+        Route: ${route},
+        Volume: ${volume},
+        Collateral: ${collateral},
+      `)
 
       // Ensure data validity (add more checks as needed)
-      if (!origin || !destination || !volume || !collateral) {
+      if (!route || !volume || !collateral) {
         return new Response('Missing required parameters', { status: 400 });
       }
 
-      const shippingRate = getShippingRate(origin, destination, volume, collateral);
+      const shippingRate = getShippingRate(route, Number(volume), Number(collateral));
 
       console.log(`
         Route: ${shippingRate.route},
@@ -31,11 +43,11 @@ export default {
       `);
 
       return new Response(
-        JSON.stringify(shippingRate),
+        calcResponseTemplate(shippingRate),
         {
           status: 200,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/html',
             'Access-Control-Allow-Origin': '*',
           },
         },
@@ -48,3 +60,53 @@ export default {
   }
 }
 
+function copyToClipboardScript(): string {
+  return `
+    <script type="text/hyperscript">
+      js
+        function clipboardCopy(id, value) {
+          navigator.clipboard.writeText(value).then(() => {
+            console.log(\`clipboard copy '\${value} (\${id})'\`);
+            const tag = document.getElementById(id);
+            tag.innerText = "Copied!";
+            setTimeout(() => { tag.innerText = " Click to Copy" }, 1000);
+          }, () => {
+            console.log(\`FAIL clipboard copy '\${value} (\${id})'\`);
+          });
+        }
+      end
+      def copyToClipboard(id, value) 
+        clipboardCopy(id, value)
+      end
+    </script>
+  `;
+}
+
+function calcResponseTemplate(r: RouteFee): string {
+  return `<dl id="calc-output" class="calc-output" style="visibility: visible;">
+    ${copyToClipboardScript()}
+    <dt>Route</dt>
+    <dd>${r.route}</dd>
+    <dt>Contract To</dt>
+    <dd hx-on:click="copyToClipboard(&quot;corp-name&quot;, &quot;Northern Freight Unlimited&quot;)">
+      Northern Freight Unlimited [NOFU]
+      <a id="corp-name" class="click-to-copy" title="click-to-copy"> Click to Copy</a>
+    </dd>
+
+    <dt>Reward</dt>
+    <dd hx-on:click="copyToClipboard(&quot;reward&quot;, &quot;${r.reward}&quot;)">
+      ${r.reward.toLocaleString()}
+      <a id="reward" class="click-to-copy" title="click-to-copy"> Click to Copy</a>
+    </dd>
+
+    <dt>Contract Rate Structure</dt>
+    <dd>Rate is ${r.rateStructure.m3Rate.toLocaleString()} isk/m3 + ${r.rateStructure.collateralRate * 100}% of collateral</dd>
+
+    <dt>Time to Accept/Complete</dt>
+    <dd>14 day accept / 7 day complete</dd>
+
+    <dt>Max Volume</dt>
+    <dd>${r.maxM3.toLocaleString()}</dd>
+    </dl>
+  `;
+}

@@ -10,29 +10,28 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <form id="calc-form" novalidate="novalidate" action="javascript:void(0);" onsubmit="JavaScript:calculateRouteReward()">
+          <form id="calc-form" hx-ext="debug" hx-post="http://localhost:4001/" hx-trigger="submit" hx-target="#calc-output" hx-swap="outerHTML" hx-include="this" >
             <input type="submit" style="display: none" />
-		  <!--name="sentMessage"-->
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="calc-route" class="calc-label">Select a route:</label>
-                  <select id="calc-route" class="form-control"></select>
+                  <select name="route" id="calc-route" class="form-control"></select>
                 </div>
                 <div class="form-group">
                   <label for="calc-m3" class="calc-label" id="calc-m3-label">Volume (m3):</label>
-                  <input name="calc-m3" class="form-control" id="calc-m3" type="number" placeholder="m3*" required="required" max="350000" min="0" data-validation-required-message="Please enter your volume to move in m3. It must be less than 350,000.">
+                  <input name="volume" class="form-control" id="calc-m3" type="number" placeholder="m3*" required="required" max="350000" min="0" data-validation-required-message="Please enter your volume to move in m3. It must be less than 350,000.">
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="form-group">
                   <label for="calc-collateral" class="calc-label" id="calc-collateral-label" >Collateral in millions of ISK (e.g. 1b would be written as 1000):</label>
-                  <input name="calc-collateral" class="form-control" id="calc-collateral" type="number" placeholder="Collateral*" required="required" max=500000 min=1 data-validation-required-message="Please enter the collateral on your package in millions of isk.">
+                  <input name="collateral" class="form-control" id="calc-collateral" type="number" placeholder="Collateral*" required="required" max=500000 min=1 data-validation-required-message="Please enter the collateral on your package in millions of isk.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <dl id="calc-output" class="calc-output"></dl>
+                  <dl id="calc-output" class="calc-output" ></dl>
                 </div>
               </div>
               <!-- <div class="clearfix"></div>
