@@ -3,7 +3,8 @@ This repo contains the source code for the Northern Freight Unlimited website.
 
 ## Layout
 
-* `assets/js`: Calculator Typescript source lives here.
+* `assets/js`: Calculator Typescript source lives here. Any TS that needs to be available to clients needs to live in this directory. Server-side TS can live...
+* src/: Contains the server-side javascript code. Code is targeted at [CloudFlare Workers](https://developers.cloudflare.com/workers/).
 * `_data/`: YAML configuration for the generating the HTML templates.
 * `index.md`: Controls which partial templates are rendered onto the page. If the template isn't in this repo, then it's in the theme. We can override with our own if we want, by using `_includes/`.
 * `_includes`: Custom HTML goes here. The HTML UI for the calc and a custom fix to our navheader goes here.
@@ -19,7 +20,7 @@ bundle exec jekyll server --force-polling
 To get the above command working, you'll need the following installed:
 
 * Ruby 2.7 (or later?)
-* Typescript
+* Node + Typescript
 * Bundler, Gem, etc.
 * Jekyll
 
