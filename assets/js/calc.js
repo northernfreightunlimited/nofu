@@ -51,6 +51,7 @@ var System;
     System["O4T"] = "O4T-Z5 (Paragon Soul)";
     System["CloudRing"] = "F7C-H0 (Cloud Ring)";
     System["DP"] = "D-PNP9 (Esoteria)";
+    System["Alterari"] = "Alterari's Secret Club House (???)";
 })(System || (System = {}));
 ;
 var ROUTE_SEP_ARROW = " ➠ ";
@@ -170,6 +171,12 @@ var routes = [
                 m3Rate: 250,
                 isRoundTrip: true,
             },
+            {
+                destination: System.Alterari,
+                m3Rate: STANDARD_EXPORT_TO_JITA_RATE + FOUR_JUMP_RT,
+                isRoundTrip: false,
+                collateralRate: 0,
+            },
         ]
     },
     {
@@ -232,6 +239,12 @@ var routes = [
                 destination: System.DP,
                 m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
                 isRoundTrip: true,
+            },
+            {
+                destination: System.Alterari,
+                m3Rate: FOUR_JUMP_RT,
+                isRoundTrip: false,
+                collateralRate: 0,
             },
         ],
     },
