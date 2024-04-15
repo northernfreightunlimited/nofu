@@ -2,6 +2,11 @@
 source "https://rubygems.org"
 gem "jekyll-remote-theme"
 
+# Must be explicitly declared post Ruby 3.0
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+
 # If you do not want to use GitHub Pages, comment out the line below, then run bundle update.
 #gem "github-pages", group: :jekyll_plugins
 
