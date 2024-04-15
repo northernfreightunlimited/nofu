@@ -10,63 +10,65 @@
 # -----------------
 en: &DEFAULT_EN
   header:
-      title: Welcome to
-      text: Northern Freight Unlimited
-      button: Click for Destinations and Rates
-      buttonlink: "#calc" # "#{section}" or "URL/page link"
+    title: Welcome to
+    text: Northern Freight Unlimited
+    button: Click for Destinations and Rates
+    buttonlink: "#calc" # "#{section}" or "URL/page link"
 
   calc:
-      title: "Rate Calculator"
-      text: "SALE: No Collateral Fees on Contracts from Jita to 1DQ!"
-      section: calc
+    title: "Rate Calculator"
+    text: "SALE: No Collateral Fees on Contracts from Jita to 1DQ!"
+    section: calc
+    hostname:
+      development: http://localhost:4001
+      production: FILL_ME_OUT
 
   services:
-      title: "Rules"
-      text: "Please read the following rules before creating a contract."
-      section: rules
-      list:
-        - title: "Northern Freight Unlimited"
-          desc: "Create your contract to Northern Freight Unlimited. Ticker is [NOFU]."
-          icon: fas fa-file-signature #find more at https://fontawesome.com/icons
-        - title: "14/7 day Accept/Complete"
-          desc: "Set your contract for 14 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
-          icon: fas fa-calendar-week 
-        - title: "Rush or Custom Quotes"
-          desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact a pilot. Rush fee is $200m ISK."
-          icon: fas fa-comments-dollar
-        - title: "$30m ISK Minimum"
-          desc: "Exception: Jita <-> 1DQ is $10m ISK minimum."
-          icon: fas fa-hand-holding-usd
-        - title: "Collateral Based Pricing"
-          desc: "Due to recent changes in game design from CCP, we must use collateral based pricing to create an acceptable risk/reward ratio for pilots."
-          icon: fas fa-file-invoice-dollar
-        - title: "Maximum 350k m3"
-          desc: "Max 350k m3 per contract."
-          icon: fas fa-weight-hanging
-        - title: "Blue Characters"
-          desc: "All contracts leaving 1DQ1 must be from blue characters."
-          icon: fas fa-user-shield
-        - title: "No Containers"
-          desc: "No containers. If you need containers moved for some reason please reach out directly."
-          icon: fas fa-box-open
-        - title: "No Black Frog banned systems"
-          desc: "No contracts to or from systems banned by Black Frog. Exceptions for Imperium systems."
-          icon: fas fa-frog
-        - title: "JF Service"
-          desc: "Need a JF moved across the Galaxy? We can do that. Contact Ajaxify on [discord](https://discord.gg/qwFr4RhE2C)."
-          icon: fas fa-truck-moving
-        - title: "Questions?"
-          desc: "Please join our [Discord Server](https://discord.gg/qwFr4RhE2C)."
-          icon: fas fa-question-circle
+    title: "Rules"
+    text: "Please read the following rules before creating a contract."
+    section: rules
+    list:
+      - title: "Northern Freight Unlimited"
+        desc: "Create your contract to Northern Freight Unlimited. Ticker is [NOFU]."
+        icon: fas fa-file-signature #find more at https://fontawesome.com/icons
+      - title: "14/7 day Accept/Complete"
+        desc: "Set your contract for 14 days to accept and 7 days to complete. Most contracts are completed within 48 hours but this is not a guarantee."
+        icon: fas fa-calendar-week
+      - title: "Rush or Custom Quotes"
+        desc: "Join our [discord](https://discord.gg/qwFr4RhE2C) and contact a pilot. Rush fee is $200m ISK."
+        icon: fas fa-comments-dollar
+      - title: "$30m ISK Minimum"
+        desc: "Exception: Jita <-> 1DQ is $10m ISK minimum."
+        icon: fas fa-hand-holding-usd
+      - title: "Collateral Based Pricing"
+        desc: "Due to recent changes in game design from CCP, we must use collateral based pricing to create an acceptable risk/reward ratio for pilots."
+        icon: fas fa-file-invoice-dollar
+      - title: "Maximum 350k m3"
+        desc: "Max 350k m3 per contract."
+        icon: fas fa-weight-hanging
+      - title: "Blue Characters"
+        desc: "All contracts leaving 1DQ1 must be from blue characters."
+        icon: fas fa-user-shield
+      - title: "No Containers"
+        desc: "No containers. If you need containers moved for some reason please reach out directly."
+        icon: fas fa-box-open
+      - title: "No Black Frog banned systems"
+        desc: "No contracts to or from systems banned by Black Frog. Exceptions for Imperium systems."
+        icon: fas fa-frog
+      - title: "JF Service"
+        desc: "Need a JF moved across the Galaxy? We can do that. Contact Ajaxify on [discord](https://discord.gg/qwFr4RhE2C)."
+        icon: fas fa-truck-moving
+      - title: "Questions?"
+        desc: "Please join our [Discord Server](https://discord.gg/qwFr4RhE2C)."
+        icon: fas fa-question-circle
 
   # portfolio:
-      # title: "Service Destinations"
-      # text: "NOFU is proud to offer service to the following destinations."
-      # section: portfolio
-      
+  # title: "Service Destinations"
+  # text: "NOFU is proud to offer service to the following destinations."
+  # section: portfolio
 
   # timeline:
-  #     title: "About" 
+  #     title: "About"
   #     text: "Lorem ipsum timeline"
   #     section: timeline
   #     events:
@@ -74,25 +76,25 @@ en: &DEFAULT_EN
   #         year: "2009-2011"
   #         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!"
   #         image: assets/img/timeline/1.jpg
-  #         alt: 
+  #         alt:
   #         align: left
   #       - title: "An Agency is Born"
   #         year: "March 2011"
   #         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!"
   #         image: assets/img/timeline/2.jpg
-  #         alt: 
+  #         alt:
   #         align: right
   #       - title: "Jekyll Theme is created"
   #         year: "2019"
   #         desc: "Ravi Riley converted Agency, a Bootstrap-based theme, into a Jekyll theme. The Jekyll theme can be installed as a Ruby gem, or remotely. For more information, visit the documentation."
   #         image: assets/img/timeline/3.jpg
   #         alt: image alt text
-  #         #align: #default is left       
+  #         #align: #default is left
   #       - title: "Title"
   #         year: "2009-2011"
   #         desc: "Your description here, **Markdown** is fully supported."
   #         image: assets/img/timeline/4.jpg
-  #         alt: 
+  #         alt:
   #         align: right
   #     end: "Be Part <br> of Our <br> Story!"
 
@@ -113,7 +115,7 @@ en: &DEFAULT_EN
   #       - title: "Creative Market"
   #         url: https://github.com/raviriley/agency-jekyll-theme
   #         logo: assets/img/clients/creative-market.jpg
-      
+
   # team:
   #     title: "OUR AMAZING TEAM"
   #     text: "Lorem ipsum dolor sit amet consectetur."
@@ -150,26 +152,25 @@ en: &DEFAULT_EN
   #             icon: fab fa-facebook-f
   #           - url: https://linkedin.com
   #             icon: fab fa-linkedin-in
-            
-  contact:
-      # title: "Contact Us"
-      # text: "Join our Discord: [https://discord.gg/x7qhNux6wF](https://discord.gg/x7qhNux6wF)"
-      # section: text
-      
-  footer:
-      # legal: "Privacy Policy"
-      # social:
-      #   - url: https://twitter.com
-      #     icon: "fab fa-twitter"  
-      #   - url: https://facebook.com
-      #     icon: "fab fa-facebook-f"
-      #   - url: https://linkedin.com
-      #     icon: "fab fa-linkedin-in"
-      #   - url: https://github.com/raviriley/agency-jekyll-theme
-      #     icon: "fab fa-github"
-      #   - url: https://instagram.com
-      #     icon: "fab fa-instagram"
 
+  contact:
+    # title: "Contact Us"
+    # text: "Join our Discord: [https://discord.gg/x7qhNux6wF](https://discord.gg/x7qhNux6wF)"
+    # section: text
+
+  footer:
+    # legal: "Privacy Policy"
+    # social:
+    #   - url: https://twitter.com
+    #     icon: "fab fa-twitter"
+    #   - url: https://facebook.com
+    #     icon: "fab fa-facebook-f"
+    #   - url: https://linkedin.com
+    #     icon: "fab fa-linkedin-in"
+    #   - url: https://github.com/raviriley/agency-jekyll-theme
+    #     icon: "fab fa-github"
+    #   - url: https://instagram.com
+    #     icon: "fab fa-instagram"
 
 # {{ site.data.sitetext.ex.ex | markdownify | default: example }}
 
