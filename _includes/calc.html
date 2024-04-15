@@ -1,5 +1,5 @@
 <!-- Calc -->
-  <section class="page-section" id="{{ site.data.sitetext.calc.section | default: "calc" }}">
+  <section class="page-section" id="{{ site.data.sitetext[site.locale].calc.section | default: "calc" }}">
     <script type="module" src="../assets/js/calc.js"></script>
     <div class="container">
       <div class="row">
@@ -10,7 +10,14 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <form id="calc-form" hx-ext="debug" hx-post="http://localhost:4001/" hx-trigger="submit" hx-target="#calc-output" hx-swap="outerHTML" hx-include="this" >
+          <form id="calc-form" 
+                hx-ext="debug" 
+                hx-post="{{ site.data.sitetext[site.locale].calc.hostname[jekyll.environment] }}" 
+                hx-trigger="submit" 
+                hx-target="#calc-output" 
+                hx-swap="outerHTML" 
+                hx-include="this" 
+            >
             <input type="submit" style="display: none" />
             <div class="row">
               <div class="col-md-6">
