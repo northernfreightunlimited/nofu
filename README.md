@@ -1,32 +1,8 @@
-# NOFU Site
-This repo contains the source code for the Northern Freight Unlimited website.
-
-## Layout
-
-* `assets/js`: Calculator Typescript source lives here. Any TS that needs to be available to clients needs to live in this directory. Server-side TS can live...
-* src/: Contains the server-side javascript code. Code is targeted at [CloudFlare Workers](https://developers.cloudflare.com/workers/).
-* `_data/`: YAML configuration for the generating the HTML templates.
-* `index.md`: Controls which partial templates are rendered onto the page. If the template isn't in this repo, then it's in the theme. We can override with our own if we want, by using `_includes/`.
-* `_includes`: Custom HTML goes here. The HTML UI for the calc and a custom fix to our navheader goes here.
-* `.github/workflows`: Auto build and publish of the site with Github Actions.
-
-## Running Locally
-To run the site locally:
-
-```
-./run-servers.sh
+```txt
+npm install
+npm run dev
 ```
 
-## Developing
-To get the above command working, you'll need the following installed:
-
-* Ruby 2.7 (or later?)
-* Node + Typescript
-* Bundler, Gem, etc.
-* Jekyll
-
-On WSL2, it wasn't too difficult for me to install things by trying to run `bundle exec jekyll` and following the error messages to install what I needed.
-
-
-## Attribution
-This site is based on the [Agency Jekyll Theme](https://github.com/raviriley/agency-jekyll-theme) Starter Template.
+```txt
+npm run deploy
+```

@@ -1,5 +1,15 @@
 import {
-  FOUNTAIN_DELVE_RATE, FOUR_JUMP_RT, IS_JITA_ROUND_TRIP, JITA_RATE_DISCOUNT, JITA_REDUCED_MIN_REWARD, ROUTE_DEFAULTS, ROUTE_SEP_ARROW, ROUTE_SEP_ARROW_RT, STANDARD_DOMAIN_RATE, STANDARD_EXPORT_TO_JITA_RATE, STANDARD_IMPORT_FROM_JITA_RATE
+  FOUNTAIN_DELVE_RATE,
+  FOUR_JUMP_RT,
+  IS_JITA_ROUND_TRIP,
+  JITA_RATE_DISCOUNT,
+  JITA_REDUCED_MIN_REWARD,
+  ROUTE_DEFAULTS,
+  ROUTE_SEP_ARROW,
+  ROUTE_SEP_ARROW_RT,
+  STANDARD_DOMAIN_RATE,
+  STANDARD_EXPORT_TO_JITA_RATE,
+  STANDARD_IMPORT_FROM_JITA_RATE,
 } from "./consts.js";
 import { System } from "./systems.js";
 import { Destination, Route } from "./types.js";
@@ -7,7 +17,7 @@ import { Destination, Route } from "./types.js";
 export class RouteCalc implements Destination {
   readonly origin: string;
   readonly destination: string;
-  readonly m3Rate: number;  // isk per m3
+  readonly m3Rate: number; // isk per m3
   readonly collateralRate: number; // percent fee of collateral to charge
   readonly minReward: number;
   readonly maxCollateral: number;
@@ -19,10 +29,12 @@ export class RouteCalc implements Destination {
     this.origin = origin;
     this.destination = destination.destination;
     this.m3Rate = destination.m3Rate;
-    this.collateralRate = destination.collateralRate ?? ROUTE_DEFAULTS.collateralRate;
+    this.collateralRate =
+      destination.collateralRate ?? ROUTE_DEFAULTS.collateralRate;
     this.minReward = destination.minReward ?? ROUTE_DEFAULTS.minReward;
     this.maxM3 = destination.maxM3 ?? ROUTE_DEFAULTS.maxM3;
-    this.maxCollateral = destination.maxCollateral ?? ROUTE_DEFAULTS.maxCollateral;
+    this.maxCollateral =
+      destination.maxCollateral ?? ROUTE_DEFAULTS.maxCollateral;
     this.isRoundTrip = destination.isRoundTrip ?? ROUTE_DEFAULTS.isRoundTrip;
     this.flatRate = destination.flatRate ?? ROUTE_DEFAULTS.flatRate;
   }
@@ -35,13 +47,29 @@ export class RouteCalc implements Destination {
   }
 }
 
+// RouteOptions returns a sorted list of RouteCalc.toString()
+// for each route in routes.
+export function RouteOptions(): string[] {
+  const routeOptions: string[] = [];
+  for (const route of routes) {
+    for (const destinations of route.destinations) {
+      const r = new RouteCalc(route.origin, destinations);
+      const routeStr = r.toString();
+      routeOptions.push(routeStr);
+    }
+  }
+  routeOptions.sort();
+  return routeOptions;
+}
+
 export const routes: Route[] = [
   {
-    origin: System.ImperialPalace, destinations: [
+    origin: System.ImperialPalace,
+    destinations: [
       {
         destination: System.Forge,
         m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
-        minReward: JITA_REDUCED_MIN_REWARD,  // 10m
+        minReward: JITA_REDUCED_MIN_REWARD, // 10m
         isRoundTrip: IS_JITA_ROUND_TRIP,
       },
       {
@@ -56,7 +84,7 @@ export const routes: Route[] = [
       },
       {
         destination: System.CloudRing,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + (FOUR_JUMP_RT / 2),
+        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT / 2,
         isRoundTrip: true,
       },
       {
@@ -103,7 +131,7 @@ export const routes: Route[] = [
         m3Rate: 250,
         isRoundTrip: true,
       },
-    ]
+    ],
   },
   {
     origin: System.Initiative,
@@ -116,7 +144,7 @@ export const routes: Route[] = [
         destination: System.ImperialPalace,
         m3Rate: FOUNTAIN_DELVE_RATE,
       },
-    ]
+    ],
   },
   {
     origin: System.Forge,
@@ -178,8 +206,8 @@ export const routes: Route[] = [
       {
         destination: System.ImperialPalace,
         m3Rate: 500,
-      }
-    ]
+      },
+    ],
   },
   {
     origin: System.Zinkon,
@@ -188,7 +216,6 @@ export const routes: Route[] = [
         destination: System.Forge,
         m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
       },
-    ]
+    ],
   },
 ];
-
