@@ -1,9 +1,10 @@
-_site
-.sass-cache
-.jekyll-metadata
-.jekyll-cache
-.typescript
-.bundle/
-vendor/
 node_modules
-.wrangler/
+dist
+.wrangler
+.dev.vars
+
+# Change them to your taste:
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb

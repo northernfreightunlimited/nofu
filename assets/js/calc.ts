@@ -1,5 +1,5 @@
-import { IS_JITA_ROUND_TRIP } from "./src/consts.js";
-import { RouteCalc, routes } from "./src/routes.js";
+import { IS_JITA_ROUND_TRIP } from "../src/consts.js";
+import { RouteCalc, routes } from "../../src/routes.js";
 
 const ROUTE_SEP_ARROW = " ➠ ";
 const ROUTE_SEP_ARROW_RT = " ⮂ ";
