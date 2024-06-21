@@ -1,5 +1,9 @@
+# Top Level configuration
 name = "nofu"
-pages_build_output_dir = "./dist"
+pages_build_output_dir = "dist/"
+
+compatibility_date = "2023-08-01"
+# compatibility_flags = ["nodejs_compat"]
 
 # [vars]
 # MY_VAR = "my-variable"
