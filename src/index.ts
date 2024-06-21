@@ -116,7 +116,7 @@ function calcResponseTemplate(r: RouteFee) {
 // calculator dropdown.
 app.get("/routes", (c) => {
   const routes = RouteOptions();
-  const options = routes.map((option, _, __) => {
+  const options = routes.map((option) => {
     const isDefault: boolean = option === DEFAULT_ROUTE_SELECTION;
     return html`<option value="${option}" ${isDefault ? "selected" : ""}>
       ${option}

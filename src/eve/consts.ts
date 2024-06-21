@@ -1,5 +1,5 @@
 export const DEFAULT_COLLATERAL_PERCENTAGE_FEE = 0.0075; // 0.75%
-export const JITA_REDUCED_MIN_REWARD = 10e6;  // 10m
+export const JITA_REDUCED_MIN_REWARD = 10e6; // 10m
 export const MILLIONS = 1e6; // 1m
 
 // Rates
@@ -13,14 +13,13 @@ export const FOUNTAIN_DELVE_RATE = 900;
 
 // Defaults where not otherwise specified
 export const ROUTE_DEFAULTS = {
-  minReward: 30e6,  // 30m
-  maxCollateral: 100e9,  // 100b
+  minReward: 30e6, // 30m
+  maxCollateral: 100e9, // 100b
   collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE, // percent collateral to charge as reward
-  maxM3: 350000,  // 350k m3
+  maxM3: 350000, // 350k m3
   isRoundTrip: false,
   flatRate: NaN,
 };
 
 export const ROUTE_SEP_ARROW = " ➠ ";
-export const ROUTE_SEP_ARROW_RT = " ⮂ "
-
+export const ROUTE_SEP_ARROW_RT = " ⮂ ";
