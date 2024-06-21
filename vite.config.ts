@@ -16,7 +16,7 @@ export default defineConfig({
     build(
       {
         emptyOutDir: true,
-        minify: false,
+        minify: true,
         entry: ["src/index.ts"],
       }
     ),
@@ -24,6 +24,14 @@ export default defineConfig({
       targets: [
         {
           src: 'index.html',
+          dest: '',
+        },
+        {
+          src: '404.html',
+          dest: '',
+        },
+        {
+          src: '_routes.json',
           dest: '',
         }
       ]
