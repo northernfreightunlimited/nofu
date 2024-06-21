@@ -1,8 +1,10 @@
 {
+  "include": ["src/**/*"],
+  "exclude": ["functions/**/*"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "lib": ["ESNext"],
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext"],
     "types": ["@cloudflare/workers-types", "vite/client"],
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -16,8 +18,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
-  "exclude": ["functions/**/*"],
+  "types": ["@cloudflare/workers-types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
 
