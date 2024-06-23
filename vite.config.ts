@@ -5,13 +5,6 @@ import { defineConfig } from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
-  assetsInclude: ["index.html"],
-  build: {
-    outDir: "dist/",
-    ssrEmitAssets: true,
-    ssrManifest: true,
-    ssr: true,
-  },
   plugins: [
     build({
       emptyOutDir: true,
