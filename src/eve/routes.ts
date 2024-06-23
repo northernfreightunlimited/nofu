@@ -131,6 +131,12 @@ export const routes: Route[] = [
         m3Rate: 250,
         isRoundTrip: true,
       },
+      {
+        destination: System.Alterari,
+        m3Rate: STANDARD_EXPORT_TO_JITA_RATE + FOUR_JUMP_RT,
+        isRoundTrip: false,
+        collateralRate: 0,
+      },
     ],
   },
   {
@@ -193,6 +199,12 @@ export const routes: Route[] = [
         destination: System.DP,
         m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
         isRoundTrip: true,
+      },
+      {
+        destination: System.Alterari,
+        m3Rate: FOUR_JUMP_RT,
+        isRoundTrip: false,
+        collateralRate: 0,
       },
     ],
   },

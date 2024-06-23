@@ -14,4 +14,5 @@ export enum System {
   O4T = "O4T-Z5 (Paragon Soul)",
   CloudRing = "F7C-H0 (Cloud Ring)",
   DP = "D-PNP9 (Esoteria)",
+  Alterari = "Alterari's Secret Club House (???)",
 }
