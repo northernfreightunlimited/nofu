@@ -15,4 +15,5 @@ export enum System {
   CloudRing = "F7C-H0 (Cloud Ring)",
   DP = "D-PNP9 (Esoteria)",
   Alterari = "Alterari's Secret Club House (???)",
+  UQ = "U-QVWD (Catch)",
 }
