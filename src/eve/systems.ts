@@ -12,7 +12,6 @@ export enum System {
   Serren = "Serren (KFU)",
   Amok = "K-6K16 (Am0k)",
   O4T = "O4T-Z5 (Paragon Soul)",
-  CloudRing = "F7C-H0 (Cloud Ring)",
   DP = "D-PNP9 (Esoteria)",
   Alterari = "Alterari's Secret Club House (???)",
   UQ = "U-QVWD (Catch)",

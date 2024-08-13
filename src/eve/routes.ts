@@ -83,11 +83,6 @@ export const routes: Route[] = [
         isRoundTrip: true,
       },
       {
-        destination: System.CloudRing,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + FOUR_JUMP_RT / 2,
-        isRoundTrip: true,
-      },
-      {
         destination: System.Ahbazon,
         m3Rate: FOUR_JUMP_RT,
         isRoundTrip: true,
@@ -161,11 +156,6 @@ export const routes: Route[] = [
   {
     origin: System.Forge,
     destinations: [
-      {
-        destination: System.CloudRing,
-        m3Rate: STANDARD_DOMAIN_RATE,
-        isRoundTrip: true,
-      },
       {
         destination: System.ImperialPalace,
         m3Rate: STANDARD_IMPORT_FROM_JITA_RATE - JITA_RATE_DISCOUNT,
