@@ -202,6 +202,12 @@ export const routes: Route[] = [
         isRoundTrip: false,
         collateralRate: 0,
       },
+      {
+        destination: System.UQ,
+        m3Rate: 650,
+        isRoundTrip: true,
+        collateralRate: 0,
+      },
     ],
   },
   {
