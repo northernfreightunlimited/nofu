@@ -127,11 +127,6 @@ export const routes: Route[] = [
         isRoundTrip: true,
       },
       {
-        destination: System.Serren,
-        m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
-        isRoundTrip: true,
-      },
-      {
         destination: System.Querious,
         m3Rate: 300,
         isRoundTrip: true,
@@ -192,11 +187,6 @@ export const routes: Route[] = [
       {
         destination: System.Querious,
         m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Serren,
-        m3Rate: FOUR_JUMP_RT,
         isRoundTrip: true,
       },
       {

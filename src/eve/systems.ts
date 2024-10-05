@@ -10,7 +10,6 @@ export enum System {
   Initiative = "B17O-R (INIT.)",
   Querious = "Querious",
   PeriodBasis = "Period Basis",
-  Serren = "Serren (KFU)",
   Amok = "K-6K16 (Am0k)",
   O4T = "O4T-Z5 (Paragon Soul)",
   DP = "D-PNP9 (Esoteria)",
