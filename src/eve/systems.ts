@@ -1,5 +1,6 @@
 export enum System {
   ImperialPalace = "1DQ1-A", // Can't use 1DQ as key here because it starts with a number
+  UALX = "UALX-3 (Teneferis)",
   Delve = "Intra Delve",
   Forge = "Jita/Perimeter",
   Domain = "Amarr/Ashab",

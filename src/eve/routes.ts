@@ -64,6 +64,16 @@ export function RouteOptions(): string[] {
 
 export const routes: Route[] = [
   {
+    origin: System.UALX,
+    destinations: [
+      {
+        destination: System.Forge,
+        m3Rate: 900,
+        isRoundTrip: IS_JITA_ROUND_TRIP,
+      },
+    ],
+  },
+  {
     origin: System.ImperialPalace,
     destinations: [
       {
@@ -71,6 +81,11 @@ export const routes: Route[] = [
         m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
         minReward: JITA_REDUCED_MIN_REWARD, // 10m
         isRoundTrip: IS_JITA_ROUND_TRIP,
+      },
+      {
+        destination: System.UALX,
+        m3Rate: 1000,
+        isRoundTrip: true,
       },
       {
         destination: System.DP,
@@ -159,6 +174,13 @@ export const routes: Route[] = [
       {
         destination: System.ImperialPalace,
         m3Rate: STANDARD_IMPORT_FROM_JITA_RATE - JITA_RATE_DISCOUNT,
+        minReward: JITA_REDUCED_MIN_REWARD,
+        collateralRate: 0,
+        isRoundTrip: IS_JITA_ROUND_TRIP,
+      },
+      {
+        destination: System.UALX,
+        m3Rate: 900,
         minReward: JITA_REDUCED_MIN_REWARD,
         collateralRate: 0,
         isRoundTrip: IS_JITA_ROUND_TRIP,
