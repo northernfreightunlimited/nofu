@@ -86,6 +86,7 @@ export const routes: Route[] = [
         destination: System.UALX,
         m3Rate: 1000,
         isRoundTrip: true,
+        collateralRate: 0,
       },
       {
         destination: System.DP,
