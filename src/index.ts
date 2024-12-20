@@ -8,10 +8,11 @@ import {
   ROUTE_SEP_ARROW_RT,
 } from "./eve/consts";
 import { RouteOptions } from "./eve/routes";
+import { System } from "./eve/systems";
 
-const DEFAULT_ROUTE_SELECTION = `1DQ1-A${
+const DEFAULT_ROUTE_SELECTION = `${System.UALX}${
   IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW
-}Jita/Perimeter`;
+}${System.Forge}`;
 
 const app = new Hono();
 

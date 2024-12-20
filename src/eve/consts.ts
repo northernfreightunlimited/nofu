@@ -9,7 +9,6 @@ export const STANDARD_EXPORT_TO_JITA_RATE = 850;
 export const JITA_RATE_DISCOUNT = 0;
 export const IS_JITA_ROUND_TRIP = false;
 export const STANDARD_DOMAIN_RATE = FOUR_JUMP_RT;
-export const FOUNTAIN_DELVE_RATE = 900;
 
 // Defaults where not otherwise specified
 export const ROUTE_DEFAULTS = {
