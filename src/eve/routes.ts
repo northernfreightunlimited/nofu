@@ -1,5 +1,4 @@
 import {
-  FOUNTAIN_DELVE_RATE,
   FOUR_JUMP_RT,
   IS_JITA_ROUND_TRIP,
   JITA_RATE_DISCOUNT,
@@ -69,7 +68,40 @@ export const routes: Route[] = [
       {
         destination: System.Forge,
         m3Rate: 900,
-        isRoundTrip: IS_JITA_ROUND_TRIP,
+        isRoundTrip: false,
+      },
+      {
+        destination: System.ImperialPalace,
+        m3Rate: 1000,
+        collateralRate: 0,
+        isRoundTrip: true,
+      },
+      {
+        destination: System.Domain,
+        m3Rate: 775,
+        isRoundTrip: true,
+      },
+      {
+        destination: System.GSF,
+        m3Rate: 250,
+        collateralRate: 0,
+        isRoundTrip: true,
+      },
+      {
+        destination: System.GEZ,
+        m3Rate: 250,
+        collateralRate: 0,
+        isRoundTrip: true,
+      }
+    ],
+  },
+  {
+    origin: System.GEZ,
+    destinations: [
+      {
+        destination: System.Forge,
+        m3Rate: 825,
+        isRoundTrip: false,
       },
     ],
   },
@@ -78,89 +110,15 @@ export const routes: Route[] = [
     destinations: [
       {
         destination: System.Forge,
-        m3Rate: STANDARD_EXPORT_TO_JITA_RATE - JITA_RATE_DISCOUNT,
+        m3Rate: 1000,
         minReward: JITA_REDUCED_MIN_REWARD, // 10m
-        isRoundTrip: IS_JITA_ROUND_TRIP,
+        isRoundTrip: false,
       },
       {
         destination: System.UALX,
         m3Rate: 1000,
         isRoundTrip: true,
         collateralRate: 0,
-      },
-      {
-        destination: System.DP,
-        m3Rate: 750,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.O4T,
-        m3Rate: 750,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Ahbazon,
-        m3Rate: FOUR_JUMP_RT,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Domain,
-        m3Rate: STANDARD_DOMAIN_RATE,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Initiative,
-        m3Rate: FOUNTAIN_DELVE_RATE,
-      },
-      {
-        destination: System.PeriodBasis,
-        m3Rate: FOUR_JUMP_RT,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Zinkon,
-        m3Rate: STANDARD_DOMAIN_RATE,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Delve,
-        m3Rate: 300,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Querious,
-        m3Rate: 300,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Amok,
-        m3Rate: 250,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Alterari,
-        m3Rate: STANDARD_EXPORT_TO_JITA_RATE + FOUR_JUMP_RT,
-        isRoundTrip: false,
-        collateralRate: 0,
-      },
-      {
-        destination: System.UQ,
-        m3Rate: 730,
-        isRoundTrip: true,
-        collateralRate: 0,
-      },
-    ],
-  },
-  {
-    origin: System.Initiative,
-    destinations: [
-      {
-        destination: System.Forge,
-        m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
-      },
-      {
-        destination: System.ImperialPalace,
-        m3Rate: FOUNTAIN_DELVE_RATE,
       },
     ],
   },
@@ -169,10 +127,10 @@ export const routes: Route[] = [
     destinations: [
       {
         destination: System.ImperialPalace,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE - JITA_RATE_DISCOUNT,
+        m3Rate: 1000,
         minReward: JITA_REDUCED_MIN_REWARD,
         collateralRate: 0,
-        isRoundTrip: IS_JITA_ROUND_TRIP,
+        isRoundTrip: false,
       },
       {
         destination: System.UALX,
@@ -182,44 +140,11 @@ export const routes: Route[] = [
         isRoundTrip: IS_JITA_ROUND_TRIP,
       },
       {
-        destination: System.Initiative,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE,
-      },
-      {
-        destination: System.Querious,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 100,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Amok,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 50,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.PeriodBasis,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 350,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.O4T,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
-      },
-      {
-        destination: System.DP,
-        m3Rate: STANDARD_IMPORT_FROM_JITA_RATE + 750,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.Alterari,
-        m3Rate: FOUR_JUMP_RT,
-        isRoundTrip: false,
+        destination: System.GEZ,
+        m3Rate: 800,
+        minReward: JITA_REDUCED_MIN_REWARD,
         collateralRate: 0,
-      },
-      {
-        destination: System.UQ,
-        m3Rate: 650,
-        isRoundTrip: true,
-        collateralRate: 0,
+        isRoundTrip: IS_JITA_ROUND_TRIP,
       },
     ],
   },
@@ -227,21 +152,21 @@ export const routes: Route[] = [
     origin: System.Irmalin,
     destinations: [
       {
-        destination: System.Forge,
-        m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
-      },
-      {
         destination: System.ImperialPalace,
         m3Rate: 500,
+        isRoundTrip: false,
+        collateralRate: 0,
       },
-    ],
-  },
-  {
-    origin: System.Zinkon,
-    destinations: [
+      {
+        destination: System.UALX,
+        m3Rate: 1000,
+        isRoundTrip: false,
+        collateralRate: 0,
+      },
       {
         destination: System.Forge,
-        m3Rate: STANDARD_EXPORT_TO_JITA_RATE,
+        m3Rate: 1000,
+        isRoundTrip: false,
       },
     ],
   },
