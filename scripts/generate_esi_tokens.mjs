@@ -100,7 +100,10 @@ async function main() {
 
     console.log("\nStarting local server for OAuth callback...");
 
-    const server = http.createServer(async (req, res) => {
+    // Declare server variable here so it's accessible in SIGINT handler if server.listen fails
+    let server; 
+
+    server = http.createServer(async (req, res) => {
         const requestUrl = new URL(req.url, `http://${req.headers.host}`);
 
         if (requestUrl.pathname === CALLBACK_PATH) {
@@ -227,18 +230,30 @@ ESI_CORPORATION_ID="${esiCorporationId || ''}"
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end("<h1>Authentication Successful!</h1><p>You can close this window. Check your console for credentials and .dev.vars status.</p>");
                 
-                console.log("Server shutting down...");
-                server.close(() => {
-                    console.log("Server closed.");
-                    process.exit(0); // Successfully exit the script
+                console.log("Server shutting down after successful operation...");
+                server.close((err) => {
+                  if (err) console.error('Error closing server after success:', err);
+                  else console.log('Server closed successfully.');
+                  console.log('Exiting script.');
+                  process.exit(0); // Force exit after server has confirmed close
                 });
 
             } catch (error) {
                 console.error("\nError during token exchange or processing:", error.message);
                 if (error.response) console.error("Response body:", await error.response.text());
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end("An error occurred. Check the console for details.");
-                server.close(() => process.exit(1));
+                
+                // Ensure response is sent before trying to close server and exit
+                if (!res.writableEnded) {
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end("An error occurred. Check the console for details.");
+                }
+                
+                console.log("Server shutting down after error...");
+                server.close((closeErr) => {
+                  if (closeErr) console.error('Error closing server after error:', closeErr);
+                  else console.log('Server closed after error.');
+                  process.exit(1);
+                });
             }
         } else {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -260,11 +275,25 @@ ESI_CORPORATION_ID="${esiCorporationId || ''}"
 
     // Keep script running until server is closed by callback or error
     process.on('SIGINT', () => {
-        console.log("\nCaught interrupt signal. Shutting down server...");
-        server.close(() => {
-            console.log("Server closed.");
-            process.exit(0);
+      console.log('\nGracefully shutting down from SIGINT (Ctrl+C)...');
+      const shutdownTimeout = setTimeout(() => {
+        console.log('Graceful shutdown timed out. Forcing exit.');
+        process.exit(1); // Force exit if not closed within ~2 seconds
+      }, 2000);
+      shutdownTimeout.unref(); // Allow Node.js to exit if this is the only timer
+
+      if (server && server.listening) { // Check if server exists and is listening
+        server.close((err) => {
+          clearTimeout(shutdownTimeout);
+          if (err) console.error('Error closing server during SIGINT:', err);
+          else console.log('Server closed during SIGINT.');
+          process.exit(0);
         });
+      } else {
+        clearTimeout(shutdownTimeout);
+        console.log('Server was not running or already closed. Exiting.');
+        process.exit(0); // If server wasn't running or already closed
+      }
     });
 }
 
