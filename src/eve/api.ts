@@ -96,15 +96,15 @@ export async function fetchCorporationContracts(env: Env): Promise<Contract[]> {
             )
             .map((esiContract): Contract => {
                 // Basic validation for key fields
-                if (!esiContract.contract_id || !esiContract.issuer_id || !esiContract.issuer_corp_id) {
-                    console.warn("Skipping contract with missing critical IDs:", esiContract);
+                if (!esiContract.contract_id || !esiContract.issuer_id || !esiContract.issuer_corporation_id) {
+                    console.warn("Skipping contract with missing critical IDs (contract_id, issuer_id, issuer_corporation_id):", esiContract);
                     return null; // Will be filtered out later
                 }
                 return {
                     contract_id: esiContract.contract_id,
                     status: esiContract.status,
                     issuer_id: esiContract.issuer_id,
-                    issuer_corporation_id: esiContract.issuer_corp_id, // ESI uses issuer_corp_id
+                    issuer_corporation_id: esiContract.issuer_corporation_id, // Assuming ESI sends issuer_corporation_id
                     assignee_id: esiContract.assignee_id,
                     acceptor_id: esiContract.acceptor_id,
                     start_location_id: esiContract.start_location_id,

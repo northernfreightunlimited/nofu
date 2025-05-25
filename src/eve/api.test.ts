@@ -32,7 +32,7 @@ const mockEsiContract = (id: number, type = 'courier', status = 'outstanding', o
   type,
   status,
   issuer_id: 1000 + id,
-  issuer_corp_id: 2000 + id, // ESI field name
+  issuer_corporation_id: 2000 + id, // ESI field name, updated
   assignee_id: 0, // Can be a corporation or character ID
   acceptor_id: 0, // Character ID
   start_location_id: 60003760, // Jita IV Moon 4 - Caldari Trade Hub
@@ -91,11 +91,11 @@ describe('fetchCorporationContracts', () => {
     
     expect(contracts).toHaveLength(2);
     expect(contracts[0].contract_id).toBe(1);
-    expect(contracts[0].issuer_corporation_id).toBe(2001); // Verifying mapping from issuer_corp_id
+    expect(contracts[0].issuer_corporation_id).toBe(2001); // Verifying mapping from issuer_corporation_id
     expect(contracts[0].type).toBe('courier');
     expect(contracts[0].status).toBe('outstanding');
     expect(contracts[1].contract_id).toBe(4);
-    expect(contracts[1].issuer_corporation_id).toBe(2004);
+    expect(contracts[1].issuer_corporation_id).toBe(2004); // Verifying mapping from issuer_corporation_id
   });
 
   it('2. should return an empty array if ESI returns no contracts', async () => {
@@ -177,7 +177,7 @@ describe('fetchCorporationContracts', () => {
       mockEsiContract(1), // Valid
       mockEsiContract(2, 'courier', 'outstanding', { contract_id: undefined }), // Missing contract_id
       mockEsiContract(3, 'courier', 'outstanding', { issuer_id: undefined }), // Missing issuer_id
-      mockEsiContract(4, 'courier', 'outstanding', { issuer_corp_id: undefined }), // Missing issuer_corp_id
+      mockEsiContract(4, 'courier', 'outstanding', { issuer_corporation_id: undefined }), // Missing issuer_corporation_id
       mockEsiContract(5), // Valid
     ];
     fetchSpy.mockResolvedValue(new Response(JSON.stringify(mockContractsResponse), { status: 200 }));
