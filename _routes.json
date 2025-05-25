@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "include": ["/routes", "/calc", "/admin/*", "/cdn-cgi/*"],
+  "include": ["/routes", "/calc", "/admin/*", "/api/*", "/cdn-cgi/*"],
   "exclude": ["/index.html", "/"]
 }
