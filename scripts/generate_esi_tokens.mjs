@@ -192,16 +192,23 @@ async function main() {
                 console.log("Scopes (from JWT 'scp'/'scopes'):", jwtScopes);
                 console.log("------------------------\n");
 
-                console.log("🎉 Success! You have obtained your ESI Refresh Token and Character ID.");
+                console.log("Character ID (from JWT 'sub'):", characterId);
+                console.log("Scopes (from JWT 'scp'/'scopes'):", jwtScopes);
+                console.log("------------------------\n");
 
-                // Prompt for ESI_CORPORATION_ID
-                const esiCorporationId = await promptUser("\nEnter your ESI Corporation ID (the ID of the corp you want to fetch contracts for): ");
+                // 1. Respond to Browser First
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end('<html><body><h1>Authentication successful! You can close this browser tab. Please check your console for the next steps.</h1></body></html>');
+                
+                console.log("🎉 Success! Browser has been notified. Please follow console prompts.");
+
+                // 2. Prompt for ESI_CORPORATION_ID in console
+                const esiCorporationId = await promptUser("\nINPUT REQUIRED: Enter your ESI Corporation ID (the ID of the corp you want to fetch contracts for): ");
                 if (!esiCorporationId) {
-                    console.error("\nESI Corporation ID is required. Cannot write .dev.vars completely.");
-                    // Optionally, decide if you want to proceed without it or exit.
-                    // For now, we'll proceed and .dev.vars will have an empty ESI_CORPORATION_ID
+                    console.warn("\nWarning: ESI Corporation ID was not provided. It will be empty in .dev.vars.");
                 }
                 
+                // 3. Write .dev.vars file
                 const devVarsContent = `ESI_CLIENT_ID="${esiClientId}"
 ESI_CLIENT_SECRET="${esiClientSecret}"
 ESI_REFRESH_TOKEN="${refresh_token}"
@@ -215,7 +222,7 @@ ESI_CORPORATION_ID="${esiCorporationId || ''}"
                     console.error('\n❌ Error writing .dev.vars file:', err.message);
                 }
 
-                // Still log credentials to console for visibility and manual setup if needed
+                // 4. Log to console
                 console.log("\n--- Your ESI Credentials (also written to .dev.vars if successful) ---");
                 console.log(`ESI_CLIENT_ID:               "${esiClientId}"`);
                 console.log(`ESI_CLIENT_SECRET:           "${esiClientSecret}"`);
@@ -226,17 +233,24 @@ ESI_CORPORATION_ID="${esiCorporationId || ''}"
                 console.log("Ensure these values are also set as secrets in your Cloudflare Worker production environment.");
                 console.log("The .dev.vars file is used for local development with 'wrangler pages dev'.\n");
 
-
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end("<h1>Authentication Successful!</h1><p>You can close this window. Check your console for credentials and .dev.vars status.</p>");
-                
-                console.log("Server shutting down after successful operation...");
-                server.close((err) => {
-                  if (err) console.error('Error closing server after success:', err);
-                  else console.log('Server closed successfully.');
-                  console.log('Exiting script.');
-                  process.exit(0); // Force exit after server has confirmed close
-                });
+                // 5. Ensure Clean Normal Shutdown
+                console.log('\nAttempting to close server and exit...');
+                if (server && server.listening) { // Ensure server exists and is listening
+                    server.close((err) => {
+                        if (err) {
+                            console.error('Error closing server:', err);
+                            process.exit(1); // Exit with error if server fails to close
+                        } else {
+                            console.log('Server closed successfully.');
+                        }
+                        console.log('Exiting script.');
+                        process.exit(0); // Clean exit
+                    });
+                } else {
+                    // If server wasn't listening or already closed for some reason
+                    console.log('Server not listening or already closed. Exiting script.');
+                    process.exit(0); // Clean exit
+                }
 
             } catch (error) {
                 console.error("\nError during token exchange or processing:", error.message);
