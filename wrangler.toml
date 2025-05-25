@@ -16,10 +16,19 @@ compatibility_date = "2023-08-01"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "eve_contracts_db"
+# database_id = "YOUR_D1_DATABASE_ID_HERE" # Important: Replace with your actual D1 DB ID
 
 # [ai]
 # binding = "AI"
+
+[[crons]]
+schedule = "*/15 * * * *"
+# Wrangler will find the exported 'scheduled' handler from your Functions.
+# No 'script' name is needed here if your build process makes 'src/cron.ts' (or its output)
+# part of the deployed Functions and it's the only 'scheduled' export,
+# or if the framework handles routing scheduled events appropriately.
+# If explicit script naming is required by the build setup, that would be added here.
+# For now, we rely on the implicit discovery for Pages Functions.

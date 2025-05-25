@@ -3,10 +3,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "npm run build && wrangler pages dev",
+    "preview": "npm run build && wrangler pages dev --persist-to=.mf/d1",
     "deploy": "npm run build && wrangler pages deploy dist",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "db:migrate:local": "wrangler d1 execute DB --file=./schema.sql --local --persist-to=.mf/d1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "hono": "^4.6.2"
@@ -16,16 +20,20 @@
     "@eslint/js": "^9.5.0",
     "@hono/vite-cloudflare-pages": "^0.4.1",
     "@hono/vite-dev-server": "^0.12.2",
+    "@vitest/ui": "^1.6.0",
     "eslint": "^9.11.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "globals": "^15.9.0",
+    "node-fetch": "^3.3.2",
+    "open": "^10.1.0",
     "prettier": "3.3.2",
     "typescript": "^5.5.2",
     "typescript-eslint": "^8.6.0",
     "undici": ">=5.28.5",
     "vite": "^5.4.12",
     "vite-plugin-static-copy": "^1.0.5",
+    "vitest": "^1.6.0",
     "wrangler": "^3.47.0"
   }
 }

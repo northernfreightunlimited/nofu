@@ -9,12 +9,27 @@ import {
 } from "./eve/consts";
 import { RouteOptions } from "./eve/routes";
 import { System } from "./eve/systems";
+import type { D1Database } from "@cloudflare/workers-types";
+
+// Import the admin application
+import adminApp from './admin';
 
 const DEFAULT_ROUTE_SELECTION = `${System.UALX}${
   IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW
 }${System.Forge}`;
 
-const app = new Hono();
+// Define an environment interface that includes bindings needed by any part of the app
+// For now, adminApp requires DB. Other routes might require other bindings in the future.
+interface Env {
+  DB: D1Database;
+  // Add other bindings here if needed by the main app or other routed apps
+  // e.g., ESI_CLIENT_ID: string;
+  // ESI_CLIENT_SECRET: string;
+  // ESI_REFRESH_TOKEN: string;
+  // ESI_CORPORATION_ID: string;
+}
+
+const app = new Hono<{ Bindings: Env }>();
 
 app.get("/calc", async (c) => {
   const req = c.req;
@@ -126,5 +141,8 @@ app.get("/routes", (c) => {
 
   return c.html(options.join("\n"));
 });
+
+// Mount the admin application under the /admin path
+app.route('/admin', adminApp);
 
 export default app;
