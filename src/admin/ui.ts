@@ -164,11 +164,39 @@ export const AdminPageLayout = (stats: AdminStatsData) => html`
             border-radius: 4px;
             margin-top: 20px;
         }
+        #triggerUpdateBtn {
+            background-color: #00aaff;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        #triggerUpdateBtn:hover {
+            background-color: #0077cc;
+        }
+        #triggerUpdateBtn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        #triggerUpdateStatus {
+            margin-top: 10px;
+            min-height: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Courier Contract Statistics</h1>
+
+        <div class="stat-card" style="margin-bottom: 20px;"> <!-- Actions Card -->
+            <h3>Actions</h3>
+            <button id="triggerUpdateBtn" type="button">Manually Run Contract Update</button>
+            <div id="triggerUpdateStatus"></div>
+        </div>
         
         <div class="stats-grid">
             <div class="stat-card">
@@ -218,6 +246,43 @@ export const AdminPageLayout = (stats: AdminStatsData) => html`
             </tbody>
         </table>` : html`<p class="no-data">No revenue data by character for this month.</p>`}
     </div>
+
+    ${html`
+    <script>
+        const triggerBtn = document.getElementById('triggerUpdateBtn');
+        const statusDiv = document.getElementById('triggerUpdateStatus');
+
+        if (triggerBtn && statusDiv) {
+            triggerBtn.addEventListener('click', async () => {
+                statusDiv.textContent = 'Triggering update job...';
+                statusDiv.style.color = '#e0e0e0'; // Default text color
+                triggerBtn.disabled = true;
+
+                try {
+                    // Using an absolute path for the fetch request
+                    const response = await fetch('/api/trigger-contract-update', { 
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        statusDiv.textContent = data.message || 'Job status unknown.';
+                        statusDiv.style.color = data.success ? 'lightgreen' : 'salmon'; // Using lightgreen and salmon for dark theme
+                    } else {
+                        statusDiv.textContent = 'Failed to trigger job. Server responded with status: ' + response.status;
+                        statusDiv.style.color = 'salmon';
+                    }
+                } catch (error) {
+                    statusDiv.textContent = 'Network error or script failed: ' + (error instanceof Error ? error.message : String(error));
+                    statusDiv.style.color = 'salmon';
+                } finally {
+                    triggerBtn.disabled = false;
+                }
+            });
+        }
+    </script>
+    `}
 </body>
 </html>
 `;

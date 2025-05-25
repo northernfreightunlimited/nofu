@@ -13,20 +13,21 @@ import type { D1Database } from "@cloudflare/workers-types";
 
 // Import the admin application
 import adminApp from './admin';
+// Import the performContractUpdate function and its result type
+import { performContractUpdate, PerformContractUpdateResult } from './cron';
+
 
 const DEFAULT_ROUTE_SELECTION = `${System.UALX}${
   IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW
 }${System.Forge}`;
 
 // Define an environment interface that includes bindings needed by any part of the app
-// For now, adminApp requires DB. Other routes might require other bindings in the future.
 interface Env {
   DB: D1Database;
-  // Add other bindings here if needed by the main app or other routed apps
-  // e.g., ESI_CLIENT_ID: string;
-  // ESI_CLIENT_SECRET: string;
-  // ESI_REFRESH_TOKEN: string;
-  // ESI_CORPORATION_ID: string;
+  ESI_CLIENT_ID: string;
+  ESI_CLIENT_SECRET: string;
+  ESI_REFRESH_TOKEN: string;
+  ESI_CORPORATION_ID: string;
 }
 
 const app = new Hono<{ Bindings: Env }>();
@@ -144,5 +145,31 @@ app.get("/routes", (c) => {
 
 // Mount the admin application under the /admin path
 app.route('/admin', adminApp);
+
+// Endpoint to manually trigger the contract update job
+app.post('/api/trigger-contract-update', async (c) => {
+    console.log('Manual contract update job triggered via API.');
+    try {
+        // Ensure 'c.env' is passed, as performContractUpdate expects it.
+        const result: PerformContractUpdateResult = await performContractUpdate(c.env); 
+        if (result.success) {
+            return c.json({ 
+                success: true, 
+                message: result.message, 
+                details: { 
+                    fetched: result.contractsFetched, 
+                    processed: result.contractsProcessed 
+                } 
+            }, 200);
+        } else {
+            console.error('Manual trigger failed:', result.message);
+            return c.json({ success: false, message: 'Failed to run contract update job.', error: result.message }, 500);
+        }
+    } catch (error) {
+        console.error('Error in /api/trigger-contract-update endpoint:', error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        return c.json({ success: false, message: 'An unexpected error occurred.', error: errorMessage }, 500);
+    }
+});
 
 export default app;

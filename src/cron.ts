@@ -1,8 +1,9 @@
 // src/cron.ts
 // Handles the scheduled cron job for fetching and storing EVE Online contracts.
+// Also provides a reusable function for on-demand contract updates.
 
 import { fetchCorporationContracts, Contract } from './eve/api'; // Path assuming cron.ts is in src/ and api.ts is in src/eve/
-import type { D1Database, ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types';
+import type { D1Database, D1Result, D1PreparedStatement, ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types';
 
 /**
  * Interface for Cloudflare Worker environment variables.
@@ -16,10 +17,133 @@ export interface Env {
     DB: D1Database; // D1 Database binding
 }
 
+/**
+ * Interface for the result of the contract update operation.
+ */
+export interface PerformContractUpdateResult {
+    success: boolean;
+    message: string;
+    contractsFetched?: number;
+    contractsProcessed?: number; // Number of rows affected (inserted/updated)
+}
+
+/**
+ * Fetches outstanding courier contracts from ESI and upserts them into the D1 database.
+ * This function can be called by the cron job or potentially by an HTTP endpoint.
+ *
+ * @param env - The Cloudflare Worker environment containing secrets and bindings.
+ * @returns A promise that resolves to a PerformContractUpdateResult object.
+ */
+export async function performContractUpdate(env: Env): Promise<PerformContractUpdateResult> {
+    try {
+        console.log("performContractUpdate: Fetching corporation contracts from ESI...");
+        const contracts: Contract[] = await fetchCorporationContracts(env);
+
+        if (contracts.length === 0) {
+            const msg = "No new outstanding courier contracts found.";
+            console.log(`performContractUpdate: ${msg}`);
+            return { success: true, message: msg, contractsFetched: 0 };
+        }
+
+        console.log(`performContractUpdate: Fetched ${contracts.length} outstanding courier contract(s).`);
+
+        const db = env.DB;
+        if (!db) {
+            // This check is more for robustness; in a Worker, env.DB should be configured or it's a deployment issue.
+            throw new Error("D1 Database (env.DB) is not available.");
+        }
+
+        const upsertSql = `
+            INSERT INTO contracts (
+                contract_id, status, issuer_id, issuer_corporation_id, assignee_id, 
+                acceptor_id, start_location_id, end_location_id, type, reward, 
+                collateral, volume, date_issued, date_expired, date_accepted, 
+                date_completed, days_to_complete, title
+            ) VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+                ?, ?, ?, ?, ?, ?, ?, ?
+            ) ON CONFLICT(contract_id) DO UPDATE SET
+                status = excluded.status,
+                issuer_id = excluded.issuer_id,
+                issuer_corporation_id = excluded.issuer_corporation_id,
+                assignee_id = excluded.assignee_id,
+                acceptor_id = excluded.acceptor_id,
+                start_location_id = excluded.start_location_id,
+                end_location_id = excluded.end_location_id,
+                type = excluded.type,
+                reward = excluded.reward,
+                collateral = excluded.collateral,
+                volume = excluded.volume,
+                date_issued = excluded.date_issued,
+                date_expired = excluded.date_expired,
+                date_accepted = excluded.date_accepted,
+                date_completed = excluded.date_completed,
+                days_to_complete = excluded.days_to_complete,
+                title = excluded.title;
+        `;
+
+        const statements: D1PreparedStatement[] = contracts.map(contract => {
+            return db.prepare(upsertSql).bind(
+                contract.contract_id,
+                contract.status,
+                contract.issuer_id,
+                contract.issuer_corporation_id,
+                contract.assignee_id ?? null,
+                contract.acceptor_id ?? null,
+                contract.start_location_id,
+                contract.end_location_id,
+                contract.type,
+                contract.reward,
+                contract.collateral,
+                contract.volume,
+                contract.date_issued,
+                contract.date_expired,
+                contract.date_accepted ?? null,
+                contract.date_completed ?? null,
+                contract.days_to_complete ?? null,
+                contract.title ?? null
+            );
+        });
+
+        console.log(`performContractUpdate: Preparing to batch upsert ${statements.length} contract(s) into D1...`);
+        const batchResults: D1Result[] = await db.batch(statements);
+        
+        // Calculate total rows affected (inserted/updated)
+        // D1Result.meta.changes or D1Result.meta.rows_written can be used.
+        // 'changes' is standard SQLite for rows inserted, updated, or deleted.
+        // 'rows_written' is specific to D1 and might be more direct for inserts/updates.
+        let totalRowsAffected = 0;
+        batchResults.forEach(result => {
+            if (result.meta && typeof result.meta.changes === 'number') {
+                totalRowsAffected += result.meta.changes;
+            } else if (result.meta && typeof result.meta.rows_written === 'number') { // Fallback for D1 specific
+                totalRowsAffected += result.meta.rows_written;
+            }
+        });
+
+        const successMsg = `D1 batch operation completed. Fetched: ${contracts.length}, Processed (upserted/updated): ${totalRowsAffected}.`;
+        console.log(`performContractUpdate: ${successMsg}`);
+        return { 
+            success: true, 
+            message: successMsg, 
+            contractsFetched: contracts.length, 
+            contractsProcessed: totalRowsAffected 
+        };
+
+    } catch (error) {
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        console.error("performContractUpdate: Error during contract update:", errorMsg);
+        if (error instanceof Error && error.stack) {
+            console.error(error.stack);
+        }
+        return { success: false, message: `Error updating contracts: ${errorMsg}` };
+    }
+}
+
 export default {
     /**
      * Handles the scheduled event (cron trigger).
-     * Fetches outstanding courier contracts from ESI and upserts them into the D1 database.
+     * Calls performContractUpdate and logs the result.
      *
      * @param event - The scheduled event information.
      * @param env - The Cloudflare Worker environment containing secrets and bindings.
@@ -28,117 +152,19 @@ export default {
     async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
         console.log(`Cron job started at: ${new Date(event.scheduledTime).toISOString()} (Trigger: ${event.cron})`);
 
-        try {
-            // 1. Fetch outstanding courier contracts from ESI
-            console.log("Fetching corporation contracts from ESI...");
-            const contracts: Contract[] = await fetchCorporationContracts(env);
+        const result = await performContractUpdate(env);
 
-            if (contracts.length === 0) {
-                console.log("No new outstanding courier contracts found.");
-                console.log("Cron job finished.");
-                return;
+        if (result.success) {
+            console.log(`Cron job finished successfully: ${result.message}`);
+            if (typeof result.contractsFetched === 'number') {
+                 console.log(`Contracts Fetched: ${result.contractsFetched}`);
             }
-
-            console.log(`Fetched ${contracts.length} outstanding courier contract(s).`);
-
-            // 2. Prepare and execute batch upsert into D1 Database
-            const db = env.DB;
-            if (!db) {
-                throw new Error("D1 Database (env.DB) is not available.");
+            if (typeof result.contractsProcessed === 'number') {
+                 console.log(`Contracts Processed (Upserted/Updated in D1): ${result.contractsProcessed}`);
             }
-
-            // SQL statement for "upsert":
-            // If a contract with the same contract_id exists, update its fields.
-            // Otherwise, insert a new row.
-            const upsertSql = `
-                INSERT INTO contracts (
-                    contract_id, status, issuer_id, issuer_corporation_id, assignee_id, 
-                    acceptor_id, start_location_id, end_location_id, type, reward, 
-                    collateral, volume, date_issued, date_expired, date_accepted, 
-                    date_completed, days_to_complete, title
-                ) VALUES (
-                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-                    ?, ?, ?, ?, ?, ?, ?, ?
-                ) ON CONFLICT(contract_id) DO UPDATE SET
-                    status = excluded.status,
-                    issuer_id = excluded.issuer_id,
-                    issuer_corporation_id = excluded.issuer_corporation_id,
-                    assignee_id = excluded.assignee_id,
-                    acceptor_id = excluded.acceptor_id,
-                    start_location_id = excluded.start_location_id,
-                    end_location_id = excluded.end_location_id,
-                    type = excluded.type,
-                    reward = excluded.reward,
-                    collateral = excluded.collateral,
-                    volume = excluded.volume,
-                    date_issued = excluded.date_issued,
-                    date_expired = excluded.date_expired,
-                    date_accepted = excluded.date_accepted,
-                    date_completed = excluded.date_completed,
-                    days_to_complete = excluded.days_to_complete,
-                    title = excluded.title;
-            `;
-
-            const statements = contracts.map(contract => {
-                return db.prepare(upsertSql).bind(
-                    contract.contract_id,
-                    contract.status,
-                    contract.issuer_id,
-                    contract.issuer_corporation_id,
-                    contract.assignee_id ?? null, // Handle optional fields
-                    contract.acceptor_id ?? null,
-                    contract.start_location_id,
-                    contract.end_location_id,
-                    contract.type,
-                    contract.reward,
-                    contract.collateral,
-                    contract.volume,
-                    contract.date_issued,
-                    contract.date_expired,
-                    contract.date_accepted ?? null,
-                    contract.date_completed ?? null,
-                    contract.days_to_complete ?? null,
-                    contract.title ?? null
-                );
-            });
-
-            console.log(`Preparing to batch upsert ${statements.length} contract(s) into D1...`);
-            const batchResults = await db.batch(statements);
-            
-            // Log batch results (D1 batch currently returns an array of D1Result objects)
-            // Each result might have { success: boolean, meta: { duration: number, rows_read: number, rows_written: number, last_row_id: any } }
-            // For simplicity, we'll just log the number of statements.
-            // You can iterate through batchResults for more detailed logging if needed.
-            let successCount = 0;
-            let failureCount = 0;
-            batchResults.forEach(result => {
-                // D1Result success is true if the individual statement succeeded
-                // This might be too verbose, but useful for initial debugging.
-                // if (result.success) { // D1Result does not have a `success` property directly on the outer object
-                //    successCount++;
-                // } else {
-                //    failureCount++;
-                // }
-                // A more robust check might involve checking result.meta.changes or similar if available
-                // For now, we assume if db.batch doesn't throw, the operations were accepted by D1.
-            });
-
-            // D1 `batch` will throw an error if the batch operation itself fails.
-            // If it completes, it means D1 accepted the batch.
-            // The results array gives info per statement, but not a simple overall success/failure count.
-            console.log(`D1 batch operation completed. Processed ${contracts.length} contracts.`);
-            // console.log(`Detailed results (if available): ${JSON.stringify(batchResults, null, 2)}`);
-
-
-        } catch (error) {
-            if (error instanceof Error) {
-                console.error("Cron job failed:", error.message);
-                console.error("Stack trace:", error.stack);
-            } else {
-                console.error("Cron job failed with an unknown error:", error);
-            }
-        } finally {
-            console.log("Cron job finished.");
+        } else {
+            console.error(`Cron job failed: ${result.message}`);
         }
+        console.log("Cron job finished processing.");
     }
 };
