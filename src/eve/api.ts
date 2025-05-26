@@ -88,11 +88,24 @@ export async function fetchCorporationContracts(env: Env): Promise<Contract[]> {
             throw new Error("Unexpected ESI response format: Expected an array of contracts.");
         }
 
-        // Filter for outstanding courier contracts and map to our Contract interface
+        // Define an array of statuses to fetch
+        const TARGET_CONTRACT_STATUSES = [
+            "outstanding",
+            "in_progress",
+            "finished", // Generic "completed"
+            "finished_issuer", // Older completed status
+            "finished_contractor", // Older completed status
+            "cancelled",
+            "rejected",
+            "failed"
+            // Consider if 'deleted' or 'reversed' are needed or returned by this ESI endpoint.
+        ];
+
+        // Filter for courier contracts with relevant statuses and map to our Contract interface
         const filteredAndMappedContracts = esiContracts
             .filter(esiContract => 
                 esiContract.type === "courier" && 
-                esiContract.status === "outstanding"
+                TARGET_CONTRACT_STATUSES.includes(esiContract.status)
             )
             .map((esiContract): Contract => {
                 // Basic validation for key fields
@@ -123,7 +136,7 @@ export async function fetchCorporationContracts(env: Env): Promise<Contract[]> {
             })
             .filter(contract => contract !== null) as Contract[]; // Remove nulls from mapping failures
 
-        // console.log(`Fetched and mapped ${filteredAndMappedContracts.length} outstanding courier contracts.`); // For debugging
+        // console.log(`Fetched and mapped ${filteredAndMappedContracts.length} relevant courier contracts.`); // For debugging
         return filteredAndMappedContracts;
 
     } catch (error) {

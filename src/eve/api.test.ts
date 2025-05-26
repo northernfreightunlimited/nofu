@@ -64,14 +64,24 @@ describe('fetchCorporationContracts', () => {
     vi.restoreAllMocks();
   });
 
-  it('1. should fetch, filter, and map outstanding courier contracts correctly', async () => {
+  it('1. should fetch, filter by TARGET_CONTRACT_STATUSES, and map courier contracts correctly', async () => {
     (getESIAccessToken as ReturnType<typeof vi.fn>).mockResolvedValue('mock_esi_access_token');
+    
+    // Replicate TARGET_CONTRACT_STATUSES for test clarity, or import if exported from api.ts
+    const TARGET_CONTRACT_STATUSES_IN_TEST = [
+        "outstanding", "in_progress", "finished", "finished_issuer", 
+        "finished_contractor", "cancelled", "rejected", "failed"
+    ];
+
     const mockContractsResponse = [
-      mockEsiContract(1, 'courier', 'outstanding'),
-      mockEsiContract(2, 'item_exchange', 'outstanding'), // Should be filtered out (wrong type)
-      mockEsiContract(3, 'courier', 'in_progress'),     // Should be filtered out (wrong status)
-      mockEsiContract(4, 'courier', 'outstanding'),
-      mockEsiContract(5, 'auction', 'outstanding'),     // Should be filtered out (wrong type)
+      mockEsiContract(1, 'courier', 'outstanding'),         // Keep
+      mockEsiContract(2, 'item_exchange', 'outstanding'),  // Filtered: wrong type
+      mockEsiContract(3, 'courier', 'in_progress'),          // Keep (new logic)
+      mockEsiContract(4, 'courier', 'finished'),           // Keep (new logic)
+      mockEsiContract(5, 'courier', 'unknown_status'),     // Filtered: status not in TARGET_CONTRACT_STATUSES
+      mockEsiContract(6, 'courier', 'cancelled'),          // Keep (new logic)
+      mockEsiContract(7, 'auction', 'outstanding'),        // Filtered: wrong type
+      mockEsiContract(8, 'courier', 'rejected')            // Keep (new logic)
     ];
     fetchSpy.mockResolvedValue(new Response(JSON.stringify(mockContractsResponse), { status: 200 }));
 
@@ -89,13 +99,26 @@ describe('fetchCorporationContracts', () => {
       }),
     }));
     
-    expect(contracts).toHaveLength(2);
-    expect(contracts[0].contract_id).toBe(1);
-    expect(contracts[0].issuer_corporation_id).toBe(2001); // Verifying mapping from issuer_corporation_id
-    expect(contracts[0].type).toBe('courier');
-    expect(contracts[0].status).toBe('outstanding');
-    expect(contracts[1].contract_id).toBe(4);
-    expect(contracts[1].issuer_corporation_id).toBe(2004); // Verifying mapping from issuer_corporation_id
+    // Expected contracts: 1 (outstanding), 3 (in_progress), 4 (finished), 6 (cancelled), 8 (rejected)
+    expect(contracts).toHaveLength(5);
+    expect(contracts.map(c => c.contract_id)).toEqual([1, 3, 4, 6, 8]);
+    
+    const contract1 = contracts.find(c => c.contract_id === 1);
+    expect(contract1?.status).toBe('outstanding');
+    expect(contract1?.type).toBe('courier');
+
+    const contract3 = contracts.find(c => c.contract_id === 3);
+    expect(contract3?.status).toBe('in_progress');
+
+    const contract4 = contracts.find(c => c.contract_id === 4);
+    expect(contract4?.status).toBe('finished');
+    
+    const contract6 = contracts.find(c => c.contract_id === 6);
+    expect(contract6?.status).toBe('cancelled');
+
+    const contract8 = contracts.find(c => c.contract_id === 8);
+    expect(contract8?.status).toBe('rejected');
+
   });
 
   it('2. should return an empty array if ESI returns no contracts', async () => {
