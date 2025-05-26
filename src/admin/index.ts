@@ -29,6 +29,16 @@ interface AvgSecondsResult {
     avg_seconds: number | null; // AVG can return null if no rows match
 }
 
+// Interface for the new character monthly stats query
+interface CharacterMonthlyStats {
+    acceptor_id: number;
+    total_revenue: number;
+    contracts_in_progress_this_month: number;
+    contracts_failed_this_month: number;
+    contracts_finished_this_month: number;
+    // character_name will be handled by the UI if needed from a separate source
+}
+
 
 adminApp.get('/', async (c) => {
     const db = c.env.DB;
@@ -100,9 +110,28 @@ adminApp.get('/', async (c) => {
         
         // Revenue By Character This Month
         // acceptor_id is the character who completed the contract
-        const revenueByCharResult = await db.prepare(
-            "SELECT acceptor_id, SUM(reward) as total_revenue FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc') AND acceptor_id IS NOT NULL GROUP BY acceptor_id ORDER BY total_revenue DESC"
-        ).all<CharacterRevenue>();
+        const revenueByCharQuery = `
+            SELECT 
+                acceptor_id, 
+                SUM(CASE WHEN status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc') THEN reward ELSE 0 END) as total_revenue,
+                SUM(CASE WHEN status = 'in_progress' AND date_accepted >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_in_progress_this_month,
+                SUM(CASE WHEN status = 'failed' AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_failed_this_month,
+                SUM(CASE WHEN status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_finished_this_month
+            FROM contracts 
+            WHERE 
+                acceptor_id IS NOT NULL 
+            GROUP BY acceptor_id
+            HAVING 
+                total_revenue > 0 OR 
+                contracts_in_progress_this_month > 0 OR 
+                contracts_failed_this_month > 0 OR 
+                contracts_finished_this_month > 0
+            ORDER BY total_revenue DESC
+        `;
+        const revenueByCharResult = await db.prepare(revenueByCharQuery).all<CharacterMonthlyStats>();
+        // This will be assigned to defaultStats.revenueByCharacterThisMonth. 
+        // The type of revenueByCharacterThisMonth in AdminStatsData (ui.ts) will need to be updated
+        // to CharacterMonthlyStats[] in a subsequent step.
         defaultStats.revenueByCharacterThisMonth = revenueByCharResult.results ?? [];
 
 

@@ -8,10 +8,13 @@ import { html } from 'hono/html';
 /**
  * Represents revenue data for a single character.
  */
-export interface CharacterRevenue {
-    character_id: number;
+export interface CharacterRevenue { // Renaming to CharacterMonthlyStats can be done here if preferred, but following subtask to update CharacterRevenue
+    character_id: number; // Note: This was acceptor_id in the D1 query result
     total_revenue: number;
-    character_name?: string; // Future enhancement: resolve character name from ESI
+    contracts_in_progress_this_month: number;
+    contracts_failed_this_month: number;
+    contracts_finished_this_month: number;
+    character_name?: string; // Optional: for future ESI name resolution
 }
 
 /**
@@ -227,24 +230,30 @@ export const AdminPageLayout = (stats: AdminStatsData) => html`
             </div>
         </div>
 
-        <h2>Revenue This Month By Character</h2>
+        <h2>Revenue And Activity This Month By Character</h2>
         ${stats.revenueByCharacterThisMonth && stats.revenueByCharacterThisMonth.length > 0 ? html`
         <table>
             <thead>
                 <tr>
                     <th>Character ID</th>
-                    <th>Total Revenue</th>
+                    <th>Total Revenue (This Month)</th>
+                    <th>Finished (This Month)</th>
+                    <th>In Progress (Accepted This Month)</th>
+                    <th>Failed (This Month)</th>
                 </tr>
             </thead>
             <tbody>
-                ${stats.revenueByCharacterThisMonth.map(charRev => html`
+                ${stats.revenueByCharacterThisMonth.map(charStat => html`
                 <tr>
-                    <td>${charRev.character_id} ${charRev.character_name ? '(' + charRev.character_name + ')' : ''}</td>
-                    <td>${formatISK(charRev.total_revenue)}</td>
+                    <td>${charStat.character_id} ${charStat.character_name ? '(' + charStat.character_name + ')' : ''}</td>
+                    <td>${formatISK(charStat.total_revenue)}</td>
+                    <td>${charStat.contracts_finished_this_month}</td>
+                    <td>${charStat.contracts_in_progress_this_month}</td>
+                    <td>${charStat.contracts_failed_this_month}</td>
                 </tr>
                 `)}
             </tbody>
-        </table>` : html`<p class="no-data">No revenue data by character for this month.</p>`}
+        </table>` : html`<p class="no-data">No activity data by character for this month.</p>`}
     </div>
 
     ${html`

@@ -215,6 +215,90 @@ describe('/admin endpoint integration tests', () => {
     // 202800s = 2d 8h 20m 0s
     expect(html).toContain('Avg. Total Time (Issued to Completion): <strong>2d 8h 20m 0s</strong>');
 
+    // Verify new table headers for character activity
+    expect(html).toMatch(/<th>Finished \(This Month\)<\/th>/);
+    expect(html).toMatch(/<th>In Progress \(Accepted This Month\)<\/th>/);
+    expect(html).toMatch(/<th>Failed \(This Month\)<\/th>/);
+
+    // Verify character 101's new stats (2 finished, 0 in_progress, 0 failed this month)
+    // C3 and C5 were finished_courier by 101 this month
+    expect(html).toContain('<td>101</td>'); // Find row for char 101
+    expect(html).toMatch(/<td>101<\/td>\s*<td>4,000,000\.00 ISK<\/td>\s*<td>2<\/td>\s*<td>0<\/td>\s*<td>0<\/td>/);
+    
+    // Verify character 102's new stats (1 finished, 0 in_progress, 0 failed this month)
+    // C4 was finished_courier by 102 this month
+    expect(html).toContain('<td>102</td>'); // Find row for char 102
+    expect(html).toMatch(/<td>102<\/td>\s*<td>2,000,000\.00 ISK<\/td>\s*<td>1<\/td>\s*<td>0<\/td>\s*<td>0<\/td>/);
+
+  });
+
+  it('should display correct detailed monthly activity for characters', async () => {
+    const db = await mf.getD1Database("DB");
+    const common = {
+      issuer_id: 1002, issuer_corporation_id: 2002, 
+      start_location_id: 60003760, end_location_id: 60008494,
+      type: 'courier', collateral: 50000, volume: 50, title: 'Activity Test'
+    };
+
+    const char789 = 789;
+    const char654 = 654;
+
+    // Dates for "this month"
+    const dateIssuedThisMonth = toIso(new Date(startOfThisMonthUTC.getTime() + 1 * 86400000)); // 1 day into this month
+    const dateAcceptedThisMonth = toIso(new Date(startOfThisMonthUTC.getTime() + 2 * 86400000)); // 2 days into this month
+    const dateCompletedThisMonth = toIso(new Date(startOfThisMonthUTC.getTime() + 3 * 86400000)); // 3 days into this month
+    const dateExpiredThisMonth = toIso(new Date(startOfThisMonthUTC.getTime() + 10 * 86400000));
+
+
+    // Character 789 data
+    // 1 finished this month
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(10, 'finished_courier', 100000, common.issuer_id, common.issuer_corporation_id, null, char789, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, dateCompletedThisMonth, 3, `${common.title} 10`)
+      .run();
+    // 2 in_progress this month
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(11, 'in_progress', 150000, common.issuer_id, common.issuer_corporation_id, null, char789, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, null, 3, `${common.title} 11`)
+      .run();
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(12, 'in_progress', 120000, common.issuer_id, common.issuer_corporation_id, null, char789, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, null, 3, `${common.title} 12`)
+      .run();
+    // 1 failed this month (using date_completed for failed as per query)
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(13, 'failed', 50000, common.issuer_id, common.issuer_corporation_id, null, char789, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, dateCompletedThisMonth, 3, `${common.title} 13`)
+      .run();
+
+    // Character 654 data
+    // 2 finished this month
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(20, 'finished_courier', 200000, common.issuer_id, common.issuer_corporation_id, null, char654, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, dateCompletedThisMonth, 3, `${common.title} 20`)
+      .run();
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(21, 'finished_courier', 250000, common.issuer_id, common.issuer_corporation_id, null, char654, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, dateCompletedThisMonth, 3, `${common.title} 21`)
+      .run();
+    // 1 in_progress this month
+    await db.prepare("INSERT INTO contracts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(22, 'in_progress', 180000, common.issuer_id, common.issuer_corporation_id, null, char654, common.start_location_id, common.end_location_id, common.type, common.collateral, common.volume, dateIssuedThisMonth, dateExpiredThisMonth, dateAcceptedThisMonth, null, 3, `${common.title} 22`)
+      .run();
+    // 0 failed this month for char 654
+
+    const res = await mf.dispatchFetch('http://localhost/admin');
+    expect(res.status).toBe(200);
+    const html = await res.text();
+
+    expect(html).toContain('<h2>Revenue And Activity This Month By Character</h2>');
+    expect(html).toMatch(/<th>Finished \(This Month\)<\/th>/);
+    expect(html).toMatch(/<th>In Progress \(Accepted This Month\)<\/th>/);
+    expect(html).toMatch(/<th>Failed \(This Month\)<\/th>/);
+    
+    // Verify Char 789 (Revenue: 100,000.00 ISK, Finished: 1, In Progress: 2, Failed: 1) - Order might change based on revenue
+    // The query orders by total_revenue DESC. Char 654 has 450k, Char 789 has 100k.
+    // So, Char 654 should appear first.
+
+    // Verify Char 654 (Revenue: 450,000.00 ISK, Finished: 2, In Progress: 1, Failed: 0)
+    expect(html).toMatch(/<td>654<\/td>\s*<td>450,000\.00 ISK<\/td>\s*<td>2<\/td>\s*<td>1<\/td>\s*<td>0<\/td>/);
+    
+    // Verify Char 789 (Revenue: 100,000.00 ISK, Finished: 1, In Progress: 2, Failed: 1)
+    expect(html).toMatch(/<td>789<\/td>\s*<td>100,000\.00 ISK<\/td>\s*<td>1<\/td>\s*<td>2<\/td>\s*<td>1<\/td>/);
   });
 
   // Add more test cases if specific edge cases for data aggregation or display need verification.
