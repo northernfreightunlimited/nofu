@@ -6,4 +6,5 @@ export enum System {
   UALX = "UALX",
   GSF = "UALX JF Range",
   GEZ = "1P-WGB",
+  N3 = "N3-JBX",
 }

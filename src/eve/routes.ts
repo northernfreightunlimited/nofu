@@ -92,7 +92,13 @@ export const routes: Route[] = [
         m3Rate: 250,
         collateralRate: 0,
         isRoundTrip: true,
-      }
+      },
+      {
+        destination: System.N3,
+        m3Rate: 400,
+        collateralRate: 0,
+        isRoundTrip: true,
+      },
     ],
   },
   {
@@ -145,6 +151,12 @@ export const routes: Route[] = [
         minReward: JITA_REDUCED_MIN_REWARD,
         collateralRate: 0,
         isRoundTrip: IS_JITA_ROUND_TRIP,
+      },
+      {
+        destination: System.N3,
+        m3Rate: 1000,
+        collateralRate: 0,
+        isRoundTrip: true,
       },
     ],
   },
