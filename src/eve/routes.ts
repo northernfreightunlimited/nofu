@@ -156,7 +156,7 @@ export const routes: Route[] = [
         destination: System.N3,
         m3Rate: 1000,
         collateralRate: 0,
-        isRoundTrip: true,
+        isRoundTrip: false,
       },
     ],
   },
