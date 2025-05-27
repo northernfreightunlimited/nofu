@@ -132,7 +132,14 @@ adminApp.get('/', async (c) => {
         // This will be assigned to defaultStats.revenueByCharacterThisMonth. 
         // The type of revenueByCharacterThisMonth in AdminStatsData (ui.ts) will need to be updated
         // to CharacterMonthlyStats[] in a subsequent step.
-        defaultStats.revenueByCharacterThisMonth = revenueByCharResult.results ?? [];
+        const mappedResults = revenueByCharResult.results?.map(stat => {
+            const { acceptor_id, ...rest } = stat;
+            return {
+                ...rest,
+                character_id: acceptor_id
+            };
+        });
+        defaultStats.revenueByCharacterThisMonth = mappedResults ?? [];
 
 
         // --- Performance Metrics ---

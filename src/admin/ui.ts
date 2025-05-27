@@ -8,7 +8,7 @@ import { html } from 'hono/html';
 /**
  * Represents revenue data for a single character.
  */
-export interface CharacterRevenue { // Renaming to CharacterMonthlyStats can be done here if preferred, but following subtask to update CharacterRevenue
+export interface CharacterMonthlyStats { // Renaming to CharacterMonthlyStats can be done here if preferred, but following subtask to update CharacterRevenue
     character_id: number; // Note: This was acceptor_id in the D1 query result
     total_revenue: number;
     contracts_in_progress_this_month: number;
@@ -31,7 +31,7 @@ export interface AdminStatsData {
     revenueToday: number;
     revenueThisWeek: number;
     revenueThisMonth: number;
-    revenueByCharacterThisMonth: CharacterRevenue[];
+    revenueByCharacterThisMonth: CharacterMonthlyStats[];
     avgCompletionTimeThisMonth: number | null; // Average time from 'accepted' to 'completed' in seconds
     avgAcceptanceTimeThisMonth: number | null; // Average time from 'issued' to 'accepted' in seconds
     avgTotalTimeThisMonth: number | null; // Average time from 'issued' to 'completed' in seconds
