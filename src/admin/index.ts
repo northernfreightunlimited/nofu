@@ -30,13 +30,14 @@ interface AvgSecondsResult {
 }
 
 // Interface for the new character monthly stats query
+// This type should match the columns selected by revenueByCharQuery
 interface CharacterMonthlyStats {
-    acceptor_id: number;
+    acceptor_id: number; 
     total_revenue: number;
     contracts_in_progress_this_month: number;
     contracts_failed_this_month: number;
     contracts_finished_this_month: number;
-    // character_name will be handled by the UI if needed from a separate source
+    character_name?: string; // Now directly selected from the pilots table
 }
 
 
@@ -112,15 +113,17 @@ adminApp.get('/', async (c) => {
         // acceptor_id is the character who completed the contract
         const revenueByCharQuery = `
             SELECT 
-                acceptor_id, 
-                SUM(CASE WHEN status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of month', 'utc') THEN reward ELSE 0 END) as total_revenue,
-                SUM(CASE WHEN status = 'in_progress' AND date_accepted >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_in_progress_this_month,
-                SUM(CASE WHEN status = 'failed' AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_failed_this_month,
-                SUM(CASE WHEN status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_finished_this_month
-            FROM contracts 
+                c.acceptor_id, 
+                p.character_name,
+                SUM(CASE WHEN c.status IN ('finished_courier', 'finished') AND c.date_completed >= date('now', 'start of month', 'utc') THEN c.reward ELSE 0 END) as total_revenue,
+                SUM(CASE WHEN c.status = 'in_progress' AND c.date_accepted >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_in_progress_this_month,
+                SUM(CASE WHEN c.status = 'failed' AND c.date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_failed_this_month,
+                SUM(CASE WHEN c.status IN ('finished_courier', 'finished') AND c.date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_finished_this_month
+            FROM contracts c
+            LEFT JOIN pilots p ON c.acceptor_id = p.character_id
             WHERE 
-                acceptor_id IS NOT NULL 
-            GROUP BY acceptor_id
+                c.acceptor_id IS NOT NULL 
+            GROUP BY c.acceptor_id, p.character_name
             HAVING 
                 total_revenue > 0 OR 
                 contracts_in_progress_this_month > 0 OR 
@@ -129,14 +132,17 @@ adminApp.get('/', async (c) => {
             ORDER BY total_revenue DESC
         `;
         const revenueByCharResult = await db.prepare(revenueByCharQuery).all<CharacterMonthlyStats>();
-        // This will be assigned to defaultStats.revenueByCharacterThisMonth. 
-        // The type of revenueByCharacterThisMonth in AdminStatsData (ui.ts) will need to be updated
-        // to CharacterMonthlyStats[] in a subsequent step.
-        const mappedResults = revenueByCharResult.results?.map(stat => {
-            const { acceptor_id, ...rest } = stat;
+        
+        // Map results to the structure expected by AdminPageLayout (defined in ui.ts)
+        // The CharacterMonthlyStats interface in ui.ts expects character_id (not acceptor_id) and character_name
+        const mappedResults = revenueByCharResult.results?.map(row => {
             return {
-                ...rest,
-                character_id: acceptor_id
+                character_id: row.acceptor_id, // Map acceptor_id from query to character_id for the UI
+                total_revenue: row.total_revenue,
+                contracts_in_progress_this_month: row.contracts_in_progress_this_month,
+                contracts_failed_this_month: row.contracts_failed_this_month,
+                contracts_finished_this_month: row.contracts_finished_this_month,
+                character_name: row.character_name // Pass through the character_name
             };
         });
         defaultStats.revenueByCharacterThisMonth = mappedResults ?? [];

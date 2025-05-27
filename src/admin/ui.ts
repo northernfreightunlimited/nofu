@@ -49,6 +49,43 @@ const formatISK = (amount: number): string => {
     return amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ISK';
 };
 
+const formatISKAbbreviated = (amount: number): string => {
+    if (isNaN(amount) || amount === 0) return '0 ISK';
+
+    const absAmount = Math.abs(amount);
+    let suffix = ' ISK';
+    let value = absAmount;
+
+    if (absAmount >= 1e9) { // Billions
+        suffix = ' B ISK';
+        value = absAmount / 1e9;
+    } else if (absAmount >= 1e6) { // Millions
+        suffix = ' M ISK';
+        value = absAmount / 1e6;
+    } else if (absAmount >= 1e3) { // Thousands
+        suffix = ' K ISK';
+        value = absAmount / 1e3;
+    }
+
+    // Determine number of decimal places:
+    // - No decimals if it's an integer or less than 1000 (original value)
+    // - Up to 3 decimal places otherwise
+    let formattedValue: string;
+    if (value === Math.floor(value) && absAmount < 1e3) {
+         formattedValue = value.toString();
+    } else if (absAmount < 1e3) { // Less than 1000, but might have decimals from original input if not handled earlier
+        formattedValue = value.toFixed(0); // Show as is, no decimals, no K/M/B suffix
+    }
+     else {
+        // For K, M, B, show up to 3 decimal places, but remove trailing zeros
+        // e.g., 123.400 M becomes 123.4 M; 123.000 M becomes 123 M
+        let tempVal = parseFloat(value.toFixed(3)); // Calculate with 3 decimals
+        formattedValue = tempVal.toString(); // Convert to string, removes trailing zeros from decimal part
+    }
+    
+    return (amount < 0 ? '-' : '') + formattedValue + suffix;
+};
+
 /**
  * Formats a duration given in total seconds into a human-readable string (e.g., "X d Y h Z m S s").
  * Only shows relevant parts (e.g., hides days if 0).
@@ -217,9 +254,9 @@ export const AdminPageLayout = (stats: AdminStatsData) => html`
             
             <div class="stat-card">
                 <h3>Revenue (from Finished Contracts)</h3>
-                <p>Today: <strong>${formatISK(stats.revenueToday)}</strong></p>
-                <p>This Week: <strong>${formatISK(stats.revenueThisWeek)}</strong></p>
-                <p>This Month: <strong>${formatISK(stats.revenueThisMonth)}</strong></p>
+                <p>Today: <strong>${formatISKAbbreviated(stats.revenueToday)}</strong></p>
+                <p>This Week: <strong>${formatISKAbbreviated(stats.revenueThisWeek)}</strong></p>
+                <p>This Month: <strong>${formatISKAbbreviated(stats.revenueThisMonth)}</strong></p>
             </div>
 
             <div class="stat-card">
@@ -245,8 +282,10 @@ export const AdminPageLayout = (stats: AdminStatsData) => html`
             <tbody>
                 ${stats.revenueByCharacterThisMonth.map(charStat => html`
                 <tr>
-                    <td>${charStat.character_id} ${charStat.character_name ? '(' + charStat.character_name + ')' : ''}</td>
-                    <td>${formatISK(charStat.total_revenue)}</td>
+                    <td>
+                        ${charStat.character_name ? charStat.character_name + ' (' + charStat.character_id + ')' : charStat.character_id}
+                    </td>
+                    <td>${formatISKAbbreviated(charStat.total_revenue)}</td>
                     <td>${charStat.contracts_finished_this_month}</td>
                     <td>${charStat.contracts_in_progress_this_month}</td>
                     <td>${charStat.contracts_failed_this_month}</td>
@@ -258,38 +297,38 @@ export const AdminPageLayout = (stats: AdminStatsData) => html`
 
     ${html`
     <script>
-        const triggerBtn = document.getElementById('triggerUpdateBtn');
-        const statusDiv = document.getElementById('triggerUpdateStatus');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logic for the manual update button (existing script)
+            const triggerBtn = document.getElementById('triggerUpdateBtn');
+            const statusDiv = document.getElementById('triggerUpdateStatus');
 
-        if (triggerBtn && statusDiv) {
-            triggerBtn.addEventListener('click', async () => {
-                statusDiv.textContent = 'Triggering update job...';
-                statusDiv.style.color = '#e0e0e0'; // Default text color
-                triggerBtn.disabled = true;
-
-                try {
-                    // Using an absolute path for the fetch request
-                    const response = await fetch('/api/trigger-contract-update', { 
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        statusDiv.textContent = data.message || 'Job status unknown.';
-                        statusDiv.style.color = data.success ? 'lightgreen' : 'salmon'; // Using lightgreen and salmon for dark theme
-                    } else {
-                        statusDiv.textContent = 'Failed to trigger job. Server responded with status: ' + response.status;
+            if (triggerBtn && statusDiv) {
+                triggerBtn.addEventListener('click', async () => {
+                    statusDiv.textContent = 'Triggering update job...';
+                    statusDiv.style.color = '#e0e0e0';
+                    triggerBtn.disabled = true;
+                    try {
+                        const response = await fetch('/api/trigger-contract-update', { 
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        if (response.ok) {
+                            const data = await response.json();
+                            statusDiv.textContent = data.message || 'Job status unknown.';
+                            statusDiv.style.color = data.success ? 'lightgreen' : 'salmon';
+                        } else {
+                            statusDiv.textContent = 'Failed to trigger job. Server responded with status: ' + response.status;
+                            statusDiv.style.color = 'salmon';
+                        }
+                    } catch (error) {
+                        statusDiv.textContent = 'Network error or script failed: ' + (error instanceof Error ? error.message : String(error));
                         statusDiv.style.color = 'salmon';
+                    } finally {
+                        triggerBtn.disabled = false;
                     }
-                } catch (error) {
-                    statusDiv.textContent = 'Network error or script failed: ' + (error instanceof Error ? error.message : String(error));
-                    statusDiv.style.color = 'salmon';
-                } finally {
-                    triggerBtn.disabled = false;
-                }
-            });
-        }
+                });
+            }
+        });
     </script>
     `}
 </body>

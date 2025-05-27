@@ -53,6 +53,85 @@ export async function performContractUpdate(env: Env): Promise<PerformContractUp
             throw new Error("D1 Database (env.DB) is not available.");
         }
 
+        // --- START NEW LOGIC FOR PILOT DATA ---
+        console.log("performContractUpdate: Starting pilot data update process...");
+        const characterIds = new Set<number>();
+        contracts.forEach(contract => {
+            characterIds.add(contract.issuer_id);
+            if (contract.acceptor_id !== null && contract.acceptor_id !== undefined) {
+                characterIds.add(contract.acceptor_id);
+            }
+        });
+
+        const pilotInsertStatements: D1PreparedStatement[] = [];
+        const uniqueCharacterIds = Array.from(characterIds);
+        console.log(`performContractUpdate: Found ${uniqueCharacterIds.length} unique character IDs from contracts.`);
+
+        for (const characterId of uniqueCharacterIds) {
+            try {
+                const pilotExists = await db.prepare("SELECT character_id FROM pilots WHERE character_id = ?").bind(characterId).first<{ character_id: number } | null>();
+                
+                if (!pilotExists) {
+                    console.log(`performContractUpdate: Fetching name for new character ID: ${characterId}`);
+                    const esiUrl = `https://esi.evetech.net/latest/characters/${characterId}/?datasource=tranquility`;
+                    
+                    try {
+                        const esiResponse = await fetch(esiUrl, { headers: { 'Accept': 'application/json', 'User-Agent': 'NOFU-App/1.0 (Discord: @nofu_app_admin)' } });
+                        if (esiResponse.ok) {
+                            // The ESI endpoint for character details returns an object directly, not an array
+                            const esiData = await esiResponse.json() as { name?: string }; // Type assertion for clarity
+                            if (esiData && esiData.name) {
+                                const pilotName = esiData.name;
+                                console.log(`performContractUpdate: Successfully fetched name for ${characterId}: ${pilotName}`);
+                                const insertPilotStmt = db.prepare("INSERT INTO pilots (character_id, character_name) VALUES (?, ?)")
+                                    .bind(characterId, pilotName);
+                                pilotInsertStatements.push(insertPilotStmt);
+                            } else {
+                                console.warn(`performContractUpdate: Name not found in ESI response for ${characterId}. Response: ${JSON.stringify(esiData)}`);
+                            }
+                        } else {
+                            const errorText = await esiResponse.text();
+                            console.error(`performContractUpdate: ESI request for character ${characterId} failed with status ${esiResponse.status}: ${errorText}`);
+                        }
+                    } catch (fetchError: any) {
+                        console.error(`performContractUpdate: Failed to fetch name for character ${characterId}: ${fetchError.message}`);
+                    }
+                } else {
+                    // console.log(`performContractUpdate: Character ID ${characterId} already exists in pilots table.`);
+                }
+            } catch (dbError: any) {
+                 console.error(`performContractUpdate: Database error while checking/inserting pilot ${characterId}: ${dbError.message}`);
+            }
+        }
+
+        if (pilotInsertStatements.length > 0) {
+            console.log(`performContractUpdate: Batch inserting ${pilotInsertStatements.length} new pilot(s) into D1...`);
+            try {
+                const pilotBatchResults: D1Result[] = await db.batch(pilotInsertStatements);
+                console.log('performContractUpdate: Pilot batch insert results:', pilotBatchResults);
+                // Optionally, iterate through pilotBatchResults to check individual statement success/failure
+                let pilotsInsertedCount = 0;
+                pilotBatchResults.forEach(result => {
+                    if (result.success && result.meta && typeof result.meta.changes === 'number' && result.meta.changes > 0) {
+                        pilotsInsertedCount++;
+                    } else if (result.success && result.meta && typeof result.meta.rows_written === 'number' && result.meta.rows_written > 0){
+                        pilotsInsertedCount++;
+                    }
+                });
+                 console.log(`performContractUpdate: Successfully inserted ${pilotsInsertedCount} new pilots.`);
+
+            } catch (batchError: any) {
+                console.error(`performContractUpdate: Error during pilot batch insert: ${batchError.message}`);
+                 if (batchError.cause) {
+                    console.error('performContractUpdate: Batch insert cause:', batchError.cause);
+                }
+            }
+        } else {
+            console.log("performContractUpdate: No new pilots to insert.");
+        }
+        console.log("performContractUpdate: Finished pilot data update process.");
+        // --- END NEW LOGIC FOR PILOT DATA ---
+
         const upsertSql = `
             INSERT INTO contracts (
                 contract_id, status, issuer_id, issuer_corporation_id, assignee_id, 

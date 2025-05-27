@@ -40,3 +40,11 @@ CREATE TABLE IF NOT EXISTS contracts (
     -- Optional title of the contract
     title TEXT
 );
+
+-- Table to store character information (ID to Name mapping)
+CREATE TABLE IF NOT EXISTS pilots (
+    -- EVE Online Character ID
+    character_id INTEGER PRIMARY KEY,
+    -- EVE Online Character Name
+    character_name TEXT NOT NULL
+);
