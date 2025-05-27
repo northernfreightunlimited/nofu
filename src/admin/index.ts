@@ -77,34 +77,34 @@ adminApp.get('/', async (c) => {
 
         // --- Finished Contracts Counts ---
         const finishedTodayResult = await db.prepare(
-            "SELECT COUNT(*) as count FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', 'start of day', 'utc')"
+            "SELECT COUNT(*) as count FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of day', 'utc')"
         ).first<CountResult>();
         defaultStats.finishedToday = finishedTodayResult?.count ?? 0;
 
         // Using '-6 days' for "this week" means the last 7 days including today.
         const finishedThisWeekResult = await db.prepare(
-            "SELECT COUNT(*) as count FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', '-6 days', 'utc')"
+            "SELECT COUNT(*) as count FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed >= date('now', '-6 days', 'utc')"
         ).first<CountResult>();
         defaultStats.finishedThisWeek = finishedThisWeekResult?.count ?? 0;
 
         const finishedThisMonthResult = await db.prepare(
-            "SELECT COUNT(*) as count FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc')"
+            "SELECT COUNT(*) as count FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of month', 'utc')"
         ).first<CountResult>();
         defaultStats.finishedThisMonth = finishedThisMonthResult?.count ?? 0;
 
         // --- Revenue ---
         const revenueTodayResult = await db.prepare(
-            "SELECT SUM(reward) as total FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', 'start of day', 'utc')"
+            "SELECT SUM(reward) as total FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of day', 'utc')"
         ).first<SumResult>();
         defaultStats.revenueToday = revenueTodayResult?.total ?? 0;
 
         const revenueThisWeekResult = await db.prepare(
-            "SELECT SUM(reward) as total FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', '-6 days', 'utc')"
+            "SELECT SUM(reward) as total FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed >= date('now', '-6 days', 'utc')"
         ).first<SumResult>();
         defaultStats.revenueThisWeek = revenueThisWeekResult?.total ?? 0;
 
         const revenueThisMonthResult = await db.prepare(
-            "SELECT SUM(reward) as total FROM contracts WHERE status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc')"
+            "SELECT SUM(reward) as total FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of month', 'utc')"
         ).first<SumResult>();
         defaultStats.revenueThisMonth = revenueThisMonthResult?.total ?? 0;
         
@@ -113,10 +113,10 @@ adminApp.get('/', async (c) => {
         const revenueByCharQuery = `
             SELECT 
                 acceptor_id, 
-                SUM(CASE WHEN status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc') THEN reward ELSE 0 END) as total_revenue,
+                SUM(CASE WHEN status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of month', 'utc') THEN reward ELSE 0 END) as total_revenue,
                 SUM(CASE WHEN status = 'in_progress' AND date_accepted >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_in_progress_this_month,
                 SUM(CASE WHEN status = 'failed' AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_failed_this_month,
-                SUM(CASE WHEN status = 'finished_courier' AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_finished_this_month
+                SUM(CASE WHEN status IN ('finished_courier', 'finished') AND date_completed >= date('now', 'start of month', 'utc') THEN 1 ELSE 0 END) as contracts_finished_this_month
             FROM contracts 
             WHERE 
                 acceptor_id IS NOT NULL 
@@ -151,13 +151,13 @@ adminApp.get('/', async (c) => {
 
         // Average Completion Time (Accepted to Completed) in seconds
         const avgCompleteTimeResult = await db.prepare(
-            "SELECT AVG((julianday(date_completed) - julianday(date_accepted)) * 86400.0) as avg_seconds FROM contracts WHERE status = 'finished_courier' AND date_completed IS NOT NULL AND date_accepted IS NOT NULL AND date_completed >= date('now', 'start of month', 'utc')"
+            "SELECT AVG((julianday(date_completed) - julianday(date_accepted)) * 86400.0) as avg_seconds FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed IS NOT NULL AND date_accepted IS NOT NULL AND date_completed >= date('now', 'start of month', 'utc')"
         ).first<AvgSecondsResult>();
         defaultStats.avgCompletionTimeThisMonth = avgCompleteTimeResult?.avg_seconds ?? null;
 
         // Average Total Time (Issued to Completed) in seconds
         const avgTotalTimeResult = await db.prepare(
-            "SELECT AVG((julianday(date_completed) - julianday(date_issued)) * 86400.0) as avg_seconds FROM contracts WHERE status = 'finished_courier' AND date_completed IS NOT NULL AND date_issued IS NOT NULL AND date_completed >= date('now', 'start of month', 'utc')"
+            "SELECT AVG((julianday(date_completed) - julianday(date_issued)) * 86400.0) as avg_seconds FROM contracts WHERE status IN ('finished_courier', 'finished') AND date_completed IS NOT NULL AND date_issued IS NOT NULL AND date_completed >= date('now', 'start of month', 'utc')"
         ).first<AvgSecondsResult>();
         defaultStats.avgTotalTimeThisMonth = avgTotalTimeResult?.avg_seconds ?? null;
         
