@@ -15,10 +15,10 @@ export const ROUTE_DEFAULTS = {
   minReward: 30e6, // 30m
   maxCollateral: 100e9, // 100b
   collateralRate: DEFAULT_COLLATERAL_PERCENTAGE_FEE, // percent collateral to charge as reward
-  maxM3: 350000, // 350k m3
+  maxM3: 350_000, // 350k m3
   isRoundTrip: false,
   flatRate: NaN,
-};
+} as const;
 
 export const ROUTE_SEP_ARROW = " ➠ ";
 export const ROUTE_SEP_ARROW_RT = " ⮂ ";

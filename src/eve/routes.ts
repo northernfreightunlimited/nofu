@@ -183,4 +183,14 @@ export const routes: Route[] = [
       },
     ],
   },
+  {
+    origin: System.X2,
+    destinations: [
+      {
+        destination: System.N3,
+        m3Rate: 175,
+        maxM3: 1_000_000,
+      },
+    ],
+  },
 ];
