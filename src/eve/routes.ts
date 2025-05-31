@@ -190,6 +190,7 @@ export const routes: Route[] = [
         destination: System.N3,
         m3Rate: 175,
         maxM3: 1_000_000,
+        collateralRate: 0,
       },
     ],
   },
