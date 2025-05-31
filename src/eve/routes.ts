@@ -1,14 +1,14 @@
 import {
-  FOUR_JUMP_RT,
+  // FOUR_JUMP_RT,
   IS_JITA_ROUND_TRIP,
-  JITA_RATE_DISCOUNT,
+  // JITA_RATE_DISCOUNT,
   JITA_REDUCED_MIN_REWARD,
   ROUTE_DEFAULTS,
   ROUTE_SEP_ARROW,
   ROUTE_SEP_ARROW_RT,
-  STANDARD_DOMAIN_RATE,
-  STANDARD_EXPORT_TO_JITA_RATE,
-  STANDARD_IMPORT_FROM_JITA_RATE,
+  // STANDARD_DOMAIN_RATE,
+  // STANDARD_EXPORT_TO_JITA_RATE,
+  // STANDARD_IMPORT_FROM_JITA_RATE,
 } from "./consts.js";
 import { System } from "./systems.js";
 import { Destination, Route } from "./types.js";
@@ -94,8 +94,8 @@ export const routes: Route[] = [
         isRoundTrip: true,
       },
       {
-        destination: System.N3,
-        m3Rate: 400,
+        destination: System.X2,
+        m3Rate: 450,
         collateralRate: 0,
         isRoundTrip: true,
       },
@@ -153,8 +153,8 @@ export const routes: Route[] = [
         isRoundTrip: IS_JITA_ROUND_TRIP,
       },
       {
-        destination: System.N3,
-        m3Rate: 1000,
+        destination: System.X2,
+        m3Rate: 1200,
         collateralRate: 0,
         isRoundTrip: false,
       },
@@ -171,8 +171,9 @@ export const routes: Route[] = [
       },
       {
         destination: System.UALX,
-        m3Rate: 1000,
+        m3Rate: 1300,
         isRoundTrip: false,
+        minReward: 60_000_000,
         collateralRate: 0,
       },
       {
