@@ -94,8 +94,8 @@ export const routes: Route[] = [
         isRoundTrip: true,
       },
       {
-        destination: System.X2,
-        m3Rate: 450,
+        destination: System.CJ,
+        m3Rate: 550,
         collateralRate: 0,
         isRoundTrip: true,
       },
@@ -153,8 +153,8 @@ export const routes: Route[] = [
         isRoundTrip: IS_JITA_ROUND_TRIP,
       },
       {
-        destination: System.X2,
-        m3Rate: 1200,
+        destination: System.CJ,
+        m3Rate: 1300,
         collateralRate: 0,
         isRoundTrip: false,
       },
@@ -187,7 +187,7 @@ export const routes: Route[] = [
     origin: System.X2,
     destinations: [
       {
-        destination: System.N3,
+        destination: System.CJ,
         m3Rate: 175,
         maxM3: 1_000_000,
         collateralRate: 0,
