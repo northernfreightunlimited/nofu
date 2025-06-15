@@ -115,15 +115,9 @@ export const routes: Route[] = [
     origin: System.ImperialPalace,
     destinations: [
       {
-        destination: System.Forge,
-        m3Rate: 1000,
-        minReward: JITA_REDUCED_MIN_REWARD, // 10m
-        isRoundTrip: false,
-      },
-      {
         destination: System.UALX,
-        m3Rate: 1000,
-        isRoundTrip: true,
+        m3Rate: 1050,
+        isRoundTrip: false,
         collateralRate: 0,
       },
     ],
@@ -131,13 +125,6 @@ export const routes: Route[] = [
   {
     origin: System.Forge,
     destinations: [
-      {
-        destination: System.ImperialPalace,
-        m3Rate: 1000,
-        minReward: JITA_REDUCED_MIN_REWARD,
-        collateralRate: 0,
-        isRoundTrip: false,
-      },
       {
         destination: System.UALX,
         m3Rate: 900,
@@ -156,29 +143,6 @@ export const routes: Route[] = [
         destination: System.CJ,
         m3Rate: 1300,
         collateralRate: 0,
-        isRoundTrip: false,
-      },
-    ],
-  },
-  {
-    origin: System.Irmalin,
-    destinations: [
-      {
-        destination: System.ImperialPalace,
-        m3Rate: 500,
-        isRoundTrip: false,
-        collateralRate: 0,
-      },
-      {
-        destination: System.UALX,
-        m3Rate: 1300,
-        isRoundTrip: false,
-        minReward: 60_000_000,
-        collateralRate: 0,
-      },
-      {
-        destination: System.Forge,
-        m3Rate: 1000,
         isRoundTrip: false,
       },
     ],
