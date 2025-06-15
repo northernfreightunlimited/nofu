@@ -7,7 +7,7 @@ import {
   ROUTE_SEP_ARROW,
   ROUTE_SEP_ARROW_RT,
 } from "./eve/consts";
-import { RouteOptions } from "./eve/routes";
+import { RouteOptions, routes } from "./eve/routes";
 import { System } from "./eve/systems";
 
 const DEFAULT_ROUTE_SELECTION = `${System.UALX}${
@@ -43,11 +43,15 @@ app.get("/calc", async (c) => {
     Route: ${shippingRate.route},
     m3: ${volume},
     Reward: ${shippingRate.reward},
-    Rate: ${shippingRate.rateStructure.m3Rate}, 
+    Rate: ${shippingRate.rateStructure.m3Rate},
     CRate: ${shippingRate.rateStructure.collateralRate},
   `);
 
   return c.html(calcResponseTemplate(shippingRate));
+});
+
+app.get("/routes", (c) => {
+  return c.json(routes);
 });
 
 function copyToClipboardScript() {
