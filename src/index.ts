@@ -50,7 +50,7 @@ app.get("/calc", async (c) => {
   return c.html(calcResponseTemplate(shippingRate));
 });
 
-app.get("/routes", (c) => {
+app.get("/jf-routes", (c) => {
   return c.json(routes);
 });
 
