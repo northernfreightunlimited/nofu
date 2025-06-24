@@ -71,12 +71,6 @@ export const routes: Route[] = [
         isRoundTrip: false,
       },
       {
-        destination: System.ImperialPalace,
-        m3Rate: 1000,
-        collateralRate: 0,
-        isRoundTrip: true,
-      },
-      {
         destination: System.Domain,
         m3Rate: 775,
         isRoundTrip: true,
@@ -112,17 +106,6 @@ export const routes: Route[] = [
     ],
   },
   {
-    origin: System.ImperialPalace,
-    destinations: [
-      {
-        destination: System.UALX,
-        m3Rate: 1050,
-        isRoundTrip: false,
-        collateralRate: 0,
-      },
-    ],
-  },
-  {
     origin: System.Forge,
     destinations: [
       {
@@ -144,17 +127,6 @@ export const routes: Route[] = [
         m3Rate: 1300,
         collateralRate: 0,
         isRoundTrip: false,
-      },
-    ],
-  },
-  {
-    origin: System.X2,
-    destinations: [
-      {
-        destination: System.CJ,
-        m3Rate: 175,
-        maxM3: 1_000_000,
-        collateralRate: 0,
       },
     ],
   },
