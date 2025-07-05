@@ -10,7 +10,7 @@ import {
 import { RouteOptions, routes } from "./eve/routes";
 import { System } from "./eve/systems";
 
-const DEFAULT_ROUTE_SELECTION = `${System.UALX}${
+const DEFAULT_ROUTE_SELECTION = `${System.CJ}${
   IS_JITA_ROUND_TRIP ? ROUTE_SEP_ARROW_RT : ROUTE_SEP_ARROW
 }${System.Forge}`;
 
