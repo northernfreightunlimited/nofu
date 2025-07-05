@@ -95,7 +95,7 @@ export const routes: Route[] = [
       {
         destination: System.Domain,
         m3Rate: 775,
-        isRoundTrip: true,
+        isRoundTrip: false,
       },
     ],
   },
@@ -132,6 +132,23 @@ export const routes: Route[] = [
         collateralRate: 0,
         minReward: JITA_REDUCED_MIN_REWARD,
         isRoundTrip: false,
+      },
+    ],
+  },
+  {
+    origin: System.Domain,
+    destinations: [
+      {
+        destination: System.UALX,
+        m3Rate: 775,
+        isRoundTrip: false,
+        collateralRate: 0,
+      },
+      {
+        destination: System.CJ,
+        m3Rate: 900,
+        isRoundTrip: false,
+        collateralRate: 0,
       },
     ],
   },
