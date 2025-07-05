@@ -63,6 +63,28 @@ export function RouteOptions(): string[] {
 
 export const routes: Route[] = [
   {
+    origin: System.CJ,
+    destinations: [
+      {
+        destination: System.Forge,
+        m3Rate: 1200,
+        isRoundTrip: false,
+        minReward: JITA_REDUCED_MIN_REWARD,
+      },
+      {
+        destination: System.Domain,
+        m3Rate: 900,
+        isRoundTrip: true,
+      },
+      {
+        destination: System.UALX,
+        m3Rate: 550,
+        collateralRate: 0,
+        isRoundTrip: true,
+      },
+    ],
+  },
+  {
     origin: System.UALX,
     destinations: [
       {
@@ -73,24 +95,6 @@ export const routes: Route[] = [
       {
         destination: System.Domain,
         m3Rate: 775,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.GSF,
-        m3Rate: 250,
-        collateralRate: 0,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.GEZ,
-        m3Rate: 250,
-        collateralRate: 0,
-        isRoundTrip: true,
-      },
-      {
-        destination: System.CJ,
-        m3Rate: 550,
-        collateralRate: 0,
         isRoundTrip: true,
       },
     ],
@@ -124,8 +128,9 @@ export const routes: Route[] = [
       },
       {
         destination: System.CJ,
-        m3Rate: 1300,
+        m3Rate: 1200,
         collateralRate: 0,
+        minReward: JITA_REDUCED_MIN_REWARD,
         isRoundTrip: false,
       },
     ],
