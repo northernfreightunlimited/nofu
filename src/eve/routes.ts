@@ -74,7 +74,7 @@ export const routes: Route[] = [
       {
         destination: System.Domain,
         m3Rate: 900,
-        isRoundTrip: true,
+        isRoundTrip: false,
       },
       {
         destination: System.UALX,
