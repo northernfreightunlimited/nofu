@@ -85,6 +85,7 @@ export const routes: Route[] = [
       {
         destination: System.NHK,
         m3Rate: 900,
+        collateralRate: 0,
         isRoundTrip: true,
       },
     ],
