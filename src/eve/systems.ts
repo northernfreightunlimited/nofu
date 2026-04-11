@@ -5,4 +5,5 @@ export enum System {
   UALX = "UALX-3",
   GEZ = "1P-WGB",
   CJ = "C-J6MT",
+  NHK = "N-HK93",
 }
